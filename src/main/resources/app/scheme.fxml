@@ -107,10 +107,10 @@
                                     <Insets />
                                  </GridPane.margin>
                                  <graphic>
-                                    <FontAwesomeIcon glyphName="HEART" size="2em" />
+                                    <FontAwesomeIcon fx:id="heart_icon" glyphName="HEART" size="2em" fill="black"/>
                                  </graphic>
                               </Button>
-                              <Label fx:id="songTitle" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="507.0" text= " " GridPane.columnIndex="1">
+                              <Label fx:id="songTitle" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="507.0" text=" " GridPane.columnIndex="1">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -130,17 +130,17 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" />
                           </rowConstraints>
                            <children>
-                              <Label alignment="CENTER" prefHeight="34.0" prefWidth="61.0" text="0:00">
+                              <Label fx:id="actual_time" alignment="CENTER" prefHeight="34.0" prefWidth="61.0" text=" ">
                                  <padding>
                                     <Insets bottom="5.0" />
                                  </padding>
                               </Label>
-                              <Slider prefHeight="0.0" prefWidth="439.0" GridPane.columnIndex="1">
+                              <Slider fx:id="songSlider" prefHeight="0.0" prefWidth="439.0" GridPane.columnIndex="1">
                                  <padding>
                                     <Insets bottom="5.0" />
                                  </padding>
                               </Slider>
-                              <Label alignment="CENTER" prefHeight="34.0" prefWidth="71.0" text="3:50" GridPane.columnIndex="2">
+                              <Label fx:id="end_time" alignment="CENTER" prefHeight="34.0" prefWidth="71.0" text=" " GridPane.columnIndex="2">
                                  <padding>
                                     <Insets bottom="5.0" />
                                  </padding>
@@ -177,7 +177,7 @@
                         </Button>
                         <Button fx:id="playButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="2">
                            <graphic>
-                              <FontAwesomeIcon glyphName="PLAY" size="3em" textAlignment="CENTER" />
+                              <FontAwesomeIcon fx:id="play_icon" glyphName="PLAY" size="3em" textAlignment="CENTER" />
                            </graphic>
                         </Button>
                         <Button fx:id="nextButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="3">

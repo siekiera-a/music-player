@@ -1,5 +1,6 @@
 package app;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,17 +9,33 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 public class SchemeController implements Initializable {
 
     private String title = "Tytuł piosenki";
+    boolean isPaused = false;
+    boolean isFavourite = false;
+    int atime = 74;
+    int etime = 230;
+    //MediaPlayer mediaPlayer;
+    //Media media;
 
     @FXML
+    public Slider volumeSlider;
+    public Slider songSlider;
+    //private MediaView mediaView;
+    public Label actual_time;
+    public Label end_time;
     public BorderPane mainContent;
     public Button homeButton;
     public Button playlistButton;
@@ -33,6 +50,8 @@ public class SchemeController implements Initializable {
     public Button repeatButton;
     public Button volumeButton;
     public Button heartButton;
+    public FontAwesomeIcon heart_icon;
+    public FontAwesomeIcon play_icon;
     public Label songTitle;
 
     @Override
@@ -50,7 +69,35 @@ public class SchemeController implements Initializable {
         repeatButton.setOnAction(this::repeat);
         volumeButton.setOnAction(this::volume);
         heartButton.setOnAction(this::addToFavourite);
+
+        loadFXML("main");
         setSongTitle();
+        songSlider.setValue(atime);
+        songSlider.setMax(etime);
+        songSlider.setMin(0);
+        actual_time.setText(getAtime());
+        end_time.setText(getEtime());
+
+        songSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            setAtime(newValue.intValue());
+            actual_time.setText(getAtime());
+        });
+    }
+
+    public String getAtime() {
+        return atime/60 +  ":" + (atime%60);
+    }
+
+    public void setAtime(int atime) {
+        this.atime = atime;
+    }
+
+    public String getEtime() {
+        return etime/60 + ":" + (etime%60);
+    }
+
+    public void setEtime(int etime) {
+        this.etime = etime;
     }
 
     @FXML
@@ -101,7 +148,13 @@ public class SchemeController implements Initializable {
 
     @FXML
     private void play(ActionEvent event) {
-        System.out.println("play");
+        //System.out.println("play");
+        isPaused = !isPaused;
+        if (isPaused)
+            play_icon.setGlyphName("PAUSE");
+        else
+            play_icon.setGlyphName("PLAY");
+        //mediaPlayer.play();
     }
 
     @FXML
@@ -122,6 +175,14 @@ public class SchemeController implements Initializable {
     @FXML
     private void addToFavourite(ActionEvent event) {
         System.out.println("heart");
+        isFavourite = !isFavourite;
+        if(isFavourite){
+            heart_icon.setFill(Color.RED);
+        }
+        else
+        {
+            heart_icon.setFill(Color.BLACK);
+        }
     }
 
     @FXML
