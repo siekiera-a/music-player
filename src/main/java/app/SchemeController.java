@@ -5,16 +5,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SchemeController implements Initializable {
+
+    private String title = "Tytuł piosenki";
 
     @FXML
     public BorderPane mainContent;
@@ -24,6 +26,14 @@ public class SchemeController implements Initializable {
     public Button statisticsButton;
     public Button infoButton;
     public Button exitButton;
+    public Button shuffleButton;
+    public Button prevButton;
+    public Button playButton;
+    public Button nextButton;
+    public Button repeatButton;
+    public Button volumeButton;
+    public Button heartButton;
+    public Label songTitle;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -33,6 +43,14 @@ public class SchemeController implements Initializable {
         statisticsButton.setOnAction(this::switchToStatistics);
         infoButton.setOnAction(this::showInfo);
         exitButton.setOnAction(this::exit);
+        shuffleButton.setOnAction(this::shuffle);
+        prevButton.setOnAction(this::prev);
+        playButton.setOnAction(this::play);
+        nextButton.setOnAction(this::next);
+        repeatButton.setOnAction(this::repeat);
+        volumeButton.setOnAction(this::volume);
+        heartButton.setOnAction(this::addToFavourite);
+        setSongTitle();
     }
 
     @FXML
@@ -56,11 +74,6 @@ public class SchemeController implements Initializable {
     }
 
     @FXML
-    private void showInfo(ActionEvent event) {
-        
-    }
-
-    @FXML
     private void exit(ActionEvent event) {
         Stage stage = (Stage) mainContent.getScene().getWindow();
         stage.close();
@@ -76,4 +89,52 @@ public class SchemeController implements Initializable {
         }
     }
 
+    @FXML
+    private void shuffle(ActionEvent event) {
+        System.out.println("shuffle");
+    }
+
+    @FXML
+    private void prev(ActionEvent event) {
+        System.out.println("prev");
+    }
+
+    @FXML
+    private void play(ActionEvent event) {
+        System.out.println("play");
+    }
+
+    @FXML
+    private void next(ActionEvent event) {
+        System.out.println("next");
+    }
+
+    @FXML
+    private void repeat(ActionEvent event) {
+        System.out.println("repeat");
+    }
+
+    @FXML
+    private void volume(ActionEvent event) {
+        System.out.println("volume");
+    }
+
+    @FXML
+    private void addToFavourite(ActionEvent event) {
+        System.out.println("heart");
+    }
+
+    @FXML
+    private void setSongTitle() {
+        songTitle.setText(title);
+    }
+
+    @FXML
+    private void showInfo(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Info");
+        alert.setHeaderText(null);
+        alert.setContentText("jakies informacje o programie");
+        alert.showAndWait();
+    }
 }

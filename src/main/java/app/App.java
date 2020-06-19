@@ -14,6 +14,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         scene = new Scene(loadFXML("scheme"), 640, 480);
+        stage.setTitle("Odtwarzacz muzyki");
         stage.setScene(scene);
         stage.show();
     }

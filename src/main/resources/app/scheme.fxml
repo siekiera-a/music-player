@@ -102,7 +102,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" />
                           </rowConstraints>
                            <children>
-                              <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="32.0" prefWidth="43.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                              <Button fx:id="heartButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="32.0" prefWidth="43.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin>
@@ -110,7 +110,7 @@
                                     <FontAwesomeIcon glyphName="HEART" size="2em" />
                                  </graphic>
                               </Button>
-                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="507.0" text="Tytuł piosenki" GridPane.columnIndex="1">
+                              <Label fx:id="songTitle" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="507.0" text= " " GridPane.columnIndex="1">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -165,32 +165,32 @@
                       <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
                     </rowConstraints>
                      <children>
-                      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false">
+                      <Button fx:id="shuffleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false">
                            <graphic>
                               <FontAwesomeIcon glyphName="RANDOM" size="3em" />
                            </graphic>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="1">
+                        <Button fx:id="prevButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="1">
                            <graphic>
                               <FontAwesomeIcon glyphName="STEP_BACKWARD" size="3em" />
                            </graphic>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="2">
+                        <Button fx:id="playButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="2">
                            <graphic>
                               <FontAwesomeIcon glyphName="PLAY" size="3em" textAlignment="CENTER" />
                            </graphic>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="3">
+                        <Button fx:id="nextButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="3">
                            <graphic>
                               <FontAwesomeIcon glyphName="STEP_FORWARD" size="3em" wrappingWidth="20.571428298950195" />
                            </graphic>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="4">
+                        <Button fx:id="repeatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="4">
                            <graphic>
                               <FontAwesomeIcon glyphName="REPEAT" size="3em" />
                            </graphic>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="5">
+                        <Button fx:id="volumeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="5">
                            <graphic>
                               <FontAwesomeIcon glyphName="VOLUME_UP" size="3em" />
                            </graphic>
