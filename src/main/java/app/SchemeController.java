@@ -16,27 +16,29 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 
 public class SchemeController implements Initializable {
 
     private String title = "Tytuł piosenki";
     boolean isPaused = false;
+    boolean isMute = false;
     boolean isFavourite = false;
-    int atime = 74;
-    int etime = 230;
-    //MediaPlayer mediaPlayer;
-    //Media media;
+    int actual_volume = 100;
+    int prev_volume;
+    int actualTime = 74; //w sekundach
+    int endTime = 230; //w sekundach
 
     @FXML
     public Slider volumeSlider;
     public Slider songSlider;
-    //private MediaView mediaView;
+
+    public Label volumeValue;
     public Label actual_time;
     public Label end_time;
+    public Label songTitle;
+
     public BorderPane mainContent;
+
     public Button homeButton;
     public Button playlistButton;
     public Button queueButton;
@@ -50,9 +52,86 @@ public class SchemeController implements Initializable {
     public Button repeatButton;
     public Button volumeButton;
     public Button heartButton;
+    public Button devicesButton;
+    public Button roomButton;
+    public Button settingsButton;
+
     public FontAwesomeIcon heart_icon;
     public FontAwesomeIcon play_icon;
-    public Label songTitle;
+    public FontAwesomeIcon volume_icon;
+
+    public void init(){
+        setSongTitle();
+
+        manageSongSlider();
+        manageVolumeSlider();
+    }
+
+    public void manageVolumeSlider(){
+        volumeSlider.setValue(actual_volume);
+        volumeSlider.setMin(0);
+        volumeSlider.setMax(100);
+        volumeValue.setText(getActual_volume());
+
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            setActual_volume(newValue.intValue());
+            volumeValue.setText(getActual_volume());
+            if (isMute && newValue.intValue() > 0) {
+                isMute = false;
+                volume_icon.setGlyphName("VOLUME_UP");
+            } else if (!isMute && newValue.intValue() == 0) {
+                isMute = true;
+                volume_icon.setGlyphName("VOLUME_OFF");
+            }
+        });
+    }
+
+    public void manageSongSlider(){
+        songSlider.setValue(actualTime);
+        songSlider.setMax(endTime);
+        songSlider.setMin(0);
+        actual_time.setText(getActualTime());
+        end_time.setText(getEndTime());
+
+        songSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            setActualTime(newValue.intValue());
+            actual_time.setText(getActualTime());
+        });
+    }
+
+    public String getActual_volume() {
+        return String.valueOf(actual_volume);
+    }
+
+    public void setActual_volume(int actual_volume) {
+        this.actual_volume = actual_volume;
+    }
+
+    public String getActualTime() {
+        return actualTime /60 +  ":" + (actualTime %60);
+    }
+
+    public void setActualTime(int actualTime) {
+        this.actualTime = actualTime;
+    }
+
+    public String getEndTime() {
+        return endTime /60 + ":" + (endTime %60);
+    }
+
+    public void setEndTime(int endTime) {
+        this.endTime = endTime;
+    }
+
+    private void loadFXML(String fxml) {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource(fxml + ".fxml"));
+            mainContent.setCenter(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -67,37 +146,14 @@ public class SchemeController implements Initializable {
         playButton.setOnAction(this::play);
         nextButton.setOnAction(this::next);
         repeatButton.setOnAction(this::repeat);
-        volumeButton.setOnAction(this::volume);
         heartButton.setOnAction(this::addToFavourite);
+        devicesButton.setOnAction(this::changeOutputDevice);
+        volumeButton.setOnAction(this::volume);
+        roomButton.setOnAction(this::switchToRoom);
+        settingsButton.setOnAction(this::switchToSettings);
 
         loadFXML("main");
-        setSongTitle();
-        songSlider.setValue(atime);
-        songSlider.setMax(etime);
-        songSlider.setMin(0);
-        actual_time.setText(getAtime());
-        end_time.setText(getEtime());
-
-        songSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            setAtime(newValue.intValue());
-            actual_time.setText(getAtime());
-        });
-    }
-
-    public String getAtime() {
-        return atime/60 +  ":" + (atime%60);
-    }
-
-    public void setAtime(int atime) {
-        this.atime = atime;
-    }
-
-    public String getEtime() {
-        return etime/60 + ":" + (etime%60);
-    }
-
-    public void setEtime(int etime) {
-        this.etime = etime;
+        init();
     }
 
     @FXML
@@ -126,14 +182,14 @@ public class SchemeController implements Initializable {
         stage.close();
     }
 
-    private void loadFXML(String fxml) {
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource(fxml + ".fxml"));
-            mainContent.setCenter(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    private void switchToRoom(ActionEvent event) {
+        loadFXML("room");
+    }
+
+    @FXML
+    private void switchToSettings(ActionEvent event) {
+        loadFXML("settings");
     }
 
     @FXML
@@ -148,13 +204,27 @@ public class SchemeController implements Initializable {
 
     @FXML
     private void play(ActionEvent event) {
-        //System.out.println("play");
         isPaused = !isPaused;
         if (isPaused)
             play_icon.setGlyphName("PAUSE");
         else
             play_icon.setGlyphName("PLAY");
-        //mediaPlayer.play();
+    }
+
+    @FXML
+    private void volume(ActionEvent event) {
+        isMute =!isMute;
+        if(isMute) {
+            prev_volume = actual_volume;
+            actual_volume = 0;
+            volume_icon.setGlyphName("VOLUME_OFF");
+        }
+        else {
+            actual_volume = prev_volume;
+            volume_icon.setGlyphName("VOLUME_UP");
+        }
+        volumeValue.setText(getActual_volume());
+        volumeSlider.setValue(actual_volume);
     }
 
     @FXML
@@ -168,13 +238,7 @@ public class SchemeController implements Initializable {
     }
 
     @FXML
-    private void volume(ActionEvent event) {
-        System.out.println("volume");
-    }
-
-    @FXML
     private void addToFavourite(ActionEvent event) {
-        System.out.println("heart");
         isFavourite = !isFavourite;
         if(isFavourite){
             heart_icon.setFill(Color.RED);
@@ -183,6 +247,11 @@ public class SchemeController implements Initializable {
         {
             heart_icon.setFill(Color.BLACK);
         }
+    }
+
+    @FXML
+    private void changeOutputDevice(ActionEvent event){
+        System.out.println("devices");
     }
 
     @FXML

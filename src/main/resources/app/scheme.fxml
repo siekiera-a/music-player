@@ -31,6 +31,8 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
@@ -57,14 +59,24 @@
                         <FontAwesomeIcon glyphName="BAR_CHART_O" size="3em" />
                      </graphic>
                   </Button>
-                  <Button fx:id="infoButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="infoButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                         <FontAwesomeIcon glyphName="INFO" size="3em" />
                      </graphic>
                   </Button>
-                  <Button fx:id="exitButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="exitButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <graphic>
                         <FontAwesomeIcon glyphName="SIGN_OUT" size="3em" wrappingWidth="33.42856979370117" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="roomButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="USER" size="3em" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="settingsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="5">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="COG" size="3em" />
                      </graphic>
                   </Button>
                </children>
@@ -107,7 +119,7 @@
                                     <Insets />
                                  </GridPane.margin>
                                  <graphic>
-                                    <FontAwesomeIcon fx:id="heart_icon" glyphName="HEART" size="2em" fill="black"/>
+                                    <FontAwesomeIcon fx:id="heart_icon" fill="black" glyphName="HEART" size="2em" />
                                  </graphic>
                               </Button>
                               <Label fx:id="songTitle" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="507.0" text=" " GridPane.columnIndex="1">
@@ -118,6 +130,11 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </GridPane.margin>
                               </Label>
+                              <Button fx:id="devicesButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="3">
+                                 <graphic>
+                                    <FontAwesomeIcon glyphName="DESKTOP" size="2em" />
+                                 </graphic>
+                              </Button>
                            </children>
                         </GridPane>
                         <GridPane prefHeight="31.0" prefWidth="600.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
@@ -154,47 +171,56 @@
                   </GridPane>
                   <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="130.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
                     </rowConstraints>
                      <children>
-                      <Button fx:id="shuffleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false">
+                      <Button fx:id="shuffleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="1">
                            <graphic>
                               <FontAwesomeIcon glyphName="RANDOM" size="3em" />
                            </graphic>
                         </Button>
-                        <Button fx:id="prevButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="1">
+                        <Button fx:id="prevButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="2">
                            <graphic>
                               <FontAwesomeIcon glyphName="STEP_BACKWARD" size="3em" />
                            </graphic>
                         </Button>
-                        <Button fx:id="playButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="2">
+                        <Button fx:id="playButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" stylesheets="@style.css" GridPane.columnIndex="3">
                            <graphic>
                               <FontAwesomeIcon fx:id="play_icon" glyphName="PLAY" size="3em" textAlignment="CENTER" />
                            </graphic>
                         </Button>
-                        <Button fx:id="nextButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="3">
+                        <Button fx:id="nextButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="4">
                            <graphic>
                               <FontAwesomeIcon glyphName="STEP_FORWARD" size="3em" wrappingWidth="20.571428298950195" />
                            </graphic>
                         </Button>
-                        <Button fx:id="repeatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="4">
+                        <Button fx:id="repeatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="5">
                            <graphic>
                               <FontAwesomeIcon glyphName="REPEAT" size="3em" />
                            </graphic>
                         </Button>
-                        <Button fx:id="volumeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="5">
+                        <Button fx:id="volumeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="6">
                            <graphic>
-                              <FontAwesomeIcon glyphName="VOLUME_UP" size="3em" />
+                              <FontAwesomeIcon fx:id="volume_icon" glyphName="VOLUME_UP" size="3em" />
                            </graphic>
                         </Button>
+                        <Slider fx:id="volumeSlider" prefHeight="14.0" prefWidth="77.0" GridPane.columnIndex="7" />
+                        <Label fx:id="volumeValue" GridPane.columnIndex="8">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
                      </children>
                   </GridPane>
                </children>
