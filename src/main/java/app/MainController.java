@@ -1,5 +1,6 @@
 package app;
 
+import app.ListManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -18,7 +19,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        listManager = new ListManager(mainView,mainSearch);
+        listManager = new ListManager(mainView, mainSearch);
         listManager.setTestList();
     }
 }

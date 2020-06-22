@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 
 public class CustomCell extends ListCell<String> {
     HBox hbox = new HBox();
-    Label label = new Label("(empty)");
+    Label label = new Label("empty");
     Pane pane = new Pane();
     Button button = new Button("♡");
     String lastItem;
@@ -39,7 +39,7 @@ public class CustomCell extends ListCell<String> {
             setGraphic(null);
         } else {
             lastItem = item;
-            label.setText(item!=null ? item : "<null>");
+            label.setText(item != null ? item : "<null>");
             setGraphic(hbox);
         }
     }

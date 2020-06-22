@@ -1,5 +1,15 @@
-.button
-{
+.button {
     -fx-border-width: 0;
+    -fx-background-color: transparent;
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0.0, 0, 1);
+}
+
+.frame, .overlay {
+    -fx-background-color: linear-gradient(#5CB3FF, #2E5A80);
+}
+
+.list-view {
     -fx-background-color: transparent;
 }

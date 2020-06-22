@@ -28,7 +28,7 @@ public class SettingsController implements Initializable {
         return location;
     }
 
-    public void chooseLocation(ActionEvent actionEvent){
+    public void chooseLocation(ActionEvent actionEvent) {
         Stage stage = (Stage) chooseLocation.getScene().getWindow();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(stage);
@@ -40,7 +40,7 @@ public class SettingsController implements Initializable {
         locationPlaylist.setText(location);
     }
 
-    public void startApp(){
+    public void startApp() {
         startAppCB.isSelected();
     }
 

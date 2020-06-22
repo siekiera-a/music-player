@@ -1,5 +1,6 @@
 package app;
 
+import app.CustomCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -12,7 +13,7 @@ public class ListManager {
     public ListView<String> playlistView;
     public TextArea playlistSearch;
 
-    ListManager(ListView<String> playlistView, TextArea playlistSearch){
+    ListManager(ListView<String> playlistView, TextArea playlistSearch) {
         this.playlistView = playlistView;
         this.playlistSearch = playlistSearch;
 
@@ -20,12 +21,12 @@ public class ListManager {
         setSearchListener();
     }
 
-    public void setList(ObservableList<String> newPlaylist){
+    public void setList(ObservableList<String> newPlaylist) {
         playlistData = newPlaylist;
         playlistView.setItems(playlistData);
     }
 
-    protected void setSearchListener(){
+    protected void setSearchListener() {
         playlistSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals("")) {
                 playlistView.setItems(playlistData);
@@ -42,7 +43,8 @@ public class ListManager {
         });
     }
 
-    public void setTestList(){
+    public void setTestList() {
+        playlistData.clear();
         // tworzenie początkowej listy piosenek
         for (int i = 0; i < 100; i++) {
             playlistData.add(String.valueOf(i));
@@ -50,5 +52,22 @@ public class ListManager {
         playlistView.setItems(playlistData);
     }
 
+    public void setTest1List() {
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 3; i < 100; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
+
+    public void setTest2List() {
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 6; i < 100; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
 
 }
