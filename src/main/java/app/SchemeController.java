@@ -57,9 +57,9 @@ public class SchemeController implements Initializable {
     public Button roomButton;
     public Button settingsButton;
 
-    public FontAwesomeIcon heart_icon;
-    public FontAwesomeIcon play_icon;
-    public FontAwesomeIcon volume_icon;
+    //public FontAwesomeIcon heart_icon;
+    //public FontAwesomeIcon play_icon;
+    //public FontAwesomeIcon volume_icon;
 
     public void init() {
         setSongTitle();
@@ -78,10 +78,10 @@ public class SchemeController implements Initializable {
             volumeValue.setText(getActual_volume());
             if (isMute && newValue.intValue() > 0) {
                 isMute = false;
-                volume_icon.setGlyphName("VOLUME_UP");
+                //volume_icon.setGlyphName("VOLUME_UP");
             } else if (!isMute && newValue.intValue() == 0) {
                 isMute = true;
-                volume_icon.setGlyphName("VOLUME_OFF");
+                //volume_icon.setGlyphName("VOLUME_OFF");
             }
         });
     }
@@ -206,9 +206,11 @@ public class SchemeController implements Initializable {
     private void play(ActionEvent event) {
         isPaused = !isPaused;
         if (isPaused)
-            play_icon.setGlyphName("PAUSE");
+            System.out.println("pause");
+            //play_icon.setGlyphName("PAUSE");
         else
-            play_icon.setGlyphName("PLAY");
+        System.out.println("play");
+            //play_icon.setGlyphName("PLAY");
     }
 
     @FXML
@@ -217,10 +219,12 @@ public class SchemeController implements Initializable {
         if (isMute) {
             prev_volume = actual_volume;
             actual_volume = 0;
-            volume_icon.setGlyphName("VOLUME_OFF");
+            System.out.println("mute");
+            //volume_icon.setGlyphName("VOLUME_OFF");
         } else {
             actual_volume = prev_volume;
-            volume_icon.setGlyphName("VOLUME_UP");
+            System.out.println("volume up");
+            //volume_icon.setGlyphName("VOLUME_UP");
         }
         volumeValue.setText(getActual_volume());
         volumeSlider.setValue(actual_volume);
@@ -240,9 +244,11 @@ public class SchemeController implements Initializable {
     private void addToFavourite(ActionEvent event) {
         isFavourite = !isFavourite;
         if (isFavourite) {
-            heart_icon.setFill(Color.RED);
+            System.out.println("red heart");
+            //heart_icon.setFill(Color.RED);
         } else {
-            heart_icon.setFill(Color.BLACK);
+            System.out.println("black heart");
+            //heart_icon.setFill(Color.BLACK);
         }
     }
 

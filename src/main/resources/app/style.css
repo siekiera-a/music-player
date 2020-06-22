@@ -3,11 +3,10 @@
     -fx-background-color: transparent;
     -fx-background-radius: 6, 5;
     -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0.0, 0, 1);
 }
 
 .frame, .overlay {
-    -fx-background-color: linear-gradient(#5CB3FF, #2E5A80);
+    -fx-background-color: radial-gradient(focus-angle 45deg , focus-distance 20% , center 25% 25% , radius 50% , reflect, #808080, #a9a9a9 75% , #696969);
 }
 
 .list-view {
