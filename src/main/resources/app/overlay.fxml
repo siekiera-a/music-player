@@ -3,13 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="overlay" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="126.0" prefWidth="136.0" styleClass="overlay" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.SchemeController">
+<VBox id="overlay" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="130.0" prefWidth="140.0" styleClass="overlay" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.OverlayController">
     <children>
         <GridPane prefHeight="400.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
             <columnConstraints>
@@ -57,25 +59,27 @@
                                 </GridPane>
                                 <GridPane prefHeight="31.0" prefWidth="600.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                     <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="30.0" />
                                         <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="42.66668701171875" />
                                         <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="40.33331298828125" />
                                         <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="45.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="30.0" />
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                     </rowConstraints>
                                     <children>
-                                        <Label fx:id="actual_time" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="61.0" text=" ">
+                                        <Label fx:id="actual_time" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="61.0" text=" " GridPane.columnIndex="1">
                                             <padding>
                                                 <Insets bottom="5.0" />
                                             </padding>
                                         </Label>
-                                        <Label fx:id="end_time" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="71.0" text=" " GridPane.columnIndex="2">
+                                        <Label fx:id="end_time" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="71.0" text=" " GridPane.columnIndex="3">
                                             <padding>
                                                 <Insets bottom="5.0" />
                                             </padding>
                                         </Label>
-                                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="/" GridPane.columnIndex="1" />
+                                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="/" GridPane.columnIndex="2" />
                                     </children>
                                     <GridPane.margin>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
@@ -85,17 +89,40 @@
                         </GridPane>
                         <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                             <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="prevButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" />
-                                <Button fx:id="playButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" stylesheets="@style.css" GridPane.columnIndex="1" />
-                                <Button fx:id="nextButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="2" />
+                                <Button fx:id="prevButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="1">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/previous.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                                <Button fx:id="playButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" stylesheets="@style.css" GridPane.columnIndex="2">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/play.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                                <Button fx:id="nextButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" GridPane.columnIndex="3">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/next.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                             </children>
                         </GridPane>
                     </children>

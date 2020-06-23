@@ -40,7 +40,7 @@ public class StatisticsController implements Initializable {
             index = observableList.indexOf(newValue);
             //System.out.println(index);
             //System.out.println(newValue);
-            if (index == -1){
+            if (index == -1) {
                 return;
             }
             if (index == 0) {

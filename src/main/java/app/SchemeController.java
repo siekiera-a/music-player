@@ -1,6 +1,5 @@
 package app;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +9,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class SchemeController implements Initializable {
 
@@ -57,11 +58,29 @@ public class SchemeController implements Initializable {
     public Button roomButton;
     public Button settingsButton;
 
-    //public FontAwesomeIcon heart_icon;
-    //public FontAwesomeIcon play_icon;
-    //public FontAwesomeIcon volume_icon;
+
+    public void setImage() {
+        playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 30, 30, true, true)));
+        prevButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/previous.png"), 30, 30, true, true)));
+        nextButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/next.png"), 30, 30, true, true)));
+        repeatButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/repeat.png"), 30, 30, true, true)));
+        shuffleButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/shuffle.png"), 30, 30, true, true)));
+        volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/audio.png"), 30, 30, true, true)));
+        homeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/home.png"), 30, 30, true, true)));
+        playlistButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/playlist.png"), 30, 30, true, true)));
+        queueButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/duration.png"), 30, 30, true, true)));
+        statisticsButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/graph.png"), 30, 30, true, true)));
+        roomButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/user.png"), 30, 30, true, true)));
+        settingsButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/settings.png"), 30, 30, true, true)));
+        infoButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/info.png"), 30, 30, true, true)));
+        exitButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/exit.png"), 30, 30, true, true)));
+        heartButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart.png"), 30, 30, true, true)));
+        devicesButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/laptop.png"), 30, 30, true, true)));
+
+    }
 
     public void init() {
+        setImage();
         setSongTitle();
         manageSongSlider();
         manageVolumeSlider();
@@ -78,10 +97,9 @@ public class SchemeController implements Initializable {
             volumeValue.setText(getActual_volume());
             if (isMute && newValue.intValue() > 0) {
                 isMute = false;
-                //volume_icon.setGlyphName("VOLUME_UP");
+
             } else if (!isMute && newValue.intValue() == 0) {
                 isMute = true;
-                //volume_icon.setGlyphName("VOLUME_OFF");
             }
         });
     }
@@ -205,12 +223,13 @@ public class SchemeController implements Initializable {
     @FXML
     private void play(ActionEvent event) {
         isPaused = !isPaused;
-        if (isPaused)
+        if (isPaused) {
             System.out.println("pause");
-            //play_icon.setGlyphName("PAUSE");
-        else
-        System.out.println("play");
-            //play_icon.setGlyphName("PLAY");
+            playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/pause.png"), 30, 30, true, true)));
+        } else {
+            System.out.println("play");
+            playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 30, 30, true, true)));
+        }
     }
 
     @FXML
@@ -220,11 +239,12 @@ public class SchemeController implements Initializable {
             prev_volume = actual_volume;
             actual_volume = 0;
             System.out.println("mute");
-            //volume_icon.setGlyphName("VOLUME_OFF");
+            volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/mute.png"), 30, 30, true, true)));
+
         } else {
             actual_volume = prev_volume;
             System.out.println("volume up");
-            //volume_icon.setGlyphName("VOLUME_UP");
+            volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/audio.png"), 30, 30, true, true)));
         }
         volumeValue.setText(getActual_volume());
         volumeSlider.setValue(actual_volume);
@@ -245,10 +265,10 @@ public class SchemeController implements Initializable {
         isFavourite = !isFavourite;
         if (isFavourite) {
             System.out.println("red heart");
-            //heart_icon.setFill(Color.RED);
+            heartButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart1.png"), 30, 30, true, true)));
         } else {
             System.out.println("black heart");
-            //heart_icon.setFill(Color.BLACK);
+            heartButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart.png"), 30, 30, true, true)));
         }
     }
 

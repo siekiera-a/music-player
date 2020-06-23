@@ -38,14 +38,14 @@
                         <RowConstraints valignment="CENTER" vgrow="NEVER" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="homeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Home" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                        <Button fx:id="playlistButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Playlist" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                        <Button fx:id="queueButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Queue" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                        <Button fx:id="statisticsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Statistics" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                        <Button fx:id="infoButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Info" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                        <Button fx:id="exitButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Exit" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                        <Button fx:id="roomButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="User" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                        <Button fx:id="settingsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Settings" GridPane.columnIndex="5" />
+                        <Button fx:id="homeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="home" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="playlistButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="playlist" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="queueButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="queue" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="statisticsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="statistics" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="infoButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="info" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="exitButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="exit" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="roomButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="user" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <Button fx:id="settingsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="settings" GridPane.columnIndex="5" />
                     </children>
                 </GridPane>
                 <BorderPane fx:id="mainContent" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="304.0" prefWidth="600.0" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
@@ -82,7 +82,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                     </rowConstraints>
                                     <children>
-                                        <Button fx:id="heartButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="32.0" prefWidth="43.0" text="heart" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                        <Button fx:id="heartButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="32.0" prefWidth="43.0" styleClass="heart" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                             <GridPane.margin>
                                                 <Insets />
                                             </GridPane.margin>
@@ -95,7 +95,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <Button fx:id="devicesButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="devices" GridPane.columnIndex="3" />
+                                        <Button fx:id="devicesButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="device" GridPane.columnIndex="3" />
                                     </children>
                                 </GridPane>
                                 <GridPane prefHeight="31.0" prefWidth="600.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
@@ -132,26 +132,26 @@
                         </GridPane>
                         <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                             <columnConstraints>
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="170.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="130.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="190.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="shuffleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" text="Shuffle" GridPane.columnIndex="1" />
-                                <Button fx:id="prevButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" text="Prev" GridPane.columnIndex="2" />
-                                <Button fx:id="playButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" stylesheets="@style.css" text="Play" GridPane.columnIndex="3" />
-                                <Button fx:id="nextButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" text="Next" GridPane.columnIndex="4" />
-                                <Button fx:id="repeatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" text="Repeat" GridPane.columnIndex="5" />
-                                <Button fx:id="volumeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@style.css" text="Volume" GridPane.columnIndex="6" />
+                                <Button fx:id="shuffleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="shuffle" GridPane.columnIndex="1" />
+                                <Button fx:id="prevButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="prev" GridPane.columnIndex="2" />
+                                <Button fx:id="playButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="50.0" prefWidth="60.0" styleClass="play" GridPane.columnIndex="3" />
+                                <Button id="nextButton" fx:id="nextButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="next" GridPane.columnIndex="4" />
+                                <Button id="repeatButton" fx:id="repeatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="repeat" GridPane.columnIndex="5" />
+                                <Button fx:id="volumeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="volume" GridPane.columnIndex="6" />
                                 <Slider fx:id="volumeSlider" prefHeight="14.0" prefWidth="77.0" GridPane.columnIndex="7" />
                                 <Label fx:id="volumeValue" GridPane.columnIndex="8">
                                     <font>

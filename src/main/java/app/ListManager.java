@@ -1,6 +1,5 @@
 package app;
 
-import app.CustomCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
