@@ -16,18 +16,20 @@ import java.util.ResourceBundle;
 public class SettingsController implements Initializable {
 
     //TODO: trzeba ustawić domyślną lokalizację i zapisać zmienioną na dysku
-    String location;
+    String location = "";
 
     @FXML
     public CheckBox startAppCB;
     public Button chooseLocation;
     public TextField locationPlaylist;
 
+    // pobieranie aktualnej lokalizacji playlist
     public String getLocation() {
         location = locationPlaylist.getText();
         return location;
     }
 
+    // metoda zmieniająca lokalizacje playlist przy naciśnięciu przycisku
     public void chooseLocation(ActionEvent actionEvent) {
         Stage stage = (Stage) chooseLocation.getScene().getWindow();
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -35,15 +37,18 @@ public class SettingsController implements Initializable {
         setLocation(file.toString());
     }
 
+    // metoda ustawiająca lokalizacje playlist
     public void setLocation(String location) {
         this.location = location;
         locationPlaylist.setText(location);
     }
 
+    //metoda ustawiająca, że aplikacja ma zostać uruchomiona przy starcie systemu
     public void startApp() {
         startAppCB.isSelected();
     }
 
+    // metoda inicjalizacji
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startApp();

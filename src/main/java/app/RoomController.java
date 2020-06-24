@@ -13,7 +13,10 @@ import java.util.ResourceBundle;
 
 public class RoomController implements Initializable {
 
+    // zmienna zliczająca ilość osob w streamie
     int peopleCount = 0;
+
+    // zmienna odpowiedzialna za id komputera
     String id;
 
     @FXML
@@ -28,27 +31,34 @@ public class RoomController implements Initializable {
 
     public TextField idTextField;
 
+
+    // pobieranie id komputera
     public String getId() {
         return id = idTextField.getText();
     }
 
+    //ustawianie id komputera
     public void setId(String id) {
         this.id = id;
     }
 
+    // wyswietlenie liczby osob na streamie
     public void setPeopleLabel(Label peopleLabel) {
         this.peopleLabel = peopleLabel;
         peopleLabel.setText(getPeopleCount());
     }
 
+    // pobranie liczby osob na streamie
     public String getPeopleCount() {
         return String.valueOf(peopleCount);
     }
 
+    // ustawienie liczby osob na streamie
     public void setPeopleCount(int peopleCount) {
         this.peopleCount = peopleCount;
     }
 
+    // metoda inicjalizacji
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         joinButton.setOnAction(this::joinToStream);
@@ -57,6 +67,7 @@ public class RoomController implements Initializable {
         setPeopleLabel(peopleLabel);
     }
 
+    // metoda odpowiedzialna za przycisk stream
     @FXML
     private void stream(ActionEvent actionEvent) {
         streamButton.setDisable(true);
@@ -65,6 +76,7 @@ public class RoomController implements Initializable {
         disconnectButton.setDisable(false);
     }
 
+    // metoda odpowiedzialna za przycisk dołącz
     @FXML
     private void joinToStream(ActionEvent actionEvent) {
         getId();
@@ -75,6 +87,7 @@ public class RoomController implements Initializable {
         disconnectButton.setDisable(false);
     }
 
+    // metoda odpowiedzialna za przycisk rozłącz
     @FXML
     private void disconnect(ActionEvent actionEvent) {
         streamButton.setDisable(false);

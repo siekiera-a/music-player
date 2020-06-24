@@ -15,7 +15,9 @@ import java.util.ResourceBundle;
 
 public class StatisticsController implements Initializable {
 
+    // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
     ListManager listManager;
+    // zmienna odpowiedzialna za index w ComboBox
     int index;
 
     @FXML
@@ -23,17 +25,25 @@ public class StatisticsController implements Initializable {
     public TextArea statisticsSearch;
     public ComboBox<String> chooseStatistics;
 
+    // metoda inicjalizacji
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<String> list = new ArrayList<String>();
+        //nowe statystyki
         list.add(0, "Najczęściej odtwarzane");
         list.add(1, "Najrzadziej odtwarzane");
         list.add(2, "Ostatnio odtwarzane");
+
         ObservableList<String> observableList = FXCollections.observableList(list);
         chooseStatistics.getItems().clear();
         chooseStatistics.setItems(observableList);
+
         listManager = new ListManager(statisticsView, statisticsSearch);
+
+        // ustawienie początkowej statystyki
         chooseStatistics.setValue(chooseStatistics.getItems().get(0));
+
+        // wyświetlenie konkretnej listy na ekranie dla początkowej statystyki
         listManager.setTestList();
 
         chooseStatistics.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
@@ -44,10 +54,13 @@ public class StatisticsController implements Initializable {
                 return;
             }
             if (index == 0) {
+                // wyświetlenie konkretnej listy na ekranie dla pierwszej statystyki
                 listManager.setTestList();
             } else if (index == 1) {
+                // wyświetlenie konkretnej listy na ekranie dla drugiej statystyki
                 listManager.setTest1List();
             } else if (index == 2) {
+                // wyświetlenie konkretnej listy na ekranie dla trzeciej statystyki
                 listManager.setTest2List();
             }
         });

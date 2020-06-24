@@ -21,15 +21,24 @@ import java.util.ResourceBundle;
 
 public class SchemeController implements Initializable {
 
+    //zmienna odpowiedzialna za tytuł piosenki
     private String title = "Tytuł piosenki";
+    //zmienna sprawdzająca czy piosenka jest zapausowana
     boolean isPaused = false;
+    //zmienna sprawdzająca czy dźwięk jest wyciszony
     boolean isMute = false;
+    //zmienna sprawdzająca czy piosenka została dodana do ulubionych
     boolean isFavourite = false;
+    // zmienna odpowiedzialna za początkowa glosnosc piosenki
     int actual_volume = 100;
+    //zmienna przechowująca aktualna glosnosc - używana przy nacisnieciu przycisku glosnosci
     int prev_volume;
+    //zmienna przechowująca aktualny czas piosenki
     int actualTime = 74; //w sekundach
+    //zmienna przechowująca czas całkowity piosenki
     int endTime = 230; //w sekundach
 
+    // elementy widoczne w programie
     @FXML
     public Slider volumeSlider;
     public Slider songSlider;
@@ -58,7 +67,7 @@ public class SchemeController implements Initializable {
     public Button roomButton;
     public Button settingsButton;
 
-
+    // metoda wstawiania ikonek do przycisków
     public void setImage() {
         playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 30, 30, true, true)));
         prevButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/previous.png"), 30, 30, true, true)));
@@ -79,6 +88,7 @@ public class SchemeController implements Initializable {
 
     }
 
+    // pomocnicza metoda do initialize
     public void init() {
         setImage();
         setSongTitle();
@@ -86,6 +96,7 @@ public class SchemeController implements Initializable {
         manageVolumeSlider();
     }
 
+    // metoda obsługująca pasek głościości
     public void manageVolumeSlider() {
         volumeSlider.setValue(actual_volume);
         volumeSlider.setMin(0);
@@ -104,6 +115,7 @@ public class SchemeController implements Initializable {
         });
     }
 
+    // metoda obsługująca pasek trwania piosenki
     public void manageSongSlider() {
         songSlider.setValue(actualTime);
         songSlider.setMax(endTime);
@@ -117,30 +129,37 @@ public class SchemeController implements Initializable {
         });
     }
 
+    //pobieranie aktualnej głośności
     public String getActual_volume() {
         return String.valueOf(actual_volume);
     }
 
+    //ustawianie aktualnej głośności
     public void setActual_volume(int actual_volume) {
         this.actual_volume = actual_volume;
     }
 
+    //pobieranie aktualnego czasu piosenki
     public String getActualTime() {
         return actualTime / 60 + ":" + (actualTime % 60);
     }
 
+    //ustawienie aktualnego czasu piosenki
     public void setActualTime(int actualTime) {
         this.actualTime = actualTime;
     }
 
+    //pobranie czasu całkowitego piosenki
     public String getEndTime() {
         return endTime / 60 + ":" + (endTime % 60);
     }
 
+    //ustawienie czasu całkowitego piosenki
     public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 
+    // metoda wczytujący obraz środka aplikacji
     private void loadFXML(String fxml) {
         Parent root = null;
         try {
@@ -151,6 +170,7 @@ public class SchemeController implements Initializable {
         }
     }
 
+    // metoda inicjalizacji
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         homeButton.setOnAction(this::switchToMain);
@@ -174,6 +194,7 @@ public class SchemeController implements Initializable {
         init();
     }
 
+    // metody służace do przełączania się między kartami
     @FXML
     private void switchToMain(ActionEvent event) {
         loadFXML("main");
@@ -210,16 +231,19 @@ public class SchemeController implements Initializable {
         loadFXML("settings");
     }
 
+    // metoda odpowiedzialna za przycisk shuffle
     @FXML
     private void shuffle(ActionEvent event) {
         System.out.println("shuffle");
     }
 
+    // metoda odpowiedzialna za przycisk previous
     @FXML
     private void prev(ActionEvent event) {
         System.out.println("prev");
     }
 
+    // metoda odpowiedzialna za przycisk play/pause
     @FXML
     private void play(ActionEvent event) {
         isPaused = !isPaused;
@@ -232,6 +256,7 @@ public class SchemeController implements Initializable {
         }
     }
 
+    // metoda odpowiedzialna za przycisk volume/mute
     @FXML
     private void volume(ActionEvent event) {
         isMute = !isMute;
@@ -250,16 +275,19 @@ public class SchemeController implements Initializable {
         volumeSlider.setValue(actual_volume);
     }
 
+    // metoda odpowiedzialna za przycisk next
     @FXML
     private void next(ActionEvent event) {
         System.out.println("next");
     }
 
+    // metoda odpowiedzialna za przycisk repeat
     @FXML
     private void repeat(ActionEvent event) {
         System.out.println("repeat");
     }
 
+    // metoda odpowiedzialna za przycisk heart, czyli dodawanie do  ulubionych
     @FXML
     private void addToFavourite(ActionEvent event) {
         isFavourite = !isFavourite;
@@ -272,16 +300,25 @@ public class SchemeController implements Initializable {
         }
     }
 
+    // metoda odpowiedzialna za przycisk device - czyli urządzenia wyjściowe
     @FXML
     private void changeOutputDevice(ActionEvent event) {
         System.out.println("devices");
     }
 
+    // metoda służąca ustawieniu tytułu piosenki
     @FXML
     private void setSongTitle() {
         songTitle.setText(title);
     }
 
+    // funkcja pobierająca tytuł piosenki
+    @FXML
+    public Label getSongTitle() {
+        return songTitle;
+    }
+
+    // metoda tworząca małe okienko z informacjami o programie
     @FXML
     private void showInfo(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

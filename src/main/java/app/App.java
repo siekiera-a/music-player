@@ -13,11 +13,15 @@ public class App extends Application {
 
     private static Scene scene;
     private static Stage st;
+
     @Override
     public void start(Stage stage) throws Exception {
+        // ustawienie okna głównego aplikacji
         scene = new Scene(loadFXML("scheme"), 640, 480);
         stage.setTitle("Odtwarzacz muzyki");
         stage.setScene(scene);
+
+        //ustawienie overlaya po minimalizacji okna głownego
         st = new Stage();
         Scene scene2 = new Scene(loadFXML("overlay"), 160, 130);
         st.setAlwaysOnTop(true);
@@ -36,14 +40,17 @@ public class App extends Application {
         });
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
+//    static void setRoot(String fxml) throws IOException {
+//        scene.setRoot(loadFXML(fxml));
+//    }
+
+    // metoda ładująca odpowiedni wygląd aplikacji
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource( fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
+    // uruchomienie aplikacji
     public static void main(String[] args) {
         launch(args);
     }
