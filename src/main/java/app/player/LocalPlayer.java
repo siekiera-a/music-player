@@ -1,0 +1,180 @@
+package app.player;
+
+import app.playlist.Playlist;
+import app.playlist.Queue;
+import app.playlist.Song;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
+import java.io.File;
+
+public class LocalPlayer {
+
+    private MediaPlayer player;
+    private final Queue queue;
+
+    private float volume;
+    private boolean loop;
+    private boolean isPlayed;
+
+    public LocalPlayer() {
+        this.queue = new Queue();
+        volume = 1.0f;
+    }
+
+    /**
+     * Stop current playing song and change to the new one
+     *
+     * @param song new song
+     */
+    private void changeSong(Song song) {
+        stop();
+        try {
+            File file = new File(song.path());
+            Media media = new Media(file.toURI().toString());
+            player = new MediaPlayer(media);
+            setPlayerProperties();
+        } catch (Exception e) {
+            player = null;
+        }
+    }
+
+    /**
+     * Apply settings for the changed song
+     */
+    private void setPlayerProperties() {
+        player.setVolume(volume);
+
+        int cycleCount = loop ? Integer.MAX_VALUE : 1;
+        player.setCycleCount(cycleCount);
+
+        // check this
+        player.setAutoPlay(isPlayed);
+    }
+
+    /**
+     * play current song
+     */
+    public void play() {
+        if (player != null) {
+            isPlayed = true;
+            player.play();
+        }
+    }
+
+    /**
+     * set song progress
+     *
+     * @param progress value in range [0.0, 1.0]
+     * @throws IllegalArgumentException if progress is out of the range
+     */
+    public void seek(float progress) {
+        if (progress < 0.0f || progress > 1.0f) {
+            throw new IllegalArgumentException("Progress should be between 0.0-1.0 inclusive!");
+        }
+
+        if (player == null) {
+            return;
+        }
+
+        Duration duration = player.getCycleDuration();
+        player.seek(duration.multiply(progress));
+    }
+
+    /**
+     * shuffle queue
+     */
+    public void shuffle() {
+        queue.shuffle();
+    }
+
+    /**
+     * set player volume
+     *
+     * @param newVolume value in range [0.0, 1.0]
+     * @throws IllegalArgumentException if value is out of the range
+     */
+    public void changeVolume(float newVolume) {
+        if (newVolume < 0.0f || newVolume > 1.0f) {
+            throw new IllegalArgumentException("Volume should be between 0.0-1.0 inclusive!");
+        }
+
+        volume = newVolume;
+        if (player != null) {
+            player.setVolume(volume);
+        }
+    }
+
+    /**
+     * Get player volume
+     *
+     * @return current volume
+     */
+    public float getVolume() {
+        return volume;
+    }
+
+    /**
+     * toggle loop
+     *
+     * @return new loop value
+     */
+    public boolean toggleLoop() {
+        loop = !loop;
+
+        if (player != null) {
+            int cycleCount = loop ? Integer.MAX_VALUE : 1;
+            player.setCycleCount(cycleCount);
+        }
+
+        return loop;
+    }
+
+    public void next() {
+        // @TODO
+    }
+
+    public void previous() {
+        // @TODO
+    }
+
+    /**
+     * pause current song
+     */
+    public void pause() {
+        if (player != null) {
+            isPlayed = false;
+            player.pause();
+        }
+    }
+
+    /**
+     * stop current song and release associeted resources
+     */
+    private void stop() {
+        if (player != null) {
+            player.stop();
+            player.dispose();
+        }
+    }
+
+    public void changePlaylist(Playlist playlist) {
+        queue.clear();
+        // @TODO
+    }
+
+    /**
+     * add song to queue
+     *
+     * @param song
+     */
+    public void queue(Song song) {
+        queue.add(song);
+    }
+
+    public void playNext(Song song) {
+        // @TODO
+    }
+
+}

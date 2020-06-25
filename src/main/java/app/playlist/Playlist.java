@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-
 public class Playlist {
     private String name;
     protected Queue<Song> playlist = new LinkedList<>();
@@ -136,6 +135,10 @@ public class Playlist {
             e.printStackTrace();
         }
 
+    }
+
+    public void clear() {
+        playlist.clear();
     }
 
 }
