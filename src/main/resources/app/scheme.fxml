@@ -75,8 +75,8 @@
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="ALWAYS" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
                                         <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="432.6666564941406" />
-                                        <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-                                        <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+                                        <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="60.0" minWidth="50.0" prefWidth="60.0" />
+                                        <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="60.0" minWidth="50.0" prefWidth="60.0" />
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" />
@@ -133,12 +133,12 @@
                         <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                             <columnConstraints>
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="190.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
                             </columnConstraints>
@@ -152,7 +152,10 @@
                                 <Button id="nextButton" fx:id="nextButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="next" GridPane.columnIndex="4" />
                                 <Button id="repeatButton" fx:id="repeatButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="repeat" GridPane.columnIndex="5" />
                                 <Button fx:id="volumeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="volume" GridPane.columnIndex="6" />
-                                <Slider fx:id="volumeSlider" prefHeight="14.0" prefWidth="77.0" GridPane.columnIndex="7" />
+                                <Slider fx:id="volumeSlider" prefHeight="14.0" prefWidth="77.0" GridPane.columnIndex="7">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Slider>
                                 <Label fx:id="volumeValue" GridPane.columnIndex="8">
                                     <font>
                                         <Font size="16.0" />

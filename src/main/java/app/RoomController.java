@@ -19,18 +19,33 @@ public class RoomController implements Initializable {
     // zmienna odpowiedzialna za id komputera
     String id;
 
+    // zmienna odpowiedzialna za hasło komputera
+    String password;
+
     @FXML
     public Button joinButton;
+    public Button passwordButton;
     public Button streamButton;
     public Button disconnectButton;
 
     public HBox peopleHBox;
+    public HBox passwordHBox;
     public HBox joinHBox;
 
     public Label peopleLabel;
 
     public TextField idTextField;
+    public TextField passwordField;
 
+    // pobieranie id komputera
+    public String getPassword() {
+        return password = passwordField.getText();
+    }
+
+    //ustawianie id komputera
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     // pobieranie id komputera
     public String getId() {
@@ -63,6 +78,7 @@ public class RoomController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         joinButton.setOnAction(this::joinToStream);
         streamButton.setOnAction(this::stream);
+        passwordButton.setOnAction(this::passwordToStream);
         disconnectButton.setOnAction(this::disconnect);
         setPeopleLabel(peopleLabel);
     }
@@ -76,7 +92,7 @@ public class RoomController implements Initializable {
         disconnectButton.setDisable(false);
     }
 
-    // metoda odpowiedzialna za przycisk dołącz
+    // metoda odpowiedzialna za przycisk wykryj
     @FXML
     private void joinToStream(ActionEvent actionEvent) {
         getId();
@@ -84,6 +100,16 @@ public class RoomController implements Initializable {
         streamButton.setDisable(true);
         joinHBox.setDisable(true);
         peopleHBox.setDisable(true);
+        passwordHBox.setDisable(false);
+        disconnectButton.setDisable(true);
+    }
+
+    @FXML
+    private void passwordToStream(ActionEvent actionEvent){
+        streamButton.setDisable(true);
+        joinHBox.setDisable(true);
+        peopleHBox.setDisable(true);
+        passwordHBox.setDisable(true);
         disconnectButton.setDisable(false);
     }
 

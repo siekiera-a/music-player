@@ -108,9 +108,10 @@ public class SchemeController implements Initializable {
             volumeValue.setText(getActual_volume());
             if (isMute && newValue.intValue() > 0) {
                 isMute = false;
-
+                volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/audio.png"), 30, 30, true, true)));
             } else if (!isMute && newValue.intValue() == 0) {
                 isMute = true;
+                volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/mute.png"), 30, 30, true, true)));
             }
         });
     }

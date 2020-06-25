@@ -2,7 +2,6 @@ package app;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -40,6 +39,7 @@ public class CustomCell extends ListCell<String> {
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
+        button.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart.png"), 20, 20, true, true)));
         setText(null);  // No text in label of super class
         if (empty) {
             lastItem = null;

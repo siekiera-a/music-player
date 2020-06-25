@@ -17,11 +17,14 @@ public class SettingsController implements Initializable {
 
     //TODO: trzeba ustawić domyślną lokalizację i zapisać zmienioną na dysku
     String location = "";
+    String password = "";
 
     @FXML
     public CheckBox startAppCB;
     public Button chooseLocation;
+    public Button passwordButton;
     public TextField locationPlaylist;
+    public TextField passwordField;
 
     // pobieranie aktualnej lokalizacji playlist
     public String getLocation() {
@@ -43,6 +46,7 @@ public class SettingsController implements Initializable {
         locationPlaylist.setText(location);
     }
 
+
     //metoda ustawiająca, że aplikacja ma zostać uruchomiona przy starcie systemu
     public void startApp() {
         startAppCB.isSelected();
@@ -53,5 +57,11 @@ public class SettingsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         startApp();
         chooseLocation.setOnAction(this::chooseLocation);
+        passwordButton.setOnAction(this::setPasswordButton);
+    }
+
+
+    private void setPasswordButton(ActionEvent actionEvent) {
+        password = passwordField.getText();
     }
 }

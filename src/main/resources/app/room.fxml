@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -20,7 +21,8 @@
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="32.0" valignment="TOP" vgrow="NEVER" />
                 <RowConstraints maxHeight="60.33331298828125" minHeight="0.0" prefHeight="33.0" valignment="TOP" vgrow="NEVER" />
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="33.0" valignment="TOP" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="33.0" valignment="TOP" vgrow="ALWAYS" />
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="33.0" valignment="TOP" vgrow="ALWAYS" />
             </rowConstraints>
@@ -41,7 +43,7 @@
                             </font>
                         </Label>
                         <TextField fx:id="idTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="ip" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="joinButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Dołącz">
+                        <Button fx:id="joinButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wykryj">
                             <font>
                                 <Font size="13.0" />
                             </font>
@@ -59,12 +61,12 @@
                         <Font size="18.0" />
                     </font>
                 </Button>
-                <Button fx:id="disconnectButton" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="ROZŁĄCZ" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                <Button fx:id="disconnectButton" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="ROZŁĄCZ" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Button>
-                <HBox fx:id="peopleHBox" alignment="CENTER" disable="true" layoutX="10.0" layoutY="95.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+                <HBox fx:id="peopleHBox" alignment="CENTER" disable="true" layoutX="10.0" layoutY="95.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
                     <children>
                         <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ile osób jest podłączonych" HBox.hgrow="ALWAYS">
                             <font>
@@ -87,6 +89,24 @@
                         <Insets right="30.0" />
                     </GridPane.margin>
                 </HBox>
+            <HBox fx:id="passwordHBox" disable="true" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+               <children>
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Podaj hasło do komputera" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="hasło" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="passwordButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Dołącz">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets right="30.0" />
+               </GridPane.margin>
+            </HBox>
             </children>
         </GridPane>
     </children>

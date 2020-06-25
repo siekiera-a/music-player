@@ -59,7 +59,7 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="locationPlaylist" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="locationPlaylist" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="190.0" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
@@ -72,7 +72,7 @@
                 </HBox>
                 <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" HBox.hgrow="ALWAYS">
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Hasło do pokoju" HBox.hgrow="ALWAYS">
                             <padding>
                                 <Insets left="30.0" />
                             </padding>
@@ -80,11 +80,16 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="128.0" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
                         </TextField>
+                  <Button fx:id="passwordButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Zatwierdź">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Button>
                     </children>
                 </HBox>
                 <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
