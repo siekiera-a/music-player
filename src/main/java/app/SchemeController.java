@@ -1,5 +1,8 @@
 package app;
 
+import app.player.LocalPlayer;
+import app.playlist.Playlist;
+import app.playlist.Song;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,20 +16,24 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SchemeController implements Initializable {
 
-    private String title = "Tytuł piosenki";
-    boolean isPaused = false;
-    boolean isMute = false;
-    boolean isFavourite = false;
+    private String title = "";
+    boolean isPlayed;
+    boolean isMute;
+    boolean isFavourite;
     int actual_volume = 100;
     int prev_volume;
     int actualTime = 74; //w sekundach
     int endTime = 230; //w sekundach
+
+    private final LocalPlayer player = new LocalPlayer();
 
     @FXML
     public Slider volumeSlider;
@@ -60,7 +67,10 @@ public class SchemeController implements Initializable {
     public FontAwesomeIcon play_icon;
     public FontAwesomeIcon volume_icon;
 
-    public void init(){
+    public void init() {
+        player.changePlaylist(new Playlist("xd", List.of(new Song("Bet My Heart.mp3"))));
+        actual_volume = (int) (player.getVolume() * 100);
+
         setSongTitle();
 
         manageSongSlider();
@@ -105,6 +115,7 @@ public class SchemeController implements Initializable {
 
     public void setActual_volume(int actual_volume) {
         this.actual_volume = actual_volume;
+        player.changeVolume(1.0f * actual_volume / 100);
     }
 
     public String getActualTime() {
@@ -204,11 +215,14 @@ public class SchemeController implements Initializable {
 
     @FXML
     private void play(ActionEvent event) {
-        isPaused = !isPaused;
-        if (isPaused)
+        isPlayed = !isPlayed;
+        if (isPlayed) {
+            player.play();
             play_icon.setGlyphName("PAUSE");
-        else
+        } else {
             play_icon.setGlyphName("PLAY");
+            player.pause();
+        }
     }
 
     @FXML

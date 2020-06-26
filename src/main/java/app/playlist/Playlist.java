@@ -141,4 +141,8 @@ public class Playlist {
         playlist.clear();
     }
 
+    public List<Song> getSongs() {
+        return List.copyOf(playlist);
+    }
+
 }

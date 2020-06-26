@@ -160,8 +160,11 @@ public class LocalPlayer {
     }
 
     public void changePlaylist(Playlist playlist) {
-        queue.clear();
-        // @TODO
+        if (playlist != null) {
+            queue.clear();
+            queue.add(playlist.getSongs());
+            changeSong(queue.getCurrentSong());
+        }
     }
 
     /**
