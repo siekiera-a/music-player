@@ -22,7 +22,7 @@ public class Queue extends Playlist {
     }
 
     /**
-     * @return song which is played
+     * @return song which is played or null if queue is empty
      */
     public Song getCurrentSong() {
         return playlist.peek();
@@ -35,7 +35,7 @@ public class Queue extends Playlist {
      * @return song which will be played next
      */
     public Song next() {
-        if (playlist.size() > 1) {
+        if (playlist.size() > 0) {
             history.offerLast(playlist.poll());
         }
         return getCurrentSong();
