@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 public class PlaylistController implements Initializable {
 
     // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
-    ListManager listManager;
+    ListManagerSong listManager;
 
     @FXML
     public ListView<String> playlistView;
@@ -20,8 +20,10 @@ public class PlaylistController implements Initializable {
     // metoda inicjalizacji
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        listManager = new ListManager(playlistView, playlistSearch);
+        listManager = new ListManagerSong(playlistView, playlistSearch);
         // wyświetlenie konkretnej listy na ekranie
-        listManager.setMostPlayedList();
+        listManager.setPlaylistList();
     }
+
+
 }

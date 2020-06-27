@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 public class QueueController implements Initializable {
 
     // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
-    ListManager listManager;
+    ListManagerSong listManager;
 
     @FXML
     public ListView<String> queueView;
@@ -20,8 +20,8 @@ public class QueueController implements Initializable {
     // metoda inicjalizacji
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        listManager = new ListManager(queueView, queueSearch);
+        listManager = new ListManagerSong(queueView, queueSearch);
         // wyświetlenie konkretnej listy na ekranie
-        listManager.setMostPlayedList();
+        listManager.setQueueList();
     }
 }
