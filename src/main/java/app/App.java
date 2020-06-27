@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -23,13 +24,14 @@ public class App extends Application {
 
         //ustawienie overlaya po minimalizacji okna głownego
         st = new Stage();
-        Scene scene2 = new Scene(loadFXML("overlay"), 160, 130);
+        Scene scene2 = new Scene(loadFXML("overlay"), 200, 100);
         st.setAlwaysOnTop(true);
-        st.setX(120);
-        st.setY(20);
+        st.setX(15);
+        st.setY(15);
         st.setScene(scene2);
         st.setResizable(false);
-        st.initStyle(StageStyle.UNDECORATED);
+        scene2.setFill(Color.TRANSPARENT);
+        st.initStyle(StageStyle.TRANSPARENT);
         stage.show();
         stage.iconifiedProperty().addListener((observable, oldValue, newValue) -> {
             if (st.isShowing()) {
@@ -46,7 +48,7 @@ public class App extends Application {
 
     // metoda ładująca odpowiedni wygląd aplikacji
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource( fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 

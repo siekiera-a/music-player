@@ -88,6 +88,13 @@ public class LocalPlayer {
     }
 
     /**
+     * rewind current song
+     */
+    public void rewind() {
+        seek(0.0f);
+    }
+
+    /**
      * shuffle queue
      */
     public void shuffle() {
@@ -189,8 +196,7 @@ public class LocalPlayer {
         if (onPlaying != null) {
             this.onPlaying = onPlaying;
             player.currentTimeProperty().addListener(
-                ((observable, oldValue, newValue) -> onPlaying.accept(newValue)
-                ));
+                ((observable, oldValue, newValue) -> onPlaying.accept(newValue)));
         }
     }
 

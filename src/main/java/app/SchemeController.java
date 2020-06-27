@@ -81,6 +81,7 @@ public class SchemeController implements Initializable {
 
     private void updateTime(Duration duration) {
         actualTime = (int) duration.toSeconds();
+        manageTimeLabel();
     }
 
     public void init() {
@@ -104,6 +105,7 @@ public class SchemeController implements Initializable {
 
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             actual_volume = newValue.intValue();
+            player.changeVolume(1.0f * actual_volume / 100);
             volumeValue.setText(String.valueOf(actual_volume));
             if (isMute && newValue.intValue() > 0) {
                 isMute = false;

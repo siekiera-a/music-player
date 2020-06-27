@@ -3,7 +3,7 @@ package app.player;
 
 import java.time.Duration;
 
-public class Stoper {
+public class Stopwatch {
 
     private long lastTick;
     private long calculatedTime;
