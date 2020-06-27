@@ -22,6 +22,6 @@ public class PlaylistController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         listManager = new ListManager(playlistView, playlistSearch);
         // wyświetlenie konkretnej listy na ekranie
-        listManager.setTestList();
+        listManager.setMostPlayedList();
     }
 }

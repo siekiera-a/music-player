@@ -44,7 +44,7 @@ public class StatisticsController implements Initializable {
         chooseStatistics.setValue(chooseStatistics.getItems().get(0));
 
         // wyświetlenie konkretnej listy na ekranie dla początkowej statystyki
-        listManager.setTestList();
+        listManager.setMostPlayedList();
 
         chooseStatistics.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             index = observableList.indexOf(newValue);
@@ -55,13 +55,13 @@ public class StatisticsController implements Initializable {
             }
             if (index == 0) {
                 // wyświetlenie konkretnej listy na ekranie dla pierwszej statystyki
-                listManager.setTestList();
+                listManager.setMostPlayedList();
             } else if (index == 1) {
                 // wyświetlenie konkretnej listy na ekranie dla drugiej statystyki
-                listManager.setTest1List();
+                listManager.setLeastPlayedList();
             } else if (index == 2) {
                 // wyświetlenie konkretnej listy na ekranie dla trzeciej statystyki
-                listManager.setTest2List();
+                listManager.setRecentlyPlayedList();
             }
         });
     }

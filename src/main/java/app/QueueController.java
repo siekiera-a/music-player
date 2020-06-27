@@ -22,6 +22,6 @@ public class QueueController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         listManager = new ListManager(queueView, queueSearch);
         // wyświetlenie konkretnej listy na ekranie
-        listManager.setTestList();
+        listManager.setMostPlayedList();
     }
 }

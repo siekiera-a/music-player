@@ -54,7 +54,6 @@ public class SchemeController implements Initializable {
     public Button playlistButton;
     public Button queueButton;
     public Button statisticsButton;
-    public Button infoButton;
     public Button exitButton;
     public Button shuffleButton;
     public Button prevButton;
@@ -63,7 +62,6 @@ public class SchemeController implements Initializable {
     public Button repeatButton;
     public Button volumeButton;
     public Button heartButton;
-    public Button devicesButton;
     public Button roomButton;
     public Button settingsButton;
 
@@ -81,10 +79,8 @@ public class SchemeController implements Initializable {
         statisticsButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/graph.png"), 30, 30, true, true)));
         roomButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/user.png"), 30, 30, true, true)));
         settingsButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/settings.png"), 30, 30, true, true)));
-        infoButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/info.png"), 30, 30, true, true)));
         exitButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/exit.png"), 30, 30, true, true)));
         heartButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart.png"), 30, 30, true, true)));
-        devicesButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/laptop.png"), 30, 30, true, true)));
 
     }
 
@@ -92,6 +88,7 @@ public class SchemeController implements Initializable {
     public void init() {
         setImage();
         setSongTitle();
+        manageSongLabel();
         manageSongSlider();
         manageVolumeSlider();
     }
@@ -121,13 +118,25 @@ public class SchemeController implements Initializable {
         songSlider.setValue(actualTime);
         songSlider.setMax(endTime);
         songSlider.setMin(0);
-        actual_time.setText(getActualTime());
-        end_time.setText(getEndTime());
+        actual_time.setText(convertTime(actualTime));
+        end_time.setText(convertTime(endTime));
 
         songSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             setActualTime(newValue.intValue());
-            actual_time.setText(getActualTime());
+            actual_time.setText(convertTime(actualTime));
         });
+    }
+
+    public void manageSongLabel(){
+        actual_time.setText(convertTime(actualTime));
+        songSlider.setValue(actual_volume);
+    }
+
+    public String convertTime(int time){
+        int minutes = (time % 60);
+        String formatted = String.format("%02d", minutes);
+        if (minutes < 10) return time / 60 + ":" + formatted;
+        else return time / 60 + ":" + minutes;
     }
 
     //pobieranie aktualnej głośności
@@ -140,19 +149,9 @@ public class SchemeController implements Initializable {
         this.actual_volume = actual_volume;
     }
 
-    //pobieranie aktualnego czasu piosenki
-    public String getActualTime() {
-        return actualTime / 60 + ":" + (actualTime % 60);
-    }
-
     //ustawienie aktualnego czasu piosenki
     public void setActualTime(int actualTime) {
         this.actualTime = actualTime;
-    }
-
-    //pobranie czasu całkowitego piosenki
-    public String getEndTime() {
-        return endTime / 60 + ":" + (endTime % 60);
     }
 
     //ustawienie czasu całkowitego piosenki
@@ -178,7 +177,6 @@ public class SchemeController implements Initializable {
         playlistButton.setOnAction(this::switchToPlaylist);
         queueButton.setOnAction(this::switchToQueue);
         statisticsButton.setOnAction(this::switchToStatistics);
-        infoButton.setOnAction(this::showInfo);
         exitButton.setOnAction(this::exit);
         shuffleButton.setOnAction(this::shuffle);
         prevButton.setOnAction(this::prev);
@@ -186,7 +184,6 @@ public class SchemeController implements Initializable {
         nextButton.setOnAction(this::next);
         repeatButton.setOnAction(this::repeat);
         heartButton.setOnAction(this::addToFavourite);
-        devicesButton.setOnAction(this::changeOutputDevice);
         volumeButton.setOnAction(this::volume);
         roomButton.setOnAction(this::switchToRoom);
         settingsButton.setOnAction(this::switchToSettings);
@@ -317,15 +314,5 @@ public class SchemeController implements Initializable {
     @FXML
     public Label getSongTitle() {
         return songTitle;
-    }
-
-    // metoda tworząca małe okienko z informacjami o programie
-    @FXML
-    private void showInfo(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Info");
-        alert.setHeaderText(null);
-        alert.setContentText("jakies informacje o programie");
-        alert.showAndWait();
     }
 }

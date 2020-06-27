@@ -42,7 +42,8 @@ public class ListManager {
         });
     }
 
-    public void setTestList() {
+    //tworzenie elementów listy statystyk najczęściej odtwarzanych
+    public void setMostPlayedList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
         for (int i = 0; i < 100; i++) {
@@ -51,7 +52,8 @@ public class ListManager {
         playlistView.setItems(playlistData);
     }
 
-    public void setTest1List() {
+    //tworzenie elementów listy statystyk najrzadziej odtwarzanych
+    public void setLeastPlayedList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
         for (int i = 3; i < 100; i++) {
@@ -60,7 +62,8 @@ public class ListManager {
         playlistView.setItems(playlistData);
     }
 
-    public void setTest2List() {
+    //tworzenie elementów listy statystyk ostatnio odtwarzanych
+    public void setRecentlyPlayedList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
         for (int i = 6; i < 100; i++) {
