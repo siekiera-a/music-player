@@ -8,6 +8,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.function.Consumer;
 
 public class LocalPlayer {
 
@@ -17,6 +18,8 @@ public class LocalPlayer {
     private float volume;
     private boolean loop;
     private boolean isPlayed;
+
+    private Consumer<Duration> onPlaying;
 
     public LocalPlayer() {
         this.queue = new Queue();
@@ -51,6 +54,8 @@ public class LocalPlayer {
 
         // check this
         player.setAutoPlay(isPlayed);
+
+        setOnPlaying(onPlaying);
     }
 
     /**
@@ -176,8 +181,17 @@ public class LocalPlayer {
         queue.add(song);
     }
 
-    public void playNext(Song song) {
+    public void playAsNext(Song song) {
         // @TODO
+    }
+
+    public void setOnPlaying(Consumer<Duration> onPlaying) {
+        if (onPlaying != null) {
+            this.onPlaying = onPlaying;
+            player.currentTimeProperty().addListener(
+                ((observable, oldValue, newValue) -> onPlaying.accept(newValue)
+                ));
+        }
     }
 
 }

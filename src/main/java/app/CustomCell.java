@@ -1,7 +1,5 @@
 package app;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -21,12 +19,9 @@ public class CustomCell extends ListCell<String> {
         super();
         hbox.getChildren().addAll(label, pane, button);
         HBox.setHgrow(pane, Priority.ALWAYS);
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                button.setTextFill(Color.RED);
-                System.out.println(lastItem + " : " + event);
-            }
+        button.setOnAction(event -> {
+            button.setTextFill(Color.RED);
+            System.out.println(lastItem + " : " + event);
         });
     }
 
