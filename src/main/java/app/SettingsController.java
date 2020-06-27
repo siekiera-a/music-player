@@ -63,7 +63,7 @@ public class SettingsController implements Initializable {
         locationPlaylist.setText(location);
     }
 
-    public void setLocationSongs(String location){
+    public void setLocationSongs(String location) {
         this.locationSongs = location;
         locationSong.setText(location);
     }

@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 
@@ -25,8 +24,8 @@ public class CustomCellSongs extends ListCell<String> {
     Button favourite;
     Button playNext;
     Button addToPlaylist;
-    ListView<String> playlistView;
-    ListManagerSong managerSong;
+    Button goUp;
+    Button goDown;
 
     public CustomCellSongs() {
         super();
@@ -43,35 +42,49 @@ public class CustomCellSongs extends ListCell<String> {
             addToPlaylist.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
             playNext = new Button("Zagraj jako następne");
             playNext.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
+            goUp = new Button("Przesuń wyżej");
+            goUp.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
+            goDown = new Button("Przesuń niżej");
+            goDown.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
 
             popup.setX(width);
             popup.setY(height);
             popup.setHeight(200);
             popup.setWidth(300);
 
-            VBox layout= new VBox(5);
-            layout.getChildren().addAll(queue, favourite, addToPlaylist,playNext);
+            VBox layout = new VBox(5);
+            layout.getChildren().addAll(queue, favourite, addToPlaylist, playNext, goUp, goDown);
             layout.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-border-width: 2; -fx-border-color: lightgray; -fx-opacity: 10");
             popup.getContent().add(layout);
+
+            popup.setAutoHide(true);
+            popup.show(App.getInstance());
 
             queue.setOnAction(this::addQueue);
             favourite.setOnAction(this::addFavourite);
             addToPlaylist.setOnAction(this::addToPlaylist);
             playNext.setOnAction(this::playNext);
+            goUp.setOnAction(this::goUp);
+            goDown.setOnAction(this::goDown);
 
-            popup.setAutoHide(true);
-            popup.show(App.getInstance());
         });
+    }
+
+    private void goDown(ActionEvent actionEvent) {
+        System.out.println("down");
+        ;
+    }
+
+    private void goUp(ActionEvent actionEvent) {
+        System.out.println("up");
     }
 
     private void playNext(ActionEvent actionEvent) {
         isPlayNext = !isPlayNext;
-        if(isPlayNext){
+        if (isPlayNext) {
             System.out.println("play next");
             playNext.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
-        }
-        else
-        {
+        } else {
             System.out.println("not play next");
             playNext.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
         }
@@ -86,7 +99,7 @@ public class CustomCellSongs extends ListCell<String> {
             popup.setHeight(200);
             popup.setWidth(300);
 
-            VBox layout= new VBox(5);
+            VBox layout = new VBox(5);
             Button playlist1 = new Button("Playlist1");
             playlist1.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
             Button playlist2 = new Button("Playlist2");
@@ -95,7 +108,7 @@ public class CustomCellSongs extends ListCell<String> {
             playlist3.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
             Button playlist4 = new Button("Playlist4");
             playlist4.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
-            layout.getChildren().addAll(playlist1,playlist2,playlist3,playlist4);
+            layout.getChildren().addAll(playlist1, playlist2, playlist3, playlist4);
             layout.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-border-width: 2; -fx-border-color: lightgray; -fx-opacity: 10");
 
             popup.getContent().add(layout);
@@ -106,11 +119,10 @@ public class CustomCellSongs extends ListCell<String> {
 
     private void addFavourite(ActionEvent actionEvent) {
         isFavourite = !isFavourite;
-        if (isFavourite){
+        if (isFavourite) {
             System.out.println("favourite");
             favourite.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
-        }
-        else{
+        } else {
             System.out.println("not favourite");
             favourite.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
         }
@@ -118,12 +130,10 @@ public class CustomCellSongs extends ListCell<String> {
 
     private void addQueue(ActionEvent actionEvent) {
         inQueue = !inQueue;
-        if (inQueue){
+        if (inQueue) {
             System.out.println(" in queue");
             queue.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
-        }
-        else
-        {
+        } else {
             System.out.println("not in queue");
             queue.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
         }

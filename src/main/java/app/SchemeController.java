@@ -127,13 +127,13 @@ public class SchemeController implements Initializable {
     }
 
     //metoda obsługująca label odpowiadający za aktualny czas piosenki
-    public void manageTimeLabel(){
+    public void manageTimeLabel() {
         actual_time.setText(convertTime(actualTime));
         songSlider.setValue(actualTime);
     }
 
     // konwersja czasu
-    public String convertTime(int time){
+    public String convertTime(int time) {
         int minutes = (time % 60);
         String formatted = String.format("%02d", minutes);
         if (minutes < 10) {
