@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class Statistics {
 
     private final LinkedList<Info> listenedSongs;
-    private Path path = Paths.get(System.getProperty("user.home") + "\\Music");
+    private final Path path = Paths.get(System.getProperty("user.home") + "\\Music");
 
     public Statistics() {
         listenedSongs = new LinkedList<>();
@@ -27,7 +27,7 @@ public class Statistics {
      * @param time which the song was played
      */
     public void addTime(Song song, int time) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         Info info = new Info(song, time, formatter.format(date));
 
@@ -39,10 +39,10 @@ public class Statistics {
     /**
      * Saving statistics to file
      *
-     * @param directory for saving statstics
+     * @param directory for saving statistics
      */
     public void save(Path directory) {
-        File file = new File(String.valueOf(directory),  "statistics.txt");
+        File file = new File(String.valueOf(directory), "statistics.txt");
 
         try (FileWriter outputFile = new FileWriter(file.getAbsoluteFile())) {
             for (Info i : listenedSongs) {
