@@ -33,6 +33,8 @@ public class StatisticsController implements Initializable {
         list.add(0, "Najczęściej odtwarzane");
         list.add(1, "Najrzadziej odtwarzane");
         list.add(2, "Ostatnio odtwarzane");
+        //TODO: Ania myśli nad nazwa statystyki
+        list.add(3, "abc");
 
         ObservableList<String> observableList = FXCollections.observableList(list);
         chooseStatistics.getItems().clear();
@@ -62,7 +64,12 @@ public class StatisticsController implements Initializable {
             } else if (index == 2) {
                 // wyświetlenie konkretnej listy na ekranie dla trzeciej statystyki
                 listManager.setRecentlyPlayedList();
+            } else if (index == 3){
+                //TODO: Ania wymyśli nazwę metody
+                listManager.setAniaList();
             }
+
+
         });
     }
 }
