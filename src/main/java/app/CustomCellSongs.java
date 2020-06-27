@@ -20,7 +20,6 @@ public class CustomCellSongs extends ListCell<String> {
     boolean isFavourite = false;
     boolean inQueue = false;
     boolean isPlayNext = false;
-    boolean inPlaylist = false;
     Button queue;
     Button favourite;
     Button playNext;
@@ -76,16 +75,7 @@ public class CustomCellSongs extends ListCell<String> {
     }
 
     private void addToPlaylist(ActionEvent actionEvent) {
-        inPlaylist = !inPlaylist;
-        if (inPlaylist){
-            System.out.println("in playlist");
-            addToPlaylist.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
-        }
-        else
-        {
-            System.out.println("not in playlist");
-            addToPlaylist.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
-        }
+        System.out.println("playlist");
     }
 
     private void addFavourite(ActionEvent actionEvent) {
