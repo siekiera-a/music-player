@@ -37,43 +37,60 @@ public class RoomController implements Initializable {
     public TextField idTextField;
     public TextField passwordField;
 
-    // pobieranie id komputera
+    /**
+     * Get password and put it in field
+     *
+     * @return
+     */
     public String getPassword() {
         return password = passwordField.getText();
     }
 
-    //ustawianie id komputera
+    /**
+     * Set password
+     *
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    // pobieranie id komputera
+    /**
+     * Get id of computer to join
+     *
+     * @return
+     */
     public String getId() {
         return id = idTextField.getText();
     }
 
-    //ustawianie id komputera
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    // wyswietlenie liczby osob na streamie
+    /**
+     * show in label how many people is on stream
+     *
+     * @param peopleLabel
+     */
     public void setPeopleLabel(Label peopleLabel) {
         this.peopleLabel = peopleLabel;
         peopleLabel.setText(getPeopleCount());
     }
 
-    // pobranie liczby osob na streamie
+    /**
+     * Get how many people is on stream
+     *
+     * @return
+     */
     public String getPeopleCount() {
         return String.valueOf(peopleCount);
     }
 
-    // ustawienie liczby osob na streamie
-    public void setPeopleCount(int peopleCount) {
-        this.peopleCount = peopleCount;
-    }
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     *
+     * @param location
+     * @param resources
+     */
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         joinButton.setOnAction(this::joinToStream);
@@ -83,7 +100,11 @@ public class RoomController implements Initializable {
         setPeopleLabel(peopleLabel);
     }
 
-    // metoda odpowiedzialna za przycisk stream
+    /**
+     * Turn on stream function
+     *
+     * @param actionEvent
+     */
     @FXML
     private void stream(ActionEvent actionEvent) {
         streamButton.setDisable(true);
@@ -92,7 +113,11 @@ public class RoomController implements Initializable {
         disconnectButton.setDisable(false);
     }
 
-    // metoda odpowiedzialna za przycisk wykryj
+    /**
+     * Detect other computer id to join someone stream
+     *
+     * @param actionEvent
+     */
     @FXML
     private void joinToStream(ActionEvent actionEvent) {
         getId();
@@ -104,6 +129,11 @@ public class RoomController implements Initializable {
         disconnectButton.setDisable(true);
     }
 
+    /**
+     * Check room password to join someone stream
+     *
+     * @param actionEvent
+     */
     @FXML
     private void passwordToStream(ActionEvent actionEvent) {
         streamButton.setDisable(true);
@@ -113,7 +143,11 @@ public class RoomController implements Initializable {
         disconnectButton.setDisable(false);
     }
 
-    // metoda odpowiedzialna za przycisk rozłącz
+    /**
+     * Turn off stream or join to other stream
+     *
+     * @param actionEvent
+     */
     @FXML
     private void disconnect(ActionEvent actionEvent) {
         streamButton.setDisable(false);

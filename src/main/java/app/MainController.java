@@ -17,7 +17,12 @@ public class MainController implements Initializable {
     public ListView<String> mainView;
     public TextArea mainSearch;
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listManager = new ListManager(mainView, mainSearch);

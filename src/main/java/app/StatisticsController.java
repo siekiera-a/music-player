@@ -25,7 +25,13 @@ public class StatisticsController implements Initializable {
     public TextArea statisticsSearch;
     public ComboBox<String> chooseStatistics;
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     * Create lists with statistics of songs
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<String> list = new ArrayList<String>();
@@ -64,12 +70,10 @@ public class StatisticsController implements Initializable {
             } else if (index == 2) {
                 // wyświetlenie konkretnej listy na ekranie dla trzeciej statystyki
                 listManager.setRecentlyPlayedList();
-            } else if (index == 3){
+            } else if (index == 3) {
                 //TODO: Ania wymyśli nazwę metody
                 listManager.setAniaList();
             }
-
-
         });
     }
 }

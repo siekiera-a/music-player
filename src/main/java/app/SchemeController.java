@@ -61,7 +61,9 @@ public class SchemeController implements Initializable {
     public Button roomButton;
     public Button settingsButton;
 
-    // metoda wstawiania ikonek do przycisków
+    /**
+     * Set icons in buttons
+     */
     public void setImage() {
         playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 30, 30, true, true)));
         prevButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/previous.png"), 30, 30, true, true)));
@@ -79,24 +81,18 @@ public class SchemeController implements Initializable {
         heartButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart.png"), 30, 30, true, true)));
     }
 
+    /**
+     * Update actual time of song
+     *
+     * @param duration
+     */
     private void updateTime(Duration duration) {
         actualTime = (int) duration.toSeconds();
     }
 
-    public void init() {
-        String path = System.getProperty("user.home") + "/music/Three Days Grace - The Abyss.mp3";
-        player.changePlaylist(new Playlist("xd", List.of(new Song(path))));
-        actual_volume = (int) (player.getVolume() * 100);
-        player.setOnPlaying(this::updateTime);
-
-        setImage();
-        setSongTitle();
-        manageTimeLabel();
-        manageSongSlider();
-        manageVolumeSlider();
-    }
-
-    // metoda obsługująca pasek głościości
+    /**
+     * Change actual volume of song in slider -> label
+     */
     public void manageVolumeSlider() {
         volumeSlider.setValue(actual_volume);
         volumeSlider.setMin(0);
@@ -116,7 +112,9 @@ public class SchemeController implements Initializable {
         });
     }
 
-    // metoda obsługująca pasek trwania piosenki
+    /**
+     * Change time of actual song in slider -> label
+     */
     public void manageSongSlider() {
         songSlider.setValue(actualTime);
         songSlider.setMax(endTime);
@@ -130,13 +128,20 @@ public class SchemeController implements Initializable {
         });
     }
 
-    //metoda obsługująca label odpowiadający za aktualny czas piosenki
+    /**
+     * Change time of actual song in label -> slider
+     */
     public void manageTimeLabel() {
         actual_time.setText(convertTime(actualTime));
         songSlider.setValue(actualTime);
     }
 
-    // konwersja czasu
+    /**
+     * Time conversion from seconds to minutes and seconds
+     *
+     * @param time in seconds
+     * @return convert time
+     */
     public String convertTime(int time) {
         int minutes = (time % 60);
         String formatted = String.format("%02d", minutes);
@@ -147,7 +152,11 @@ public class SchemeController implements Initializable {
         }
     }
 
-    // metoda wczytujący obraz środka aplikacji
+    /**
+     * Load and change actual window
+     *
+     * @param fxml
+     */
     private void loadFXML(String fxml) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxml + ".fxml"));
@@ -157,7 +166,12 @@ public class SchemeController implements Initializable {
         }
     }
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         homeButton.setOnAction(this::switchToMain);
@@ -176,59 +190,116 @@ public class SchemeController implements Initializable {
         settingsButton.setOnAction(this::switchToSettings);
 
         loadFXML("main");
-        init();
+
+        String path = System.getProperty("user.home") + "/music/Three Days Grace - The Abyss.mp3";
+        player.changePlaylist(new Playlist("xd", List.of(new Song(path))));
+        actual_volume = (int) (player.getVolume() * 100);
+        player.setOnPlaying(this::updateTime);
+
+        setImage();
+        setSongTitle();
+        manageTimeLabel();
+        manageSongSlider();
+        manageVolumeSlider();
     }
 
-    // metody służace do przełączania się między kartami
+    /**
+     * Set actual window to main window
+     *
+     * @param event
+     */
     @FXML
     private void switchToMain(ActionEvent event) {
         loadFXML("main");
     }
 
+    /**
+     * Set actual window to playlist window
+     *
+     * @param event
+     */
     @FXML
     private void switchToPlaylist(ActionEvent event) {
         loadFXML("playlist");
     }
 
+    /**
+     * Set actual window to queue window
+     *
+     * @param event
+     */
     @FXML
     private void switchToQueue(ActionEvent event) {
         loadFXML("queue");
     }
 
+    /**
+     * Set actual window to statistics window
+     *
+     * @param event
+     */
     @FXML
     private void switchToStatistics(ActionEvent event) {
         loadFXML("statistics");
     }
 
+    /**
+     * Exit the program
+     *
+     * @param event
+     */
     @FXML
     private void exit(ActionEvent event) {
         Stage stage = (Stage) mainContent.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Set actual window to room window
+     *
+     * @param event
+     */
+
     @FXML
     private void switchToRoom(ActionEvent event) {
         loadFXML("room");
     }
 
+    /**
+     * Set actual window to settings window
+     *
+     * @param event
+     */
     @FXML
     private void switchToSettings(ActionEvent event) {
         loadFXML("settings");
     }
 
-    // metoda odpowiedzialna za przycisk shuffle
+    /**
+     * Shuffle songs
+     *
+     * @param event
+     */
     @FXML
     private void shuffle(ActionEvent event) {
         System.out.println("shuffle");
     }
 
-    // metoda odpowiedzialna za przycisk previous
+    /**
+     * Go back to the previous song
+     *
+     * @param event
+     */
     @FXML
     private void prev(ActionEvent event) {
         System.out.println("prev");
     }
 
-    // metoda odpowiedzialna za przycisk play/pause
+    /**
+     * Play and pause actual song
+     *
+     * @param event
+     */
     @FXML
     private void play(ActionEvent event) {
         isPlayed = !isPlayed;
@@ -241,7 +312,11 @@ public class SchemeController implements Initializable {
         }
     }
 
-    // metoda odpowiedzialna za przycisk volume/mute
+    /**
+     * Change volume icon and actual volume
+     *
+     * @param event
+     */
     @FXML
     private void volume(ActionEvent event) {
         isMute = !isMute;
@@ -257,19 +332,33 @@ public class SchemeController implements Initializable {
         volumeSlider.setValue(actual_volume);
     }
 
-    // metoda odpowiedzialna za przycisk next
+    /**
+     * Go to the next song
+     *
+     * @param event
+     */
     @FXML
     private void next(ActionEvent event) {
         System.out.println("next");
     }
 
-    // metoda odpowiedzialna za przycisk repeat
+
+    /**
+     * Repeat actual song
+     *
+     * @param event
+     */
     @FXML
     private void repeat(ActionEvent event) {
         System.out.println("repeat");
     }
 
-    // metoda odpowiedzialna za przycisk heart, czyli dodawanie do  ulubionych
+
+    /**
+     * Add actual song to favourite playlist
+     *
+     * @param event
+     */
     @FXML
     private void addToFavourite(ActionEvent event) {
         isFavourite = !isFavourite;
@@ -280,6 +369,9 @@ public class SchemeController implements Initializable {
         }
     }
 
+    /**
+     * Change title of song label
+     */
     @FXML
     private void setSongTitle() {
         songTitle.setText(title);

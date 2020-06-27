@@ -26,7 +26,15 @@ public class PlaylistController implements Initializable {
     public TextArea playlistSearch;
     public ComboBox<String> choosePlaylists;
 
-    // metoda inicjalizacji
+
+    /**
+     * Default initialize method
+     * Create list of playlist with songs
+     *
+     * @param location
+     * @param resources
+     */
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<String> list = new ArrayList<String>();
@@ -34,8 +42,8 @@ public class PlaylistController implements Initializable {
         list.add(0, "Playlista 1");
         list.add(1, "Playlista 2");
         list.add(2, "Playlista 3");
-        list.add(3,"Playlista 4");
-        list.add(4,"Ulubione");
+        list.add(3, "Playlista 4");
+        list.add(4, "Ulubione");
 
         ObservableList<String> observableList = FXCollections.observableList(list);
         choosePlaylists.getItems().clear();

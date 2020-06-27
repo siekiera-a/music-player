@@ -33,7 +33,12 @@ public class OverlayController implements Initializable {
     public Button prevButton;
     public Button nextButton;
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         playButton.setOnAction(this::play);
@@ -44,39 +49,43 @@ public class OverlayController implements Initializable {
         prevButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/previous.png"), 20, 20, true, true)));
         nextButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/next.png"), 20, 20, true, true)));
 
-        actual_time.setText(getActualTime());
-        end_time.setText(getEndTime());
+        actual_time.setText(convertTime(actualTime));
+        end_time.setText(convertTime(endTime));
         setSongTitle();
 
     }
 
-    //pobieranie aktualnego czasu piosenki
-    public String getActualTime() {
-        return actualTime / 60 + ":" + (actualTime % 60);
+    /**
+     * Time conversion from seconds to minutes and seconds
+     *
+     * @param time in seconds
+     * @return convert time
+     */
+    public String convertTime(int time) {
+        int minutes = (time % 60);
+        String formatted = String.format("%02d", minutes);
+        if (minutes < 10) {
+            return time / 60 + ":" + formatted;
+        } else {
+            return time / 60 + ":" + minutes;
+        }
     }
 
-    //ustawienie aktualnego czasu piosenki
-    public void setActualTime(int actualTime) {
-        this.actualTime = actualTime;
-    }
-
-    //pobranie czasu całkowitego piosenki
-    public String getEndTime() {
-        return endTime / 60 + ":" + (endTime % 60);
-    }
-
-    //ustawienie czasu całkowitego piosenki
-    public void setEndTime(int endTime) {
-        this.endTime = endTime;
-    }
-
-    // metoda odpowiedzialna za przycisk previous
+    /**
+     * Go back to the previous song
+     *
+     * @param event
+     */
     @FXML
     private void prev(ActionEvent event) {
         System.out.println("prev");
     }
 
-    // metoda odpowiedzialna za przycisk play/pause
+    /**
+     * Play and pause actual song
+     *
+     * @param event
+     */
     @FXML
     private void play(ActionEvent event) {
         isPaused = !isPaused;
@@ -89,22 +98,22 @@ public class OverlayController implements Initializable {
         }
     }
 
-    // metoda odpowiedzialna za przycisk next
+    /**
+     * Go to the next song
+     *
+     * @param event
+     */
     @FXML
     private void next(ActionEvent event) {
         System.out.println("next");
     }
 
 
-    // metoda służąca ustawieniu tytułu piosenki
+    /**
+     * Change title of song label
+     */
     @FXML
     private void setSongTitle() {
         songTitle.setText(title);
-    }
-
-    // funkcja pobierająca tytuł piosenki
-    @FXML
-    public Label getSongTitle() {
-        return songTitle;
     }
 }

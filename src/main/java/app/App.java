@@ -13,6 +13,14 @@ public class App extends Application {
 
     private static Stage stage2;
 
+    /**
+     * Start method
+     * Create stages
+     *
+     * @param stage
+     * @throws Exception
+     */
+
     @Override
     public void start(Stage stage) throws Exception {
         // ustawienie okna głównego aplikacji
@@ -45,13 +53,23 @@ public class App extends Application {
         return stage2;
     }
 
-    // metoda ładująca odpowiedni wygląd aplikacji
+    /**
+     * Load the application view
+     *
+     * @param fxml
+     * @return
+     * @throws IOException
+     */
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource( fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
-    // uruchomienie aplikacji
+    /**
+     * Run app
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

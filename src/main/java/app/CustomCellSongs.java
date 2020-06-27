@@ -78,16 +78,31 @@ public class CustomCellSongs extends ListCell<String> {
         });
     }
 
+    /**
+     * Change picked song one position down
+     *
+     * @param actionEvent
+     */
     private void goDown(ActionEvent actionEvent) {
         System.out.println("down");
         //lms.downWithIndex(a);
     }
 
+    /**
+     * Change picked song one position up
+     *
+     * @param actionEvent
+     */
     private void goUp(ActionEvent actionEvent) {
         System.out.println("up");
         //lms.upWithIndex(a);
     }
 
+    /**
+     * Set picked song to play next in queue
+     *
+     * @param actionEvent
+     */
     private void playNext(ActionEvent actionEvent) {
         isPlayNext = !isPlayNext;
         if (isPlayNext) {
@@ -99,6 +114,11 @@ public class CustomCellSongs extends ListCell<String> {
         }
     }
 
+    /**
+     * Set picked song to selected playlist
+     *
+     * @param actionEvent
+     */
     private void addToPlaylist(ActionEvent actionEvent) {
         addToPlaylist.setOnAction(event -> {
             Popup popup = new Popup();
@@ -126,6 +146,11 @@ public class CustomCellSongs extends ListCell<String> {
         });
     }
 
+    /**
+     * Set picked song to favourite playlist
+     *
+     * @param actionEvent
+     */
     private void addFavourite(ActionEvent actionEvent) {
         isFavourite = !isFavourite;
         if (isFavourite) {
@@ -137,6 +162,11 @@ public class CustomCellSongs extends ListCell<String> {
         }
     }
 
+    /**
+     * Set picked song to queue
+     *
+     * @param actionEvent
+     */
     private void addQueue(ActionEvent actionEvent) {
         inQueue = !inQueue;
         if (inQueue) {
@@ -148,6 +178,12 @@ public class CustomCellSongs extends ListCell<String> {
         }
     }
 
+    /**
+     * Update element
+     *
+     * @param item
+     * @param empty
+     */
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);

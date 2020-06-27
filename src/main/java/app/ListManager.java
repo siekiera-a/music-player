@@ -20,11 +20,9 @@ public class ListManager {
         setSearchListener();
     }
 
-    public void setList(ObservableList<String> newPlaylist) {
-        playlistData = newPlaylist;
-        playlistView.setItems(playlistData);
-    }
-
+    /**
+     * Search (filtered) elements in list
+     */
     protected void setSearchListener() {
         playlistSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals("")) {
@@ -42,7 +40,9 @@ public class ListManager {
         });
     }
 
-    //tworzenie elementów listy statystyk najczęściej odtwarzanych
+    /**
+     * Create list of element which is the most played
+     */
     public void setMostPlayedList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
@@ -52,7 +52,9 @@ public class ListManager {
         playlistView.setItems(playlistData);
     }
 
-    //tworzenie elementów listy statystyk najrzadziej odtwarzanych
+    /**
+     * Create list of element which is the least played
+     */
     public void setLeastPlayedList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
@@ -62,7 +64,9 @@ public class ListManager {
         playlistView.setItems(playlistData);
     }
 
-    //tworzenie elementów listy statystyk ostatnio odtwarzanych
+    /**
+     * Create list of element which is recently played
+     */
     public void setRecentlyPlayedList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
@@ -72,7 +76,10 @@ public class ListManager {
         playlistView.setItems(playlistData);
     }
 
-    public void setAniaList(){
+    /**
+     * Create list of element which is the ...
+     */
+    public void setAniaList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
         for (int i = 45; i < 100; i++) {

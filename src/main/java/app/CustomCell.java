@@ -19,6 +19,12 @@ public class CustomCell extends ListCell<String> {
         HBox.setHgrow(pane, Priority.ALWAYS);
     }
 
+    /**
+     * Update element
+     *
+     * @param item
+     * @param empty
+     */
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
