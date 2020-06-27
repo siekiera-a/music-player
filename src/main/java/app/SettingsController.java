@@ -16,8 +16,8 @@ import java.util.ResourceBundle;
 public class SettingsController implements Initializable {
 
     //TODO: trzeba ustawić domyślną lokalizację i hasło oraz zapisać zmienione dane na dysku
-    String locationPlaylists = "";
-    String locationSongs = "";
+    String locationPlaylists = System.getProperty("user.music");
+    String locationSongs = System.getProperty("user.music");
     String password = "";
 
     @FXML

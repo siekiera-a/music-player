@@ -16,7 +16,7 @@ public class ListManagerSong {
         this.playlistView = playlistView;
         this.playlistSearch = playlistSearch;
 
-        playlistView.setCellFactory(x -> new CustomCellSongs());
+        playlistView.setCellFactory(x -> new CustomCellSongs(this));
         setSearchListener();
     }
 
@@ -60,5 +60,13 @@ public class ListManagerSong {
         }
         playlistView.setItems(playlistData);
     }
+
+    /*public void upWithIndex(int index) {
+
+    }*/
+
+    /*public void downWithIndex(int index) {
+
+    }*/
 
 }
