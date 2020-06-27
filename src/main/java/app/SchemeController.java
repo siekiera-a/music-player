@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -88,7 +87,7 @@ public class SchemeController implements Initializable {
     public void init() {
         setImage();
         setSongTitle();
-        manageSongLabel();
+        manageTimeLabel();
         manageSongSlider();
         manageVolumeSlider();
     }
@@ -98,11 +97,11 @@ public class SchemeController implements Initializable {
         volumeSlider.setValue(actual_volume);
         volumeSlider.setMin(0);
         volumeSlider.setMax(100);
-        volumeValue.setText(getActual_volume());
+        volumeValue.setText(String.valueOf(actual_volume));
 
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            setActual_volume(newValue.intValue());
-            volumeValue.setText(getActual_volume());
+            actual_volume = newValue.intValue();
+            volumeValue.setText(String.valueOf(actual_volume));
             if (isMute && newValue.intValue() > 0) {
                 isMute = false;
                 volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/audio.png"), 30, 30, true, true)));
@@ -122,41 +121,26 @@ public class SchemeController implements Initializable {
         end_time.setText(convertTime(endTime));
 
         songSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            setActualTime(newValue.intValue());
+            actualTime = newValue.intValue();
             actual_time.setText(convertTime(actualTime));
         });
     }
 
-    public void manageSongLabel(){
+    //metoda obsługująca label odpowiadający za aktualny czas piosenki
+    public void manageTimeLabel(){
         actual_time.setText(convertTime(actualTime));
-        songSlider.setValue(actual_volume);
+        songSlider.setValue(actualTime);
     }
 
+    // konwersja czasu
     public String convertTime(int time){
         int minutes = (time % 60);
         String formatted = String.format("%02d", minutes);
-        if (minutes < 10) return time / 60 + ":" + formatted;
-        else return time / 60 + ":" + minutes;
-    }
-
-    //pobieranie aktualnej głośności
-    public String getActual_volume() {
-        return String.valueOf(actual_volume);
-    }
-
-    //ustawianie aktualnej głośności
-    public void setActual_volume(int actual_volume) {
-        this.actual_volume = actual_volume;
-    }
-
-    //ustawienie aktualnego czasu piosenki
-    public void setActualTime(int actualTime) {
-        this.actualTime = actualTime;
-    }
-
-    //ustawienie czasu całkowitego piosenki
-    public void setEndTime(int endTime) {
-        this.endTime = endTime;
+        if (minutes < 10) {
+            return time / 60 + ":" + formatted;
+        } else {
+            return time / 60 + ":" + minutes;
+        }
     }
 
     // metoda wczytujący obraz środka aplikacji
@@ -180,6 +164,7 @@ public class SchemeController implements Initializable {
         exitButton.setOnAction(this::exit);
         shuffleButton.setOnAction(this::shuffle);
         prevButton.setOnAction(this::prev);
+
         playButton.setOnAction(this::play);
         nextButton.setOnAction(this::next);
         repeatButton.setOnAction(this::repeat);
@@ -269,7 +254,7 @@ public class SchemeController implements Initializable {
             System.out.println("volume up");
             volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/audio.png"), 30, 30, true, true)));
         }
-        volumeValue.setText(getActual_volume());
+        volumeValue.setText(String.valueOf(actual_volume));
         volumeSlider.setValue(actual_volume);
     }
 
