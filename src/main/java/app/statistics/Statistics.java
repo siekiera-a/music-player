@@ -39,7 +39,7 @@ public class Statistics {
     /**
      * Saving statistics to file
      *
-     * @param directory for saving statstics
+     * @param directory for saving statistics
      */
     public void save(Path directory) {
         File file = new File(String.valueOf(directory),  "statistics.txt");
