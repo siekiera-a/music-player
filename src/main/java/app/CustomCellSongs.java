@@ -1,6 +1,7 @@
 package app;
 
 import javafx.event.ActionEvent;
+import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -27,8 +28,13 @@ public class CustomCellSongs extends ListCell<String> {
     Button goUp;
     Button goDown;
 
-    public CustomCellSongs() {
+    ListManagerSong lms;
+
+    public CustomCellSongs(ListManagerSong lms) {
         super();
+
+        this.lms = lms;
+
         hbox.getChildren().addAll(label, pane, button);
         HBox.setHgrow(pane, Priority.ALWAYS);
         button.setOnAction(event -> {
@@ -47,8 +53,10 @@ public class CustomCellSongs extends ListCell<String> {
             goDown = new Button("Przesuń niżej");
             goDown.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
 
-            popup.setX(width);
-            popup.setY(height);
+            Bounds bounds = button.getBoundsInLocal();
+            Bounds screenBnds = button.localToScreen(bounds);
+            popup.setX(screenBnds.getMinX());
+            popup.setY(screenBnds.getMinY());
             popup.setHeight(200);
             popup.setWidth(300);
 
@@ -72,11 +80,12 @@ public class CustomCellSongs extends ListCell<String> {
 
     private void goDown(ActionEvent actionEvent) {
         System.out.println("down");
-        ;
+        //lms.downWithIndex(a);
     }
 
     private void goUp(ActionEvent actionEvent) {
         System.out.println("up");
+        //lms.upWithIndex(a);
     }
 
     private void playNext(ActionEvent actionEvent) {

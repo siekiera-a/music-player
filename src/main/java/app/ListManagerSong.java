@@ -16,7 +16,7 @@ public class ListManagerSong {
         this.playlistView = playlistView;
         this.playlistSearch = playlistSearch;
 
-        playlistView.setCellFactory(x -> new CustomCellSongs());
+        playlistView.setCellFactory(x -> new CustomCellSongs(this));
         setSearchListener();
     }
 
@@ -42,12 +42,47 @@ public class ListManagerSong {
         });
     }
 
-    public void setPlaylistList() {
+    public void setPlaylist1List() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
         for (int i = 0; i < 100; i++) {
             playlistData.add(String.valueOf(i));
-            //dorzuć druga lista od piosenek dla każdej playlisty
+        }
+        playlistView.setItems(playlistData);
+    }
+
+    public void setPlaylist2List() {
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 0; i < 80; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
+
+    public void setPlaylist3List() {
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 0; i < 60; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
+
+    public void setPlaylist4List() {
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 0; i < 30; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
+
+    public void setFavouriteList() {
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 0; i < 14; i++) {
+            playlistData.add(String.valueOf(i));
         }
         playlistView.setItems(playlistData);
     }
@@ -60,5 +95,13 @@ public class ListManagerSong {
         }
         playlistView.setItems(playlistData);
     }
+
+    /*public void upWithIndex(int index) {
+
+    }*/
+
+    /*public void downWithIndex(int index) {
+
+    }*/
 
 }

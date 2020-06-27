@@ -72,4 +72,13 @@ public class ListManager {
         playlistView.setItems(playlistData);
     }
 
+    public void setAniaList(){
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 45; i < 100; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
+
 }

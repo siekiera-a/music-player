@@ -84,7 +84,8 @@ public class SchemeController implements Initializable {
     }
 
     public void init() {
-        player.changePlaylist(new Playlist("xd", List.of(new Song("Bet My Heart.mp3"))));
+        String path = System.getProperty("user.home") + "/music/Three Days Grace - The Abyss.mp3";
+        player.changePlaylist(new Playlist("xd", List.of(new Song(path))));
         actual_volume = (int) (player.getVolume() * 100);
         player.setOnPlaying(this::updateTime);
 
