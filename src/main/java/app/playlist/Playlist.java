@@ -3,6 +3,7 @@ package app.playlist;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -15,6 +16,7 @@ public class Playlist {
 
     /**
      * Create a new playlist based on song's collection
+     * Throw IllegalStateException if no space is currently available
      *
      * @param name  name of playlist
      * @param songs song's collection
@@ -35,7 +37,7 @@ public class Playlist {
     }
 
     /**
-     * Add song to playlist
+     * Add song to the end of playlist
      *
      * @param song song which is add to playlist
      */
@@ -44,7 +46,7 @@ public class Playlist {
     }
 
     /**
-     * Add songs collection to playlist
+     * Add songs collection to the end of playlist
      *
      * @param songs song's collection
      */
@@ -56,6 +58,7 @@ public class Playlist {
 
     /**
      * Remove song from playlist
+     * Throw NoSuchElementException if playlist doesn't contain song
      *
      * @param song song which is being removed
      */
@@ -77,9 +80,8 @@ public class Playlist {
     /**
      * Remove playlist
      */
-    public void remove() {
-        String directory = System.getProperty("user.home") + "\\Music";
-        File file = new File(directory, this.name + ".txt");
+    public void remove(Path directory) {
+        File file = new File(String.valueOf(directory), this.name + ".txt");
 
         file.delete();
     }
@@ -89,10 +91,10 @@ public class Playlist {
      *
      * @param name new playlist's name
      */
-    public void changeName(String name) {
-        String directory = System.getProperty("user.home") + "\\Music";
-        File oldFile = new File(directory, this.name + ".txt");
-        File newFile = new File(directory, name + ".txt");
+    public void changeName(String name, Path directory) {
+        File file = new File(String.valueOf(directory), this.name + ".txt");
+        File oldFile = new File(String.valueOf(directory), this.name + ".txt");
+        File newFile = new File(String.valueOf(directory), name + ".txt");
 
         boolean change = oldFile.renameTo(newFile);
         if (change) {
@@ -123,9 +125,8 @@ public class Playlist {
     /**
      * Save playlist in file
      */
-    public void save() {
-        String directory = System.getProperty("user.home") + "\\Music";
-        File file = new File(directory, this.name + ".txt");
+    public void save(Path directory) {
+        File file = new File(String.valueOf(directory), this.name + ".txt");
 
         try (FileWriter outputFile = new FileWriter(file.getAbsoluteFile())) {
             for (Song p : playlist) {
@@ -134,7 +135,6 @@ public class Playlist {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void clear() {

@@ -12,7 +12,7 @@ public class ListManager {
     public ListView<String> playlistView;
     public TextArea playlistSearch;
 
-    ListManager(ListView<String> playlistView, TextArea playlistSearch){
+    ListManager(ListView<String> playlistView, TextArea playlistSearch) {
         this.playlistView = playlistView;
         this.playlistSearch = playlistSearch;
 
@@ -20,12 +20,12 @@ public class ListManager {
         setSearchListener();
     }
 
-    public void setList(ObservableList<String> newPlaylist){
+    public void setList(ObservableList<String> newPlaylist) {
         playlistData = newPlaylist;
         playlistView.setItems(playlistData);
     }
 
-    protected void setSearchListener(){
+    protected void setSearchListener() {
         playlistSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals("")) {
                 playlistView.setItems(playlistData);
@@ -42,7 +42,9 @@ public class ListManager {
         });
     }
 
-    public void setTestList(){
+    //tworzenie elementów listy statystyk najczęściej odtwarzanych
+    public void setMostPlayedList() {
+        playlistData.clear();
         // tworzenie początkowej listy piosenek
         for (int i = 0; i < 100; i++) {
             playlistData.add(String.valueOf(i));
@@ -50,5 +52,24 @@ public class ListManager {
         playlistView.setItems(playlistData);
     }
 
+    //tworzenie elementów listy statystyk najrzadziej odtwarzanych
+    public void setLeastPlayedList() {
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 3; i < 100; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
+
+    //tworzenie elementów listy statystyk ostatnio odtwarzanych
+    public void setRecentlyPlayedList() {
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 6; i < 100; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
 
 }
