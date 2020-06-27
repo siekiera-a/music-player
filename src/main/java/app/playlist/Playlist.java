@@ -147,4 +147,12 @@ public class Playlist {
         }
     }
 
+    public void clear() {
+        playlist.clear();
+    }
+
+    public List<Song> getSongs() {
+        return List.copyOf(playlist);
+    }
+
 }

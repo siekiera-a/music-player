@@ -24,9 +24,7 @@ public record Song(String path) {
             int index = file.lastIndexOf(".");
             String ext = file.substring(index + 1);
 
-            if (extensions.contains(ext.toLowerCase())) {
-                this.path = path;
-            } else {
+            if (!extensions.contains(ext.toLowerCase())) {
                 throw new IllegalArgumentException("Extension not supported");
             }
 

@@ -164,4 +164,14 @@ public class ListManager {
                 .sorted((Map.Entry.comparingByValue()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1,e2)->e1, LinkedHashMap::new));
     }
+
+    // to chyba dla Ciebie Aniu
+    public void setAniaList(){
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 45; i < 100; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
 }
