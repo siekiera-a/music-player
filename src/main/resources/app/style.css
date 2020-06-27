@@ -1,9 +1,9 @@
 .frame {
-    -fx-background-color: ghostwhite;
+    -fx-background-color: white;
 }
 
 .overlay {
-    -fx-background-color: ghostwhite;
+    -fx-background-color: white;
 }
 
 .list-view {
@@ -20,6 +20,5 @@
 .button:hover {
 
 }
-
 
 

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 
@@ -24,6 +25,8 @@ public class CustomCellSongs extends ListCell<String> {
     Button favourite;
     Button playNext;
     Button addToPlaylist;
+    ListView<String> playlistView;
+    ListManagerSong managerSong;
 
     public CustomCellSongs() {
         super();
@@ -75,7 +78,30 @@ public class CustomCellSongs extends ListCell<String> {
     }
 
     private void addToPlaylist(ActionEvent actionEvent) {
-        System.out.println("playlist");
+        addToPlaylist.setOnAction(event -> {
+            Popup popup = new Popup();
+
+            popup.setX(width + 150);
+            popup.setY(height);
+            popup.setHeight(200);
+            popup.setWidth(300);
+
+            VBox layout= new VBox(5);
+            Button playlist1 = new Button("Playlist1");
+            playlist1.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
+            Button playlist2 = new Button("Playlist2");
+            playlist2.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
+            Button playlist3 = new Button("Playlist3");
+            playlist3.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
+            Button playlist4 = new Button("Playlist4");
+            playlist4.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
+            layout.getChildren().addAll(playlist1,playlist2,playlist3,playlist4);
+            layout.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-border-width: 2; -fx-border-color: lightgray; -fx-opacity: 10");
+
+            popup.getContent().add(layout);
+            popup.setAutoHide(true);
+            popup.show(App.getInstance());
+        });
     }
 
     private void addFavourite(ActionEvent actionEvent) {

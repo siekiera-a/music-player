@@ -24,8 +24,6 @@
                 <RowConstraints maxHeight="60.33331298828125" minHeight="10.0" prefHeight="35.0" valignment="TOP" vgrow="NEVER" />
                 <RowConstraints maxHeight="60.33331298828125" minHeight="10.0" prefHeight="35.0" valignment="TOP" vgrow="NEVER" />
                 <RowConstraints maxHeight="60.33331298828125" minHeight="10.0" prefHeight="35.0" valignment="TOP" vgrow="NEVER" />
-                <RowConstraints maxHeight="60.33331298828125" minHeight="10.0" prefHeight="35.0" valignment="TOP" vgrow="NEVER" />
-                <RowConstraints maxHeight="60.33331298828125" minHeight="10.0" prefHeight="35.0" valignment="TOP" vgrow="NEVER" />
             </rowConstraints>
             <children>
                 <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="600.0" styleClass="text" text="Ustawienia">
@@ -72,7 +70,7 @@
                 </HBox>
                 <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Hasło do pokoju" HBox.hgrow="ALWAYS">
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lokalizacja zapisu piosenek" HBox.hgrow="ALWAYS">
                             <padding>
                                 <Insets left="30.0" />
                             </padding>
@@ -80,12 +78,12 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="128.0" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="locationSong" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="203.0" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
                         </TextField>
-                  <Button fx:id="passwordButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Zatwierdź">
+                  <Button fx:id="chooseLocationSongs" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wybierz">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
@@ -94,7 +92,7 @@
                 </HBox>
                 <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" HBox.hgrow="ALWAYS">
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Hasło do pokoju" HBox.hgrow="ALWAYS">
                             <padding>
                                 <Insets left="30.0" />
                             </padding>
@@ -102,45 +100,16 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="133.0" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
                         </TextField>
-                    </children>
-                </HBox>
-                <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
-                    <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" HBox.hgrow="ALWAYS">
-                            <padding>
-                                <Insets left="30.0" />
-                            </padding>
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Label>
-                        <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets right="20.0" />
-                            </HBox.margin>
-                        </TextField>
-                    </children>
-                </HBox>
-                <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6">
-                    <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" HBox.hgrow="ALWAYS">
-                            <padding>
-                                <Insets left="30.0" />
-                            </padding>
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Label>
-                        <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets right="20.0" />
-                            </HBox.margin>
-                        </TextField>
+                  <Button fx:id="passwordButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Zatwierdź">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Button>
                     </children>
                 </HBox>
             </children>

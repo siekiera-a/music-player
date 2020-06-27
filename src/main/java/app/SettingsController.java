@@ -15,35 +15,57 @@ import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
 
-    //TODO: trzeba ustawić domyślną lokalizację i zapisać zmienioną na dysku
-    String location = "";
+    //TODO: trzeba ustawić domyślną lokalizację i hasło oraz zapisać zmienione dane na dysku
+    String locationPlaylists = "";
+    String locationSongs = "";
     String password = "";
 
     @FXML
     public CheckBox startAppCB;
+
     public Button chooseLocation;
     public Button passwordButton;
+    public Button chooseLocationSongs;
+
     public TextField locationPlaylist;
+    public TextField locationSong;
     public TextField passwordField;
 
     // pobieranie aktualnej lokalizacji playlist
-    public String getLocation() {
-        location = locationPlaylist.getText();
-        return location;
+    public String getLocationPlaylist() {
+        locationPlaylists = locationPlaylist.getText();
+        return locationPlaylists;
+    }
+
+    public String getLocationSongs() {
+        locationSongs = locationSong.getText();
+        return locationSongs;
     }
 
     // metoda zmieniająca lokalizacje playlist przy naciśnięciu przycisku
-    public void chooseLocation(ActionEvent actionEvent) {
+    public void chooseLocationPlaylist(ActionEvent actionEvent) {
         Stage stage = (Stage) chooseLocation.getScene().getWindow();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(stage);
-        setLocation(file.toString());
+        setLocationPlaylist(file.toString());
+    }
+
+    public void chooseLocationSongs(ActionEvent actionEvent) {
+        Stage stage = (Stage) chooseLocationSongs.getScene().getWindow();
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File file = directoryChooser.showDialog(stage);
+        setLocationSongs(file.toString());
     }
 
     // metoda ustawiająca lokalizacje playlist
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationPlaylist(String location) {
+        this.locationPlaylists = location;
         locationPlaylist.setText(location);
+    }
+
+    public void setLocationSongs(String location){
+        this.locationSongs = location;
+        locationSong.setText(location);
     }
 
 
@@ -56,10 +78,10 @@ public class SettingsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startApp();
-        chooseLocation.setOnAction(this::chooseLocation);
+        chooseLocation.setOnAction(this::chooseLocationPlaylist);
+        chooseLocationSongs.setOnAction(this::chooseLocationSongs);
         passwordButton.setOnAction(this::setPasswordButton);
     }
-
 
     private void setPasswordButton(ActionEvent actionEvent) {
         password = passwordField.getText();
