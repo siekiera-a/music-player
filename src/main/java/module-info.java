@@ -2,7 +2,7 @@ module app {
     requires javafx.controls;
     requires javafx.fxml;
     requires fontawesomefx;
-    requires java.desktop;
+    requires javafx.media;
 
     opens app to javafx.fxml;
     exports app;

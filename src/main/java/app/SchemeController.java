@@ -1,5 +1,8 @@
 package app;
 
+import app.player.LocalPlayer;
+import app.playlist.Playlist;
+import app.playlist.Song;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,32 +15,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
-
 
 public class SchemeController implements Initializable {
 
-    //zmienna odpowiedzialna za tytuł piosenki
-    private String title = "Tytuł piosenki";
-    //zmienna sprawdzająca czy piosenka jest zapausowana
-    boolean isPaused = false;
-    //zmienna sprawdzająca czy dźwięk jest wyciszony
-    boolean isMute = false;
-    //zmienna sprawdzająca czy piosenka została dodana do ulubionych
-    boolean isFavourite = false;
-    // zmienna odpowiedzialna za początkowa glosnosc piosenki
+    private String title = "";
+    boolean isPlayed;
+    boolean isMute;
+    boolean isFavourite;
     int actual_volume = 100;
-    //zmienna przechowująca aktualna glosnosc - używana przy nacisnieciu przycisku glosnosci
     int prev_volume;
-    //zmienna przechowująca aktualny czas piosenki
-    int actualTime = 74; //w sekundach
-    //zmienna przechowująca czas całkowity piosenki
+    int actualTime = 0; //w sekundach
     int endTime = 230; //w sekundach
 
-    // elementy widoczne w programie
+    private final LocalPlayer player = new LocalPlayer();
+
     @FXML
     public Slider volumeSlider;
     public Slider songSlider;
@@ -80,11 +77,17 @@ public class SchemeController implements Initializable {
         settingsButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/settings.png"), 30, 30, true, true)));
         exitButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/exit.png"), 30, 30, true, true)));
         heartButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart.png"), 30, 30, true, true)));
-
     }
 
-    // pomocnicza metoda do initialize
+    private void updateTime(Duration duration) {
+        actualTime = (int) duration.toSeconds();
+    }
+
     public void init() {
+        player.changePlaylist(new Playlist("xd", List.of(new Song("Bet My Heart.mp3"))));
+        actual_volume = (int) (player.getVolume() * 100);
+        player.setOnPlaying(this::updateTime);
+
         setImage();
         setSongTitle();
         manageTimeLabel();
@@ -127,13 +130,13 @@ public class SchemeController implements Initializable {
     }
 
     //metoda obsługująca label odpowiadający za aktualny czas piosenki
-    public void manageTimeLabel(){
+    public void manageTimeLabel() {
         actual_time.setText(convertTime(actualTime));
         songSlider.setValue(actualTime);
     }
 
     // konwersja czasu
-    public String convertTime(int time){
+    public String convertTime(int time) {
         int minutes = (time % 60);
         String formatted = String.format("%02d", minutes);
         if (minutes < 10) {
@@ -145,9 +148,8 @@ public class SchemeController implements Initializable {
 
     // metoda wczytujący obraz środka aplikacji
     private void loadFXML(String fxml) {
-        Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource(fxml + ".fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(fxml + ".fxml"));
             mainContent.setCenter(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -164,7 +166,6 @@ public class SchemeController implements Initializable {
         exitButton.setOnAction(this::exit);
         shuffleButton.setOnAction(this::shuffle);
         prevButton.setOnAction(this::prev);
-
         playButton.setOnAction(this::play);
         nextButton.setOnAction(this::next);
         repeatButton.setOnAction(this::repeat);
@@ -229,12 +230,12 @@ public class SchemeController implements Initializable {
     // metoda odpowiedzialna za przycisk play/pause
     @FXML
     private void play(ActionEvent event) {
-        isPaused = !isPaused;
-        if (isPaused) {
-            System.out.println("pause");
+        isPlayed = !isPlayed;
+        if (isPlayed) {
+            player.play();
             playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/pause.png"), 30, 30, true, true)));
         } else {
-            System.out.println("play");
+            player.pause();
             playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 30, 30, true, true)));
         }
     }
@@ -246,12 +247,9 @@ public class SchemeController implements Initializable {
         if (isMute) {
             prev_volume = actual_volume;
             actual_volume = 0;
-            System.out.println("mute");
             volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/mute.png"), 30, 30, true, true)));
-
         } else {
             actual_volume = prev_volume;
-            System.out.println("volume up");
             volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/audio.png"), 30, 30, true, true)));
         }
         volumeValue.setText(String.valueOf(actual_volume));
@@ -275,29 +273,15 @@ public class SchemeController implements Initializable {
     private void addToFavourite(ActionEvent event) {
         isFavourite = !isFavourite;
         if (isFavourite) {
-            System.out.println("red heart");
             heartButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart1.png"), 30, 30, true, true)));
         } else {
-            System.out.println("black heart");
             heartButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart.png"), 30, 30, true, true)));
         }
     }
 
-    // metoda odpowiedzialna za przycisk device - czyli urządzenia wyjściowe
-    @FXML
-    private void changeOutputDevice(ActionEvent event) {
-        System.out.println("devices");
-    }
-
-    // metoda służąca ustawieniu tytułu piosenki
     @FXML
     private void setSongTitle() {
         songTitle.setText(title);
     }
 
-    // funkcja pobierająca tytuł piosenki
-    @FXML
-    public Label getSongTitle() {
-        return songTitle;
-    }
 }
