@@ -21,6 +21,7 @@ public class Store {
 
     private int volume;
     private boolean isPlayed;
+    private int currentTime;
 
     public Store() {
         volume = (int) (player.getVolume() * 100);
@@ -35,6 +36,9 @@ public class Store {
         player.changePlaylist(new Playlist("xd", List.of(new Song("Bet My Heart.mp3"))));
     }
 
+    /**
+     * play if not playing, pause if playing
+     */
     public void playPause() {
         isPlayed = !isPlayed;
         if (isPlayed) {
@@ -48,14 +52,30 @@ public class Store {
         player.shuffle();
     }
 
+    /**
+     * play next song
+     */
     public void next() {
         player.next();
     }
 
+    /**
+     * rewind song if listening longer than 5 seconds, otherwise play previous song
+     */
     public void previous() {
-        player.previous();
+        if (currentTime < 5) {
+            player.previous();
+        } else {
+            player.rewind();
+        }
     }
 
+    /**
+     * change player volume
+     *
+     * @param volume new volume in range [0, 100]
+     * @throws IllegalArgumentException if new volume is out of range
+     */
     public void changeVolume(int volume) {
         if (volume < 0 || volume > 100) {
             throw new IllegalArgumentException("Volume should be in range [0, 100]");
@@ -68,43 +88,89 @@ public class Store {
         // @TODO
     }
 
+    /**
+     * @return true, if playing now, otherwise false
+     */
     public boolean isPlayed() {
         return isPlayed;
     }
 
+    /**
+     * @param action method that will be performed after change of song time
+     */
     public void subscribeTimeChange(Consumer<Duration> action) {
         timeChangeListeners.add(action);
     }
 
+    /**
+     * notify subscribers about change in song time
+     *
+     * @param currentTime current time of the song
+     */
     private void timeChange(Duration currentTime) {
+        this.currentTime = (int) currentTime.toSeconds();
         timeChangeListeners.forEach(c -> c.accept(currentTime));
     }
 
+    /**
+     * subscribe to audio load
+     *
+     * @param action method that will be performed after audio load
+     */
     public void subscribeAudioLoaded(Consumer<Duration> action) {
         audioLoadedListeners.add(action);
     }
 
+    /**
+     * notify subscribers about audio loaded and change title
+     *
+     * @param duration duration of the song
+     */
     private void audioLoaded(Duration duration) {
+        currentTime = 0;
         audioLoadedListeners.forEach(c -> c.accept(duration));
         titleChange(player.getTitle());
     }
 
+    /**
+     * subscribe to scene change
+     *
+     * @param action method that will be performed after changing scene
+     */
     public void subscribeSceneChange(Consumer<Boolean> action) {
         sceneChangeListeners.add(action);
     }
 
+    /**
+     * notify subscribers about scene change (window minimalization/maximalization)
+     */
     public void sceneChange() {
         sceneChangeListeners.forEach(c -> c.accept(isPlayed));
     }
 
+    /**
+     * subscribe to title change
+     *
+     * @param action method that will be performed after changing the title
+     */
     public void subscribeTitleChange(Consumer<String> action) {
         titleChangeListeners.add(action);
     }
 
+    /**
+     * notify subscribers about title change
+     *
+     * @param newTitle new title
+     */
     public void titleChange(String newTitle) {
         titleChangeListeners.forEach(c -> c.accept(newTitle));
     }
 
+    /**
+     * Get player volume
+     *
+     * @return current volume
+     */
     public int getVolume() {
         return volume;
     }
