@@ -6,12 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -57,38 +57,52 @@ public class ListManager {
         });
     }
 
-    //tworzenie elementów listy statystyk ostatnio odtwarzanych
-    public void setRecentlyPlayedList() {
+    /**
+     * Set current day listened songs in option 'Recently Played' in statistics
+     */
+    public void currentDaySongs() {
         playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 0; i < 100; i++) {
-            playlistData.add(String.valueOf(i));
-
+        if (Files.exists(Paths.get(filePah))){
+            Map<Song, Integer> sortedByCount = sortByValue(getFewDaysListened(0));
+            showStatistics(sortedByCount);
         }
-        playlistView.setItems(playlistData);
     }
 
+    /**
+     * Set last week listened songs in option 'Last Week Played' in statistics
+     */
+    public void lastWeekSongs() {
+        playlistData.clear();
+        if (Files.exists(Paths.get(filePah))){
+            Map<Song, Integer> sortedByCount = sortByValue(getFewDaysListened(-6));
+            showStatistics(sortedByCount);
+        }
+    }
 
     /**
      * Set the least played songs in option 'Last Played Songs' in statistics
      */
-    public void setLeastPlayedList() {
+    public void leastPlayed() {
         playlistData.clear();
-        Map<Song, Integer> sortedByCount = reverseOrder(getCountedSongs());
-        showStatistics(sortedByCount);
+        if (Files.exists(Paths.get(filePah))){
+            Map<Song, Integer> sortedByCount = reverseOrder(getCountedSongs());
+            showStatistics(sortedByCount);
+        }
     }
 
     /**
      * Set the most played songs in option 'Generally Played Songs' in statistics
      */
-    public void setMostPlayedList() {
+    public void mostPlayed() {
         playlistData.clear();
-        Map<Song, Integer> sortedByCount = sortByValue(getCountedSongs());
-        showStatistics(sortedByCount);
+        if (Files.exists(Paths.get(filePah))){
+            Map<Song, Integer> sortedByCount = sortByValue(getCountedSongs());
+            showStatistics(sortedByCount);
+        }
     }
 
     /**
-     * Set list of statistics on TODO where exackly??????
+     * Set list of statistics on screen
      *
      * @param sortedByCount sorted map
      */
@@ -98,15 +112,28 @@ public class ListManager {
     }
 
     /**
-     * Get played songs from file and count the number of occurrences of the songs
+     * Get played songs from file and count total time of listening for each song in the last few days
      *
-     * @return hashmap, which contains songs and number of repetitions
+     * @param number of last days to statictics
+     * @return hashmap, which contains songs and total time of listening
      */
-    public Map<Song, Integer> getCountedSongs(){
-        Map<Song, Integer> mostListened = new HashMap<>();
+    public Map<Song, Integer> getFewDaysListened(int number) {
+        Map<Song, Integer> listenedSongs = new HashMap<>();
         try {
             var lines = Files.readAllLines(Path.of(filePah));
             var parser = new SimpleDateFormat("dd/MM/yyyy");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, number);
+            Date calDate = calendar.getTime();
+            String format = parser.format(calDate);
+            Date currentDay = null;
+            try {
+                currentDay = parser.parse(format);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Date finalCurrentDay = currentDay;
 
             lines.forEach(line -> {
                 String[] data = line.split("\t");
@@ -118,6 +145,43 @@ public class ListManager {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                Song song = new Song(path);
+
+                if (date!= null && finalCurrentDay != null && (date.after(finalCurrentDay) || date.equals(finalCurrentDay))) {
+                    if (!listenedSongs.containsKey(song)) {
+                        listenedSongs.put(song, time);
+                    } else {
+                        for (var e : listenedSongs.entrySet()) {
+                            if (e.getKey().equals(song)) {
+                                Integer value = e.getValue();
+                                value += time;
+                                listenedSongs.put(song, value);
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return listenedSongs;
+    }
+
+    /**
+     * Get played songs from file and count the number of occurrences of the songs
+     *
+     * @return hashmap, which contains songs and number of repetitions
+     */
+    public Map<Song, Integer> getCountedSongs() {
+        Map<Song, Integer> mostListened = new HashMap<>();
+        try {
+            var lines = Files.readAllLines(Path.of(filePah));
+
+            lines.forEach(line -> {
+                String[] data = line.split("\t");
+                String path = data[0];
+
                 Song song = new Song(path);
 
                 if (!mostListened.containsKey(song)) {
@@ -148,8 +212,8 @@ public class ListManager {
     public Map<Song, Integer> sortByValue(Map<Song, Integer> map) {
         return map.entrySet()
                 .stream()
-                .sorted((Map.Entry.<Song, Integer> comparingByValue().reversed()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1,e2)->e1, LinkedHashMap::new));
+                .sorted((Map.Entry.<Song, Integer>comparingByValue().reversed()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     /**
@@ -162,16 +226,6 @@ public class ListManager {
         return map.entrySet()
                 .stream()
                 .sorted((Map.Entry.comparingByValue()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1,e2)->e1, LinkedHashMap::new));
-    }
-
-    // to chyba dla Ciebie Aniu
-    public void setAniaList(){
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 45; i < 100; i++) {
-            playlistData.add(String.valueOf(i));
-        }
-        playlistView.setItems(playlistData);
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 }
