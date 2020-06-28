@@ -1,19 +1,24 @@
 package app.settings;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Settings {
-    private String password;
     private Path saveDirectory;
-    private Path playlistLocation;
+    private Path musicDirectory;
+    private final Path path = Paths.get(System.getProperty("user.home") + "\\Music");
 
     public Settings() {
-        Path path = Paths.get(System.getProperty("user.home") + "\\Music");
         this.saveDirectory = path;
-        this.playlistLocation = path;
+        this.musicDirectory = path;
+        if (!Files.exists(Paths.get(path + "\\settings.txt"))) {
+            save();
+        }
     }
 
     /**
@@ -21,9 +26,10 @@ public class Settings {
      *
      * @param path for searching music
      */
-    public void setPlaylistLocations(Path path) {
+    public void setMusicLocation(Path path) {
         if (isDirectory(path)) {
-            playlistLocation = path;
+            musicDirectory = path;
+            save();
         }
     }
 
@@ -35,6 +41,7 @@ public class Settings {
     public void setSaveDirectory(Path path) {
         if (isDirectory(path)) {
             saveDirectory = path;
+            save();
         }
     }
 
@@ -49,12 +56,17 @@ public class Settings {
     }
 
     /**
-     * Setting password
-     *
-     * @param password for private room
+     * Saving settings to file
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void save() {
+        File file = new File(String.valueOf(path), "settings.txt");
+
+        try (FileWriter outputFile = new FileWriter(file.getAbsoluteFile())) {
+            outputFile.write((saveDirectory) + "\n");
+            outputFile.write((musicDirectory) + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -67,7 +79,7 @@ public class Settings {
     public static String getRunningDir() {
         String runningdir = Paths.get(".").toAbsolutePath().normalize().toString();
         runningdir += "\\target";       //dopisac cala lokalizacje artefaktow
-         System.out.println(runningdir);
+        System.out.println(runningdir);
 
         return runningdir;
     }

@@ -9,6 +9,7 @@ import java.util.List;
 public class Queue extends Playlist {
 
     private final Deque<Song> history = new LinkedList<>();
+//    private boolean prev;
 
     public Queue() {
         super("Queue");
@@ -18,7 +19,9 @@ public class Queue extends Playlist {
      * Shuffle queue
      */
     public void shuffle() {
+        Song currentSong = playlist.remove();
         Collections.shuffle((List<?>) playlist);
+        addFirst(currentSong);
     }
 
     /**
@@ -29,20 +32,21 @@ public class Queue extends Playlist {
     }
 
     /**
-     * If queue has next and add current played to history and play next song from queue
-     * or play current
+     * Ad current played song to history and play next song from queue
      *
-     * @return song which will be played next
+     * @return song which will be played next or null if queue is empty
      */
     public Song next() {
         if (playlist.size() > 0) {
             history.offerLast(playlist.poll());
         }
+//        prev = false;
         return getCurrentSong();
     }
 
     /**
-     * Play previous played song based on history or play current if history is empty
+     * Add current played song to the end of history.
+     * Play previous song based on history.
      *
      * @return song which was played before
      */
@@ -52,5 +56,21 @@ public class Queue extends Playlist {
         }
         return getCurrentSong();
     }
+
+
+//    public Song previous() {
+//        if (history.size() > 0) {
+//            Song prevSong = history.peekLast();
+//            if (!prev) {
+//                history.offerLast(getCurrentSong());
+//                prev = true;
+//            } else {
+//                history.offerLast(history.peekLast());
+//            }
+//
+//            return prevSong;
+//        }
+//        return getCurrentSong();
+//    }
 
 }
