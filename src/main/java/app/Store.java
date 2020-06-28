@@ -197,4 +197,13 @@ public class Store {
         player.queue(song);
     }
 
+    /**
+     * Get player queue
+     *
+     * @return queue
+     */
+    public List<Song> getQueue() {
+        return player.getQueue();
+    }
+
 }
