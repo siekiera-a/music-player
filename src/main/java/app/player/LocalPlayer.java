@@ -8,6 +8,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class LocalPlayer {
@@ -225,6 +226,10 @@ public class LocalPlayer {
 
     public String getTitle() {
         return currentSong != null ? currentSong.getTitle() : "";
+    }
+
+    public List<Song> getQueue() {
+        return queue.getSongs();
     }
 
 }
