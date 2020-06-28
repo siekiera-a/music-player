@@ -20,11 +20,9 @@ public class ListManagerSong {
         setSearchListener();
     }
 
-    public void setList(ObservableList<String> newPlaylist) {
-        playlistData = newPlaylist;
-        playlistView.setItems(playlistData);
-    }
-
+    /**
+     * Search (filtered) elements in list
+     */
     protected void setSearchListener() {
         playlistSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals("")) {
@@ -42,6 +40,9 @@ public class ListManagerSong {
         });
     }
 
+    /**
+     * Create first playlist
+     */
     public void setPlaylist1List() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
@@ -51,6 +52,9 @@ public class ListManagerSong {
         playlistView.setItems(playlistData);
     }
 
+    /**
+     * Create second playlist
+     */
     public void setPlaylist2List() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
@@ -60,6 +64,9 @@ public class ListManagerSong {
         playlistView.setItems(playlistData);
     }
 
+    /**
+     * Create third playlist
+     */
     public void setPlaylist3List() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
@@ -69,6 +76,9 @@ public class ListManagerSong {
         playlistView.setItems(playlistData);
     }
 
+    /**
+     * Create forth playlist
+     */
     public void setPlaylist4List() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
@@ -78,6 +88,9 @@ public class ListManagerSong {
         playlistView.setItems(playlistData);
     }
 
+    /**
+     * Create favourite playlist
+     */
     public void setFavouriteList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
@@ -87,10 +100,25 @@ public class ListManagerSong {
         playlistView.setItems(playlistData);
     }
 
+    /**
+     * Create queue
+     */
     public void setQueueList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
         for (int i = 5; i < 100; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
+
+    /**
+     * Create collection of songs
+     */
+    public void setCollection(){
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 0; i < 1000; i++) {
             playlistData.add(String.valueOf(i));
         }
         playlistView.setItems(playlistData);
