@@ -12,8 +12,7 @@ import java.io.IOException;
 
 public class App extends Application {
 
-    private static Scene scene;
-    private static Stage st;
+    private static Stage stage2;
 
     private static final Store store = new Store();
 
@@ -24,10 +23,11 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // ustawienie okna głównego aplikacji
-        scene = new Scene(loadFXML("scheme"), 640, 480);
+        Scene scene = new Scene(loadFXML("scheme"), 640, 480);
         stage.setTitle("Odtwarzacz muzyki");
         stage.setScene(scene);
-
+        stage.setMinWidth(640);
+        stage.setMinHeight(480);
         //ustawienie overlaya po minimalizacji okna głownego
         st = new Stage();
         Scene scene2 = new Scene(loadFXML("overlay"), 200, 100);
@@ -47,6 +47,11 @@ public class App extends Application {
             }
             store.sceneChange();
         });
+        stage2 = stage;
+    }
+
+    public static Stage getInstance() {
+        return stage2;
     }
 
     // metoda ładująca odpowiedni wygląd aplikacji

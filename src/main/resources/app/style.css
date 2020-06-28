@@ -1,5 +1,5 @@
 .frame {
-    -fx-background-color: ghostwhite;
+    -fx-background-color: white;
 }
 
 .overlay {
@@ -20,6 +20,5 @@
 .button:hover {
 
 }
-
 
 

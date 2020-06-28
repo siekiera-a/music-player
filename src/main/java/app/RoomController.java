@@ -105,7 +105,7 @@ public class RoomController implements Initializable {
     }
 
     @FXML
-    private void passwordToStream(ActionEvent actionEvent){
+    private void passwordToStream(ActionEvent actionEvent) {
         streamButton.setDisable(true);
         joinHBox.setDisable(true);
         peopleHBox.setDisable(true);
