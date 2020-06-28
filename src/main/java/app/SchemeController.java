@@ -1,8 +1,5 @@
 package app;
 
-import app.player.LocalPlayer;
-import app.playlist.Playlist;
-import app.playlist.Song;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,21 +16,15 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class SchemeController implements Initializable {
 
-    private String title = "";
-    boolean isPlayed;
     boolean isMute;
     boolean isFavourite;
-    int actual_volume = 100;
     int prev_volume;
-    int actualTime = 0; //w sekundach
-    int endTime = 230; //w sekundach
 
-    private final LocalPlayer player = new LocalPlayer();
+    private final Store store = App.getStore();
 
     @FXML
     public Slider volumeSlider;
@@ -62,7 +53,7 @@ public class SchemeController implements Initializable {
     public Button settingsButton;
 
     // metoda wstawiania ikonek do przycisków
-    public void setImage() {
+    public void initIcons() {
         playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 30, 30, true, true)));
         prevButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/previous.png"), 30, 30, true, true)));
         nextButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/next.png"), 30, 30, true, true)));
@@ -80,32 +71,30 @@ public class SchemeController implements Initializable {
     }
 
     private void updateTime(Duration duration) {
-        actualTime = (int) duration.toSeconds();
+        updateTimeUI((int) duration.toSeconds());
     }
 
     public void init() {
-        String path = System.getProperty("user.home") + "/music/Three Days Grace - The Abyss.mp3";
-        player.changePlaylist(new Playlist("xd", List.of(new Song(path))));
-        actual_volume = (int) (player.getVolume() * 100);
-        player.setOnPlaying(this::updateTime);
+        changePlayIcon(store.isPlayed());
+        store.subscribeTimeChange(this::updateTime);
+        store.subscribeSceneChange(this::changePlayIcon);
+        store.subscribeTitleChange(this::setSongTitle);
+        store.subscribeAudioLoaded(this::initDurationSlider);
 
-        setImage();
-        setSongTitle();
-        manageTimeLabel();
-        manageSongSlider();
-        manageVolumeSlider();
+        initIcons();
+        initVolumeSlider();
     }
 
     // metoda obsługująca pasek głościości
-    public void manageVolumeSlider() {
-        volumeSlider.setValue(actual_volume);
+    public void initVolumeSlider() {
+        volumeSlider.setValue(store.getVolume());
         volumeSlider.setMin(0);
         volumeSlider.setMax(100);
-        volumeValue.setText(String.valueOf(actual_volume));
+        volumeValue.setText(String.valueOf(store.getVolume()));
 
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            actual_volume = newValue.intValue();
-            volumeValue.setText(String.valueOf(actual_volume));
+            store.changeVolume(newValue.intValue());
+            volumeValue.setText(String.valueOf(store.getVolume()));
             if (isMute && newValue.intValue() > 0) {
                 isMute = false;
                 volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/audio.png"), 30, 30, true, true)));
@@ -117,34 +106,28 @@ public class SchemeController implements Initializable {
     }
 
     // metoda obsługująca pasek trwania piosenki
-    public void manageSongSlider() {
-        songSlider.setValue(actualTime);
-        songSlider.setMax(endTime);
+    public void initDurationSlider(Duration duration) {
+        songSlider.setMax((int) (duration.toSeconds()));
         songSlider.setMin(0);
-        actual_time.setText(convertTime(actualTime));
-        end_time.setText(convertTime(endTime));
+        end_time.setText(convertTime((int) (duration.toSeconds())));
+        actual_time.setText(convertTime(0));
 
         songSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            actualTime = newValue.intValue();
-            actual_time.setText(convertTime(actualTime));
+            // @TODO implements
         });
     }
 
     //metoda obsługująca label odpowiadający za aktualny czas piosenki
-    public void manageTimeLabel() {
-        actual_time.setText(convertTime(actualTime));
-        songSlider.setValue(actualTime);
+    public void updateTimeUI(int newTime) {
+        actual_time.setText(convertTime(newTime));
+        songSlider.setValue(newTime);
     }
 
     // konwersja czasu
-    public String convertTime(int time) {
-        int minutes = (time % 60);
-        String formatted = String.format("%02d", minutes);
-        if (minutes < 10) {
-            return time / 60 + ":" + formatted;
-        } else {
-            return time / 60 + ":" + minutes;
-        }
+    public static String convertTime(int time) {
+        int minutes = time / 60;
+        int seconds = time % 60;
+        return String.format("%d:%02d", minutes, seconds);
     }
 
     // metoda wczytujący obraz środka aplikacji
@@ -219,24 +202,26 @@ public class SchemeController implements Initializable {
     // metoda odpowiedzialna za przycisk shuffle
     @FXML
     private void shuffle(ActionEvent event) {
-        System.out.println("shuffle");
+        store.shuffle();
     }
 
     // metoda odpowiedzialna za przycisk previous
     @FXML
     private void prev(ActionEvent event) {
-        System.out.println("prev");
+        store.previous();
     }
 
     // metoda odpowiedzialna za przycisk play/pause
     @FXML
     private void play(ActionEvent event) {
-        isPlayed = !isPlayed;
+        store.playPause();
+        changePlayIcon(store.isPlayed());
+    }
+
+    private void changePlayIcon(boolean isPlayed) {
         if (isPlayed) {
-            player.play();
             playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/pause.png"), 30, 30, true, true)));
         } else {
-            player.pause();
             playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 30, 30, true, true)));
         }
     }
@@ -246,27 +231,27 @@ public class SchemeController implements Initializable {
     private void volume(ActionEvent event) {
         isMute = !isMute;
         if (isMute) {
-            prev_volume = actual_volume;
-            actual_volume = 0;
+            prev_volume = store.getVolume();
+            store.changeVolume(0);
             volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/mute.png"), 30, 30, true, true)));
         } else {
-            actual_volume = prev_volume;
+            store.changeVolume(prev_volume);
             volumeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/audio.png"), 30, 30, true, true)));
         }
-        volumeValue.setText(String.valueOf(actual_volume));
-        volumeSlider.setValue(actual_volume);
+        volumeValue.setText(String.valueOf(store.getVolume()));
+        volumeSlider.setValue(store.getVolume());
     }
 
     // metoda odpowiedzialna za przycisk next
     @FXML
     private void next(ActionEvent event) {
-        System.out.println("next");
+        store.next();
     }
 
     // metoda odpowiedzialna za przycisk repeat
     @FXML
     private void repeat(ActionEvent event) {
-        System.out.println("repeat");
+        store.repeat();
     }
 
     // metoda odpowiedzialna za przycisk heart, czyli dodawanie do  ulubionych
@@ -281,7 +266,7 @@ public class SchemeController implements Initializable {
     }
 
     @FXML
-    private void setSongTitle() {
+    private void setSongTitle(String title) {
         songTitle.setText(title);
     }
 
