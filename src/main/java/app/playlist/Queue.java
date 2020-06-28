@@ -9,7 +9,6 @@ import java.util.List;
 public class Queue extends Playlist {
 
     private final Deque<Song> history = new LinkedList<>();
-//    private boolean prev;
 
     public Queue() {
         super("Queue");
@@ -40,7 +39,6 @@ public class Queue extends Playlist {
         if (playlist.size() > 0) {
             history.offerLast(playlist.poll());
         }
-//        prev = false;
         return getCurrentSong();
     }
 
@@ -56,21 +54,4 @@ public class Queue extends Playlist {
         }
         return getCurrentSong();
     }
-
-
-//    public Song previous() {
-//        if (history.size() > 0) {
-//            Song prevSong = history.peekLast();
-//            if (!prev) {
-//                history.offerLast(getCurrentSong());
-//                prev = true;
-//            } else {
-//                history.offerLast(history.peekLast());
-//            }
-//
-//            return prevSong;
-//        }
-//        return getCurrentSong();
-//    }
-
 }

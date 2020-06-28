@@ -33,6 +33,10 @@ public class Settings {
         }
     }
 
+    public Path getSaveDirectory() {
+        return saveDirectory;
+    }
+
     /**
      * Changing path for saving playloist
      *

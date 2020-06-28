@@ -3,12 +3,19 @@ package app;
 import app.player.LocalPlayer;
 import app.playlist.Playlist;
 import app.playlist.Song;
+import app.settings.Settings;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class Store {
 
@@ -18,6 +25,8 @@ public class Store {
     private final Set<Consumer<Duration>> audioLoadedListeners;
     private final Set<Consumer<Boolean>> sceneChangeListeners;
     private final Set<Consumer<String>> titleChangeListeners;
+    private final List<Playlist> playlists;
+    private final Settings settings;
 
     private int volume;
     private boolean isPlayed;
@@ -29,15 +38,43 @@ public class Store {
         sceneChangeListeners = new HashSet<>();
         titleChangeListeners = new HashSet<>();
         audioLoadedListeners = new HashSet<>();
+        settings = new Settings();
+        playlists = new ArrayList<>();
 
         player.setOnPlaying(this::timeChange);
         player.setOnAudioLoaded(this::audioLoaded);
 
+        try (Stream<Path> files = Files.walk(settings.getSaveDirectory(), 1)) {
+            files.filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().endsWith(".txt"))
+                    .forEach(path -> {
+                        String file = path.getFileName().toString();
+                        String playlistName = file.substring(0, file.lastIndexOf("."));
+                        try {
+                            List<String> lines = Files.readAllLines(path);
+                            List<Song> songs = new ArrayList<>();
+                            lines.forEach(line -> {
+                                try {
+                                    Song song = new Song(line);
+                                    songs.add(song);
+                                } catch (IllegalArgumentException ignored) {
+                                }
+                            });
+                            Playlist playlist = new Playlist(playlistName, songs);
+                            playlists.add(playlist);
+                        } catch (IOException e) {
+                        }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         player.changePlaylist(new Playlist("xd", List.of(
-            new Song("Bet My Heart.mp3"),
-            new Song("Visions.mp3"),
-            new Song("This Love.mp3")
+                new Song("C:\\Users\\Ania\\Music\\1.mp3"),
+                new Song("C:\\Users\\Ania\\Music\\2.mp3"),
+                new Song("C:\\Users\\Ania\\Music\\3.mp3")
         )));
+
     }
 
     /**
@@ -206,4 +243,20 @@ public class Store {
         return player.getQueue();
     }
 
+    public void createPlaylist(String name) {
+        playlists.add(new Playlist(name));
+    }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public Playlist getPlaylist(String name) {
+        Optional<Playlist> playlist = playlists
+                .stream()
+                .filter(p -> p.getName().equals(name))
+                .findFirst();
+
+        return playlist.orElse(null);
+    }
 }
