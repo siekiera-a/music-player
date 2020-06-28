@@ -3,7 +3,7 @@
 }
 
 .overlay {
-    -fx-background-color: white;
+    -fx-background-color: rgba(247, 207, 0, 0.8);
 }
 
 .list-view {

@@ -15,11 +15,14 @@ public class LocalPlayer {
     private MediaPlayer player;
     private final Queue queue;
 
+    private Song currentSong;
+
     private float volume;
     private boolean loop;
     private boolean isPlayed;
 
     private Consumer<Duration> onPlaying;
+    private Consumer<Duration> onLoaded;
 
     public LocalPlayer() {
         this.queue = new Queue();
@@ -34,6 +37,7 @@ public class LocalPlayer {
     private void changeSong(Song song) {
         stop();
         try {
+            currentSong = song;
             File file = new File(song.path());
             Media media = new Media(file.toURI().toString());
             player = new MediaPlayer(media);
@@ -56,6 +60,7 @@ public class LocalPlayer {
         player.setAutoPlay(isPlayed);
 
         setOnPlaying(onPlaying);
+        setOnAudioLoaded(onLoaded);
     }
 
     /**
@@ -85,6 +90,13 @@ public class LocalPlayer {
 
         Duration duration = player.getCycleDuration();
         player.seek(duration.multiply(progress));
+    }
+
+    /**
+     * rewind current song
+     */
+    public void rewind() {
+        seek(0.0f);
     }
 
     /**
@@ -188,10 +200,24 @@ public class LocalPlayer {
     public void setOnPlaying(Consumer<Duration> onPlaying) {
         if (onPlaying != null) {
             this.onPlaying = onPlaying;
-            player.currentTimeProperty().addListener(
-                ((observable, oldValue, newValue) -> onPlaying.accept(newValue)
-                ));
+            if (player != null) {
+                player.currentTimeProperty().addListener(
+                    ((observable, oldValue, newValue) -> onPlaying.accept(newValue)));
+            }
         }
+    }
+
+    public void setOnAudioLoaded(Consumer<Duration> onLoaded) {
+        if (onLoaded != null) {
+            this.onLoaded = onLoaded;
+            if (player != null) {
+                player.setOnReady(() -> onLoaded.accept(player.getCycleDuration()));
+            }
+        }
+    }
+
+    public String getTitle() {
+        return currentSong != null ? currentSong.getTitle() : "";
     }
 
 }

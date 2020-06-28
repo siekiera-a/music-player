@@ -7,21 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
 public class OverlayController implements Initializable {
-
-    //zmienna odpowiedzialna za tytuł piosenki
-    private String title = "Tytuł piosenki";
-    //zmienna sprawdzająca czy piosenka jest zapausowana
-    boolean isPaused = false;
-    //zmienna przechowująca aktualny czas piosenki
-    int actualTime = 74; //w sekundach
-    //zmienna przechowująca czas całkowity piosenki
-    int endTime = 230; //w sekundach
 
     //elementy widoczne w programie
     @FXML
@@ -33,6 +25,8 @@ public class OverlayController implements Initializable {
     public Button prevButton;
     public Button nextButton;
 
+    private final Store store = App.getStore();
+
     // metoda inicjalizacji
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,71 +34,54 @@ public class OverlayController implements Initializable {
         nextButton.setOnAction(this::next);
         prevButton.setOnAction(this::prev);
 
-        playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 20, 20, true, true)));
         prevButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/previous.png"), 20, 20, true, true)));
         nextButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/next.png"), 20, 20, true, true)));
 
-        actual_time.setText(getActualTime());
-        end_time.setText(getEndTime());
-        setSongTitle();
-
+        changePlayIcon(store.isPlayed());
+        store.subscribeTimeChange(this::updateTime);
+        store.subscribeSceneChange(this::changePlayIcon);
+        store.subscribeTitleChange(this::setSongTitle);
+        store.subscribeAudioLoaded(d -> {
+            end_time.setText(SchemeController.convertTime((int) (d.toSeconds())));
+            actual_time.setText(SchemeController.convertTime(0));
+        });
     }
 
-    //pobieranie aktualnego czasu piosenki
-    public String getActualTime() {
-        return actualTime / 60 + ":" + (actualTime % 60);
+    private void updateTime(Duration duration) {
+        actual_time.setText(SchemeController.convertTime((int) duration.toSeconds()));
     }
 
-    //ustawienie aktualnego czasu piosenki
-    public void setActualTime(int actualTime) {
-        this.actualTime = actualTime;
-    }
-
-    //pobranie czasu całkowitego piosenki
-    public String getEndTime() {
-        return endTime / 60 + ":" + (endTime % 60);
-    }
-
-    //ustawienie czasu całkowitego piosenki
-    public void setEndTime(int endTime) {
-        this.endTime = endTime;
+    public void changePlayIcon(boolean isPlayed) {
+        if (isPlayed) {
+            playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/pause.png"), 20, 20, true, true)));
+        } else {
+            playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 20, 20, true, true)));
+        }
     }
 
     // metoda odpowiedzialna za przycisk previous
     @FXML
     private void prev(ActionEvent event) {
-        System.out.println("prev");
+        store.previous();
     }
 
     // metoda odpowiedzialna za przycisk play/pause
     @FXML
     private void play(ActionEvent event) {
-        isPaused = !isPaused;
-        if (isPaused) {
-            System.out.println("pause");
-            playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/pause.png"), 20, 20, true, true)));
-        } else {
-            System.out.println("play");
-            playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 20, 20, true, true)));
-        }
+        store.playPause();
+        changePlayIcon(store.isPlayed());
     }
 
     // metoda odpowiedzialna za przycisk next
     @FXML
     private void next(ActionEvent event) {
-        System.out.println("next");
+        store.next();
     }
 
 
     // metoda służąca ustawieniu tytułu piosenki
     @FXML
-    private void setSongTitle() {
+    private void setSongTitle(String title) {
         songTitle.setText(title);
-    }
-
-    // funkcja pobierająca tytuł piosenki
-    @FXML
-    public Label getSongTitle() {
-        return songTitle;
     }
 }
