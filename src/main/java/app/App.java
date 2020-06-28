@@ -13,6 +13,7 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Stage stage2;
+    private static Stage st;
 
     private static final Store store = new Store();
 

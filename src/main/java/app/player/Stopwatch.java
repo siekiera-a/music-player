@@ -1,6 +1,5 @@
 package app.player;
 
-
 import java.time.Duration;
 
 public class Stopwatch {
@@ -27,7 +26,7 @@ public class Stopwatch {
     }
 
     /**
-     * stop timer and reset stopper
+     * stop timer and reset stopwatch
      *
      * @return calculated time
      */
