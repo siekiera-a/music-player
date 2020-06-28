@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -12,6 +13,13 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Stage stage2;
+    private static Stage st;
+
+    private static final Store store = new Store();
+
+    public static Store getStore() {
+        return store;
+    }
 
     /**
      * Start method
@@ -30,14 +38,15 @@ public class App extends Application {
         stage.setMinWidth(640);
         stage.setMinHeight(480);
         //ustawienie overlaya po minimalizacji okna głownego
-        Stage st = new Stage();
-        Scene scene2 = new Scene(loadFXML("overlay"), 160, 130);
+        st = new Stage();
+        Scene scene2 = new Scene(loadFXML("overlay"), 200, 100);
         st.setAlwaysOnTop(true);
-        st.setX(120);
-        st.setY(20);
+        st.setX(15);
+        st.setY(15);
         st.setScene(scene2);
         st.setResizable(false);
-        st.initStyle(StageStyle.UNDECORATED);
+        scene2.setFill(Color.TRANSPARENT);
+        st.initStyle(StageStyle.TRANSPARENT);
         stage.show();
         stage.iconifiedProperty().addListener((observable, oldValue, newValue) -> {
             if (st.isShowing()) {
@@ -45,6 +54,7 @@ public class App extends Application {
             } else {
                 st.show();
             }
+            store.sceneChange();
         });
         stage2 = stage;
     }

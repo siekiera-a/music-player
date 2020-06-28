@@ -1,5 +1,6 @@
 package app;
 
+import app.settings.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,117 +11,119 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
-
-    String locationPlaylists = System.getProperty("user.music");
-    String locationSongs = System.getProperty("user.music");
-    String password = "room";
+    private final Path filePath = Paths.get(System.getProperty("user.home") + "\\Music\\settings.txt");
+    String locationPlaylists;
+    String locationSongs;
+    String password = "";
+    private final Settings settings = new Settings();
 
     @FXML
     public CheckBox startAppCB;
 
-    public Button chooseLocation;
+    public Button playlistButton;
     public Button passwordButton;
-    public Button chooseLocationSongs;
+    public Button songButton;
 
-    public TextField locationPlaylist;
-    public TextField locationSong;
+    public TextField playlistLocationField;
+    public TextField songLocationField;
     public TextField passwordField;
 
 
     /**
-     * Get location of playlists
-     *
-     * @return
-     */
-    public String getLocationPlaylist() {
-        locationPlaylists = locationPlaylist.getText();
-        return locationPlaylists;
-    }
-
-    /**
-     * Get location of songs
-     *
-     * @return
-     */
-    public String getLocationSongs() {
-        locationSongs = locationSong.getText();
-        return locationSongs;
-    }
-
-    /**
-     * Change location of playlist
+     * Change playlists search directory
      *
      * @param actionEvent
      */
     public void chooseLocationPlaylist(ActionEvent actionEvent) {
-        Stage stage = (Stage) chooseLocation.getScene().getWindow();
+        Stage stage = (Stage) playlistButton.getScene().getWindow();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(stage);
-        setLocationPlaylist(file.toString());
+        setPlaylistLocation(file.toString());
     }
 
     /**
-     * Change location of songs
+     * Change songs search directory
      *
      * @param actionEvent
      */
     public void chooseLocationSongs(ActionEvent actionEvent) {
-        Stage stage = (Stage) chooseLocationSongs.getScene().getWindow();
+        Stage stage = (Stage) songButton.getScene().getWindow();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(stage);
-        setLocationSongs(file.toString());
+        setSongsLocation(file.toString());
     }
 
     /**
-     * Set location of playlist and put in textfield
+     * Change playlist's save directory and set in playlists localization text field
      *
-     * @param location
+     * @param directory where system will save playlists
      */
-    public void setLocationPlaylist(String location) {
-        this.locationPlaylists = location;
-        locationPlaylist.setText(location);
+    public void setPlaylistLocation(String directory) {
+        this.locationPlaylists = directory;
+        settings.setSaveDirectory(Path.of(directory));
+        playlistLocationField.setText(locationPlaylists);
     }
 
     /**
-     * Set location of songs and put in textfield
+     * Change songs search directory and set in songs localization text field
      *
-     * @param location
+     * @param directory where system will search songs
      */
-    public void setLocationSongs(String location) {
-        this.locationSongs = location;
-        locationSong.setText(location);
+    public void setSongsLocation(String directory) {
+        this.locationSongs = directory;
+        settings.setMusicLocation(Paths.get(directory));
+        songLocationField.setText(locationSongs);
     }
 
     /**
-     * Application will run when system starts;
+     * Set user's settings on screen in Text fields
      */
+    public void showSettings() {
+        songLocationField.setText(locationSongs);
+        playlistLocationField.setText(locationPlaylists);
+    }
+
+    /**
+     * Read user's settings from file and write them to local variables
+     *
+     * @param filePah where are saved user's settings
+     */
+    public void readSettings(Path filePah) {
+        List<String> settings = new ArrayList<>();
+        try {
+            settings = Files.readAllLines(filePah);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        locationPlaylists = settings.get(0);
+        locationSongs = settings.get(1);
+    }
+
+    //metoda ustawiająca, że aplikacja ma zostać uruchomiona przy starcie systemu
     public void startApp() {
         startAppCB.isSelected();
     }
 
-    /**
-     * Default initialize method
-     *
-     * @param location
-     * @param resources
-     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startApp();
-        chooseLocation.setOnAction(this::chooseLocationPlaylist);
-        chooseLocationSongs.setOnAction(this::chooseLocationSongs);
+        readSettings(filePath);
+        showSettings();
+        playlistButton.setOnAction(this::chooseLocationPlaylist);
+        songButton.setOnAction(this::chooseLocationSongs);
         passwordButton.setOnAction(this::setPasswordButton);
     }
 
-    /**
-     * Create a password to the room
-     *
-     * @param actionEvent
-     */
     private void setPasswordButton(ActionEvent actionEvent) {
         password = passwordField.getText();
     }

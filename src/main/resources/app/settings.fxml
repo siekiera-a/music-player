@@ -57,12 +57,12 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="locationPlaylist" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="190.0" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="playlistLocationField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="190.0" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
                         </TextField>
-                        <Button fx:id="chooseLocation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wybierz">
+                        <Button fx:id="playlistButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wybierz">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin></Button>
@@ -78,12 +78,12 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="locationSong" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="203.0" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="songLocationField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="203.0" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
                         </TextField>
-                  <Button fx:id="chooseLocationSongs" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wybierz">
+                  <Button fx:id="songButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wybierz">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>

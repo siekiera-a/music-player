@@ -27,6 +27,6 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         listManager = new ListManager(mainView, mainSearch);
         // wyświetlenie konkretnej listy na ekranie
-        listManager.setMostPlayedList();
+        listManager.lastWeekSongs();
     }
 }
