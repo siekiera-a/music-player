@@ -60,72 +60,80 @@ public class ListManager {
     /**
      * Set current day listened songs in option 'Recently Played' in statistics
      */
-    public void setRecentlyPlayedList() {
+    public void currentDaySongs() {
         playlistData.clear();
-        Map<Song, Integer> sortedByCount = sortByValue(getTodayListened());
-        showStatistics(sortedByCount);
+        if (Files.exists(Paths.get(filePah))){
+            Map<Song, Integer> sortedByCount = sortByValue(getFewDaysListened(0));
+            showStatistics(sortedByCount);
+        }
     }
 
-    // to chyba dla Ciebie Aniu
-    public void setAniaList() {
+    /**
+     * Set last week listened songs in option 'Last Week Played' in statistics
+     */
+    public void lastWeekSongs() {
         playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 45; i < 100; i++) {
-            playlistData.add(String.valueOf(i));
+        if (Files.exists(Paths.get(filePah))){
+            Map<Song, Integer> sortedByCount = sortByValue(getFewDaysListened(-6));
+            showStatistics(sortedByCount);
         }
-        playlistView.setItems(playlistData);
     }
 
     /**
      * Set the least played songs in option 'Last Played Songs' in statistics
      */
-    public void setLeastPlayedList() {
+    public void leastPlayed() {
         playlistData.clear();
-        Map<Song, Integer> sortedByCount = reverseOrder(getCountedSongs());
-        showStatistics(sortedByCount);
+        if (Files.exists(Paths.get(filePah))){
+            Map<Song, Integer> sortedByCount = reverseOrder(getCountedSongs());
+            showStatistics(sortedByCount);
+        }
     }
 
     /**
      * Set the most played songs in option 'Generally Played Songs' in statistics
      */
-    public void setMostPlayedList() {
+    public void mostPlayed() {
         playlistData.clear();
-        Map<Song, Integer> sortedByCount = sortByValue(getCountedSongs());
-        showStatistics(sortedByCount);
+        if (Files.exists(Paths.get(filePah))){
+            Map<Song, Integer> sortedByCount = sortByValue(getCountedSongs());
+            showStatistics(sortedByCount);
+        }
     }
 
     /**
-     * Set list of statistics on TODO where exactly??????
+     * Set list of statistics on screen
      *
      * @param sortedByCount sorted map
      */
     private void showStatistics(Map<Song, Integer> sortedByCount) {
-        sortedByCount.forEach((key, value) -> playlistData.add(key.getTitle() + "\t" + value));
+        sortedByCount.forEach((key, value) -> playlistData.add(key.getTitle()));
         playlistView.setItems(playlistData);
     }
 
     /**
-     * Get played songs from file and count total time of listening for each song in the current day
+     * Get played songs from file and count total time of listening for each song in the last few days
      *
+     * @param number of last days to statictics
      * @return hashmap, which contains songs and total time of listening
      */
-    public Map<Song, Integer> getTodayListened() {
-        Map<Song, Integer> todayListened = new HashMap<>();
+    public Map<Song, Integer> getFewDaysListened(int number) {
+        Map<Song, Integer> listenedSongs = new HashMap<>();
         try {
             var lines = Files.readAllLines(Path.of(filePah));
             var parser = new SimpleDateFormat("dd/MM/yyyy");
 
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -7);
-            Date date1 = calendar.getTime();
-            String date2 = parser.format(date1);
-            Date inActiveDay = null;
+            calendar.add(Calendar.DATE, number);
+            Date calDate = calendar.getTime();
+            String format = parser.format(calDate);
+            Date currentDay = null;
             try {
-                inActiveDay = parser.parse(date2);
+                currentDay = parser.parse(format);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Date finalInActiveDay = inActiveDay;
+            Date finalCurrentDay = currentDay;
 
             lines.forEach(line -> {
                 String[] data = line.split("\t");
@@ -139,14 +147,16 @@ public class ListManager {
                 }
                 Song song = new Song(path);
 
-                if (date.after(finalInActiveDay)) {
-                    if (!todayListened.containsKey(song)) {
-                        todayListened.put(song, time);
+                if (date!= null && finalCurrentDay != null && (date.after(finalCurrentDay) || date.equals(finalCurrentDay))) {
+                    if (!listenedSongs.containsKey(song)) {
+                        listenedSongs.put(song, time);
                     } else {
-                        for (var e : todayListened.entrySet()) {
-                            Integer value = e.getValue();
-                            value += time;
-                            todayListened.put(song, value);
+                        for (var e : listenedSongs.entrySet()) {
+                            if (e.getKey().equals(song)) {
+                                Integer value = e.getValue();
+                                value += time;
+                                listenedSongs.put(song, value);
+                            }
                         }
                     }
                 }
@@ -155,7 +165,7 @@ public class ListManager {
             e.printStackTrace();
             return null;
         }
-        return todayListened;
+        return listenedSongs;
     }
 
     /**

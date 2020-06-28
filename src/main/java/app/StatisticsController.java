@@ -28,13 +28,12 @@ public class StatisticsController implements Initializable {
     // metoda inicjalizacji
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         //nowe statystyki
         list.add(0, "Najczęściej odtwarzane");
         list.add(1, "Najrzadziej odtwarzane");
-        list.add(2, "Ostatnio odtwarzane");
-        //TODO: Ania myśli nad nazwa statystyki
-        list.add(3, "abc");
+        list.add(2, "Dzisiaj odtwarzane");
+        list.add(3, "Najczęściej odtwarzane w ostatnim tygodniu");
 
         ObservableList<String> observableList = FXCollections.observableList(list);
         chooseStatistics.getItems().clear();
@@ -46,7 +45,7 @@ public class StatisticsController implements Initializable {
         chooseStatistics.setValue(chooseStatistics.getItems().get(0));
 
         // wyświetlenie konkretnej listy na ekranie dla początkowej statystyki
-        listManager.setMostPlayedList();
+        listManager.mostPlayed();
 
         chooseStatistics.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             index = observableList.indexOf(newValue);
@@ -57,16 +56,15 @@ public class StatisticsController implements Initializable {
             }
             if (index == 0) {
                 // wyświetlenie konkretnej listy na ekranie dla pierwszej statystyki
-                listManager.setMostPlayedList();
+                listManager.mostPlayed();
             } else if (index == 1) {
                 // wyświetlenie konkretnej listy na ekranie dla drugiej statystyki
-                listManager.setLeastPlayedList();
+                listManager.leastPlayed();
             } else if (index == 2) {
                 // wyświetlenie konkretnej listy na ekranie dla trzeciej statystyki
-                listManager.setRecentlyPlayedList();
+                listManager.currentDaySongs();
             } else if (index == 3){
-                //TODO: Ania wymyśli nazwę metody
-                listManager.setAniaList();
+                listManager.lastWeekSongs();
             }
 
 
