@@ -22,6 +22,7 @@ public class SchemeController implements Initializable {
 
     boolean isMute;
     boolean isFavourite;
+    boolean isRepeat;
     int prev_volume;
 
     private final Store store = App.getStore();
@@ -251,7 +252,13 @@ public class SchemeController implements Initializable {
     // metoda odpowiedzialna za przycisk repeat
     @FXML
     private void repeat(ActionEvent event) {
-        store.repeat();
+        isRepeat = !isRepeat;
+        if (isRepeat) {
+            repeatButton.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
+            store.repeat();
+        } else {
+            repeatButton.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
+        }
     }
 
     // metoda odpowiedzialna za przycisk heart, czyli dodawanie do  ulubionych
