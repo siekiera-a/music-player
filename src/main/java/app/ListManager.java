@@ -6,12 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -57,17 +57,24 @@ public class ListManager {
         });
     }
 
-    //tworzenie elementów listy statystyk ostatnio odtwarzanych
+    /**
+     * Set current day listened songs in option 'Recently Played' in statistics
+     */
     public void setRecentlyPlayedList() {
         playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 0; i < 100; i++) {
-            playlistData.add(String.valueOf(i));
+        Map<Song, Integer> sortedByCount = sortByValue(getTodayListened());
+        showStatistics(sortedByCount);
+    }
 
+    // to chyba dla Ciebie Aniu
+    public void setAniaList() {
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 45; i < 100; i++) {
+            playlistData.add(String.valueOf(i));
         }
         playlistView.setItems(playlistData);
     }
-
 
     /**
      * Set the least played songs in option 'Last Played Songs' in statistics
@@ -88,25 +95,37 @@ public class ListManager {
     }
 
     /**
-     * Set list of statistics on TODO where exackly??????
+     * Set list of statistics on TODO where exactly??????
      *
      * @param sortedByCount sorted map
      */
     private void showStatistics(Map<Song, Integer> sortedByCount) {
-        sortedByCount.forEach((key, value) -> playlistData.add(key.getTitle()));
+        sortedByCount.forEach((key, value) -> playlistData.add(key.getTitle() + "\t" + value));
         playlistView.setItems(playlistData);
     }
 
     /**
-     * Get played songs from file and count the number of occurrences of the songs
+     * Get played songs from file and count total time of listening for each song in the current day
      *
-     * @return hashmap, which contains songs and number of repetitions
+     * @return hashmap, which contains songs and total time of listening
      */
-    public Map<Song, Integer> getCountedSongs(){
-        Map<Song, Integer> mostListened = new HashMap<>();
+    public Map<Song, Integer> getTodayListened() {
+        Map<Song, Integer> todayListened = new HashMap<>();
         try {
             var lines = Files.readAllLines(Path.of(filePah));
             var parser = new SimpleDateFormat("dd/MM/yyyy");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -7);
+            Date date1 = calendar.getTime();
+            String date2 = parser.format(date1);
+            Date inActiveDay = null;
+            try {
+                inActiveDay = parser.parse(date2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Date finalInActiveDay = inActiveDay;
 
             lines.forEach(line -> {
                 String[] data = line.split("\t");
@@ -118,6 +137,41 @@ public class ListManager {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                Song song = new Song(path);
+
+                if (date.after(finalInActiveDay)) {
+                    if (!todayListened.containsKey(song)) {
+                        todayListened.put(song, time);
+                    } else {
+                        for (var e : todayListened.entrySet()) {
+                            Integer value = e.getValue();
+                            value += time;
+                            todayListened.put(song, value);
+                        }
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return todayListened;
+    }
+
+    /**
+     * Get played songs from file and count the number of occurrences of the songs
+     *
+     * @return hashmap, which contains songs and number of repetitions
+     */
+    public Map<Song, Integer> getCountedSongs() {
+        Map<Song, Integer> mostListened = new HashMap<>();
+        try {
+            var lines = Files.readAllLines(Path.of(filePah));
+
+            lines.forEach(line -> {
+                String[] data = line.split("\t");
+                String path = data[0];
+
                 Song song = new Song(path);
 
                 if (!mostListened.containsKey(song)) {
@@ -148,8 +202,8 @@ public class ListManager {
     public Map<Song, Integer> sortByValue(Map<Song, Integer> map) {
         return map.entrySet()
                 .stream()
-                .sorted((Map.Entry.<Song, Integer> comparingByValue().reversed()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1,e2)->e1, LinkedHashMap::new));
+                .sorted((Map.Entry.<Song, Integer>comparingByValue().reversed()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     /**
@@ -162,16 +216,6 @@ public class ListManager {
         return map.entrySet()
                 .stream()
                 .sorted((Map.Entry.comparingByValue()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1,e2)->e1, LinkedHashMap::new));
-    }
-
-    // to chyba dla Ciebie Aniu
-    public void setAniaList(){
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 45; i < 100; i++) {
-            playlistData.add(String.valueOf(i));
-        }
-        playlistView.setItems(playlistData);
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 }
