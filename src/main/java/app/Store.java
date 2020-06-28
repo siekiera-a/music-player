@@ -33,7 +33,11 @@ public class Store {
         player.setOnPlaying(this::timeChange);
         player.setOnAudioLoaded(this::audioLoaded);
 
-        player.changePlaylist(new Playlist("xd", List.of(new Song("Bet My Heart.mp3"))));
+        player.changePlaylist(new Playlist("xd", List.of(
+            new Song("Bet My Heart.mp3"),
+            new Song("Visions.mp3"),
+            new Song("This Love.mp3")
+        )));
     }
 
     /**
@@ -175,5 +179,22 @@ public class Store {
         return volume;
     }
 
+    /**
+     * Add song to the front of the queue
+     *
+     * @param song song to add
+     */
+    public void playAsNext(Song song) {
+        player.playAsNext(song);
+    }
+
+    /**
+     * Queue the song
+     *
+     * @param song requested song
+     */
+    public void queue(Song song) {
+        player.queue(song);
+    }
 
 }

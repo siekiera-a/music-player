@@ -43,6 +43,7 @@ public class LocalPlayer {
             player = new MediaPlayer(media);
             setPlayerProperties();
         } catch (Exception e) {
+            currentSong = null;
             player = null;
         }
     }
@@ -149,11 +150,17 @@ public class LocalPlayer {
     }
 
     public void next() {
-        // @TODO
+        Song next = queue.next();
+        if (next != null && !next.equals(currentSong)) {
+            changeSong(next);
+        }
     }
 
     public void previous() {
-        // @TODO
+        Song previous = queue.previous();
+        if (previous != null && !previous.equals(currentSong)) {
+            changeSong(previous);
+        }
     }
 
     /**
@@ -194,7 +201,7 @@ public class LocalPlayer {
     }
 
     public void playAsNext(Song song) {
-        // @TODO
+
     }
 
     public void setOnPlaying(Consumer<Duration> onPlaying) {
