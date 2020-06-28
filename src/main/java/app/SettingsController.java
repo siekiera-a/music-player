@@ -24,19 +24,16 @@ public class SettingsController implements Initializable {
     private final Path filePath = Paths.get(System.getProperty("user.home") + "\\Music\\settings.txt");
     String locationPlaylists;
     String locationSongs;
-    String password = "";
     private final Settings settings = new Settings();
 
     @FXML
     public CheckBox startAppCB;
 
     public Button playlistButton;
-    public Button passwordButton;
     public Button songButton;
 
     public TextField playlistLocationField;
     public TextField songLocationField;
-    public TextField passwordField;
 
 
     /**
@@ -121,10 +118,5 @@ public class SettingsController implements Initializable {
         showSettings();
         playlistButton.setOnAction(this::chooseLocationPlaylist);
         songButton.setOnAction(this::chooseLocationSongs);
-        passwordButton.setOnAction(this::setPasswordButton);
-    }
-
-    private void setPasswordButton(ActionEvent actionEvent) {
-        password = passwordField.getText();
     }
 }

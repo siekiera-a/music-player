@@ -24,36 +24,16 @@ public class RoomController implements Initializable {
 
     @FXML
     public Button joinButton;
-    public Button passwordButton;
     public Button streamButton;
     public Button disconnectButton;
 
     public HBox peopleHBox;
-    public HBox passwordHBox;
     public HBox joinHBox;
 
     public Label peopleLabel;
 
     public TextField idTextField;
-    public TextField passwordField;
 
-    /**
-     * Get password and put it in field
-     *
-     * @return
-     */
-    public String getPassword() {
-        return password = passwordField.getText();
-    }
-
-    /**
-     * Set password
-     *
-     * @param password
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     /**
      * Get id of computer to join
@@ -95,7 +75,6 @@ public class RoomController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         joinButton.setOnAction(this::joinToStream);
         streamButton.setOnAction(this::stream);
-        passwordButton.setOnAction(this::passwordToStream);
         disconnectButton.setOnAction(this::disconnect);
         setPeopleLabel(peopleLabel);
     }
@@ -125,21 +104,6 @@ public class RoomController implements Initializable {
         streamButton.setDisable(true);
         joinHBox.setDisable(true);
         peopleHBox.setDisable(true);
-        passwordHBox.setDisable(false);
-        disconnectButton.setDisable(true);
-    }
-
-    /**
-     * Check room password to join someone stream
-     *
-     * @param actionEvent
-     */
-    @FXML
-    private void passwordToStream(ActionEvent actionEvent) {
-        streamButton.setDisable(true);
-        joinHBox.setDisable(true);
-        peopleHBox.setDisable(true);
-        passwordHBox.setDisable(true);
         disconnectButton.setDisable(false);
     }
 
@@ -154,7 +118,6 @@ public class RoomController implements Initializable {
         joinHBox.setDisable(false);
         peopleHBox.setDisable(true);
         disconnectButton.setDisable(true);
-
     }
 
 }

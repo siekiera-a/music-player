@@ -112,6 +112,18 @@ public class ListManagerSong {
         playlistView.setItems(playlistData);
     }
 
+    /**
+     * Create collection of songs
+     */
+    public void setCollection(){
+        playlistData.clear();
+        // tworzenie początkowej listy piosenek
+        for (int i = 0; i < 1000; i++) {
+            playlistData.add(String.valueOf(i));
+        }
+        playlistView.setItems(playlistData);
+    }
+
     /*public void upWithIndex(int index) {
 
     }*/
