@@ -15,6 +15,12 @@ public class App extends Application {
     private static Scene scene;
     private static Stage st;
 
+    private static final Store store = new Store();
+
+    public static Store getStore() {
+        return store;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         // ustawienie okna głównego aplikacji
@@ -39,12 +45,9 @@ public class App extends Application {
             } else {
                 st.show();
             }
+            store.sceneChange();
         });
     }
-
-//    static void setRoot(String fxml) throws IOException {
-//        scene.setRoot(loadFXML(fxml));
-//    }
 
     // metoda ładująca odpowiedni wygląd aplikacji
     private static Parent loadFXML(String fxml) throws IOException {
