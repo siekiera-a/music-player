@@ -64,7 +64,7 @@ public class ListManager {
      */
     public void currentDaySongs() {
         playlistData.clear();
-        if (Files.exists(Paths.get(filePah))){
+        if (Files.exists(Paths.get(filePah))) {
             Map<Song, Integer> sortedByCount = sortByValue(getFewDaysListened(0));
             showStatistics(sortedByCount);
         }
@@ -75,7 +75,7 @@ public class ListManager {
      */
     public void lastWeekSongs() {
         playlistData.clear();
-        if (Files.exists(Paths.get(filePah))){
+        if (Files.exists(Paths.get(filePah))) {
             Map<Song, Integer> sortedByCount = sortByValue(getFewDaysListened(-6));
             showStatistics(sortedByCount);
         }
@@ -86,7 +86,7 @@ public class ListManager {
      */
     public void leastPlayed() {
         playlistData.clear();
-        if (Files.exists(Paths.get(filePah))){
+        if (Files.exists(Paths.get(filePah))) {
             Map<Song, Integer> sortedByCount = reverseOrder(getCountedSongs());
             showStatistics(sortedByCount);
         }
@@ -97,7 +97,7 @@ public class ListManager {
      */
     public void mostPlayed() {
         playlistData.clear();
-        if (Files.exists(Paths.get(filePah))){
+        if (Files.exists(Paths.get(filePah))) {
             Map<Song, Integer> sortedByCount = sortByValue(getCountedSongs());
             showStatistics(sortedByCount);
         }
@@ -149,7 +149,7 @@ public class ListManager {
                 }
                 Song song = new Song(path);
 
-                if (date!= null && finalCurrentDay != null && (date.after(finalCurrentDay) || date.equals(finalCurrentDay))) {
+                if (date != null && finalCurrentDay != null && (date.after(finalCurrentDay) || date.equals(finalCurrentDay))) {
                     if (!listenedSongs.containsKey(song)) {
                         listenedSongs.put(song, time);
                     } else {

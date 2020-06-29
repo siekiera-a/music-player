@@ -28,7 +28,7 @@ public class CustomCell extends ListCell<String> {
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
-        setText(null);  // No text in label of super class
+        setText(null);
         if (empty) {
             lastItem = null;
             setGraphic(null);

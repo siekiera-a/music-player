@@ -41,7 +41,11 @@ public class ListManagerSong {
         });
     }
 
-
+    /**
+     * Set playlist
+     *
+     * @param playlist
+     */
     public void setPlaylist(Playlist playlist) {
         playlistData.clear();
         if (playlist != null) {

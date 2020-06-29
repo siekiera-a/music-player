@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CustomCellSongs extends ListCell<String> {
-    //parametry, które będą ustawiały popup w dobrym miejscu
+
     double height = 200;
     double width = 800;
     private int number = 0;
@@ -80,16 +80,17 @@ public class CustomCellSongs extends ListCell<String> {
         });
     }
 
+    /**
+     * Add selected song to be played next in queue
+     *
+     * @param actionEvent
+     */
     private void playNext(ActionEvent actionEvent) {
         isPlayNext = !isPlayNext;
         if (isPlayNext) {
-            System.out.println("play next");
-
             store.playAsNext(new Song(lastItem));
-
             playNext.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
         } else {
-            System.out.println("not play next");
             playNext.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
         }
     }
@@ -156,7 +157,6 @@ public class CustomCellSongs extends ListCell<String> {
             store.queue(new Song(lastItem));
             queue.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
         } else {
-            System.out.println("not in queue");
             queue.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
         }
     }
@@ -170,7 +170,7 @@ public class CustomCellSongs extends ListCell<String> {
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
-        setText(null);  // No text in label of super class
+        setText(null);
         if (empty) {
             lastItem = null;
             setGraphic(null);

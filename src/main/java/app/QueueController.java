@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 
 public class QueueController implements Initializable {
 
-    // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
     ListManagerSong listManager;
     private final Store store = App.getStore();
     @FXML
@@ -28,7 +27,6 @@ public class QueueController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listManager = new ListManagerSong(queueView, queueSearch);
-        // wyświetlenie konkretnej listy na ekranie
         store.subscribeQueueChange(listManager::setPlaylist);
         listManager.setPlaylist(new Playlist("Queue", store.getQueue()));
     }

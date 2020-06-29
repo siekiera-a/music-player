@@ -53,7 +53,9 @@ public class SchemeController implements Initializable {
     public Button roomButton;
     public Button settingsButton;
 
-    // metoda wstawiania ikonek do przycisków
+    /**
+     * Initialize icons of buttons
+     */
     public void initIcons() {
         playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/play.png"), 30, 30, true, true)));
         prevButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/previous.png"), 30, 30, true, true)));
@@ -71,10 +73,17 @@ public class SchemeController implements Initializable {
         heartButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/heart.png"), 30, 30, true, true)));
     }
 
+    /**
+     * Update time
+     * @param duration
+     */
     private void updateTime(Duration duration) {
         updateTimeUI((int) duration.toSeconds());
     }
 
+    /**
+     * Helper method to initialize
+     */
     public void init() {
         changePlayIcon(store.isPlayed());
         store.subscribeTimeChange(this::updateTime);
@@ -86,7 +95,9 @@ public class SchemeController implements Initializable {
         initVolumeSlider();
     }
 
-    // metoda obsługująca pasek głościości
+    /**
+     * Initialize volume slider
+     */
     public void initVolumeSlider() {
         volumeSlider.setValue(store.getVolume());
         volumeSlider.setMin(0);
@@ -106,7 +117,10 @@ public class SchemeController implements Initializable {
         });
     }
 
-    // metoda obsługująca pasek trwania piosenki
+    /**
+     * Initialize duration slider
+     * @param duration
+     */
     public void initDurationSlider(Duration duration) {
         songSlider.setMax((int) (duration.toSeconds()));
         songSlider.setMin(0);
@@ -118,20 +132,30 @@ public class SchemeController implements Initializable {
         });
     }
 
-    //metoda obsługująca label odpowiadający za aktualny czas piosenki
+    /**
+     * Update time in UI
+     * @param newTime
+     */
     public void updateTimeUI(int newTime) {
         actual_time.setText(convertTime(newTime));
         songSlider.setValue(newTime);
     }
 
-    // konwersja czasu
+    /**
+     * Convert time from seconds to minutes and seconds
+     * @param time converted time
+     * @return
+     */
     public static String convertTime(int time) {
         int minutes = time / 60;
         int seconds = time % 60;
         return String.format("%d:%02d", minutes, seconds);
     }
 
-    // metoda wczytujący obraz środka aplikacji
+    /**
+     * Load new view of application
+     * @param fxml
+     */
     private void loadFXML(String fxml) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxml + ".fxml"));
@@ -141,7 +165,11 @@ public class SchemeController implements Initializable {
         }
     }
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         homeButton.setOnAction(this::switchToMain);
@@ -163,27 +191,46 @@ public class SchemeController implements Initializable {
         init();
     }
 
-    // metody służace do przełączania się między kartami
+    /**
+     * Switch view to main view
+     * @param event
+     */
     @FXML
     private void switchToMain(ActionEvent event) {
         loadFXML("main");
     }
 
+    /**
+     * Switch view to playlist view
+     * @param event
+     */
     @FXML
     private void switchToPlaylist(ActionEvent event) {
         loadFXML("playlist");
     }
 
+    /**
+     * Switch view to queue view
+     * @param event
+     */
     @FXML
     private void switchToQueue(ActionEvent event) {
         loadFXML("queue");
     }
 
+    /**
+     * Switch view to statistics view
+     * @param event
+     */
     @FXML
     private void switchToStatistics(ActionEvent event) {
         loadFXML("statistics");
     }
 
+    /**
+     * Exit application
+     * @param event
+     */
     @FXML
     private void exit(ActionEvent event) {
         Stage stage = (Stage) mainContent.getScene().getWindow();
@@ -191,35 +238,56 @@ public class SchemeController implements Initializable {
         App.getStore().release();
     }
 
+    /**
+     * Switch view to room view
+     * @param event
+     */
     @FXML
     private void switchToRoom(ActionEvent event) {
         loadFXML("room");
     }
 
+    /**
+     * Switch view to settings view
+     * @param event
+     */
     @FXML
     private void switchToSettings(ActionEvent event) {
         loadFXML("settings");
     }
 
-    // metoda odpowiedzialna za przycisk shuffle
+    /**
+     * Shuffle
+     * @param event
+     */
     @FXML
     private void shuffle(ActionEvent event) {
         store.shuffle();
     }
 
-    // metoda odpowiedzialna za przycisk previous
+    /**
+     * Go back to previous song
+     * @param event
+     */
     @FXML
     private void prev(ActionEvent event) {
         store.previous();
     }
 
-    // metoda odpowiedzialna za przycisk play/pause
+    /**
+     * Play or pause song
+     */
+
     @FXML
     private void play(ActionEvent event) {
         store.playPause();
         changePlayIcon(store.isPlayed());
     }
 
+    /**
+     * Change icon play - pause
+     * @param isPlayed
+     */
     private void changePlayIcon(boolean isPlayed) {
         if (isPlayed) {
             playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/pause.png"), 30, 30, true, true)));
@@ -228,7 +296,10 @@ public class SchemeController implements Initializable {
         }
     }
 
-    // metoda odpowiedzialna za przycisk volume/mute
+    /**
+     * Change volume icon and value in UI
+     * @param event
+     */
     @FXML
     private void volume(ActionEvent event) {
         isMute = !isMute;
@@ -244,13 +315,19 @@ public class SchemeController implements Initializable {
         volumeSlider.setValue(store.getVolume());
     }
 
-    // metoda odpowiedzialna za przycisk next
+    /**
+     * Go to next song
+     * @param event
+     */
     @FXML
     private void next(ActionEvent event) {
         store.next();
     }
 
-    // metoda odpowiedzialna za przycisk repeat
+    /**
+     * Repeat current song
+     * @param event
+     */
     @FXML
     private void repeat(ActionEvent event) {
         isRepeat = !isRepeat;
@@ -262,7 +339,10 @@ public class SchemeController implements Initializable {
         }
     }
 
-    // metoda odpowiedzialna za przycisk heart, czyli dodawanie do  ulubionych
+    /**
+     * Add song to the favourite playlist
+     * @param event
+     */
     @FXML
     private void addToFavourite(ActionEvent event) {
         isFavourite = !isFavourite;
@@ -273,9 +353,12 @@ public class SchemeController implements Initializable {
         }
     }
 
+    /**
+     * Set title od songs
+     * @param title
+     */
     @FXML
     private void setSongTitle(String title) {
         songTitle.setText(title);
     }
-
 }

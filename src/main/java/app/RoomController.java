@@ -13,10 +13,7 @@ import java.util.ResourceBundle;
 
 public class RoomController implements Initializable {
 
-    // zmienna zliczająca ilość osob w streamie
     int peopleCount = 0;
-
-    // zmienna odpowiedzialna za id komputera
     String id;
 
     @FXML
@@ -98,7 +95,6 @@ public class RoomController implements Initializable {
     @FXML
     private void joinToStream(ActionEvent actionEvent) {
         getId();
-        //System.out.println(id);
         streamButton.setDisable(true);
         joinHBox.setDisable(true);
         peopleHBox.setDisable(true);

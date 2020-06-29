@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
     ListManagerSong listManager;
 
     @FXML
@@ -26,7 +25,6 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listManager = new ListManagerSong(mainView, mainSearch);
-        // wyświetlenie konkretnej listy na ekranie
-//        listManager.setCollection();
+   //     listManager.setCollection();
     }
 }

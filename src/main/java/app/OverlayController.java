@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 
 public class OverlayController implements Initializable {
 
-    //elementy widoczne w programie
     @FXML
     public Label songTitle;
     public Label actual_time;
@@ -27,7 +26,12 @@ public class OverlayController implements Initializable {
 
     private final Store store = App.getStore();
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         playButton.setOnAction(this::play);
@@ -47,10 +51,20 @@ public class OverlayController implements Initializable {
         });
     }
 
+    /**
+     * Update time
+     *
+     * @param duration
+     */
     private void updateTime(Duration duration) {
         actual_time.setText(SchemeController.convertTime((int) duration.toSeconds()));
     }
 
+    /**
+     * Change icon play - pause
+     *
+     * @param isPlayed
+     */
     public void changePlayIcon(boolean isPlayed) {
         if (isPlayed) {
             playButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/pause.png"), 20, 20, true, true)));
@@ -59,27 +73,43 @@ public class OverlayController implements Initializable {
         }
     }
 
-    // metoda odpowiedzialna za przycisk previous
+    /**
+     * Go back to previous song
+     *
+     * @param event
+     */
     @FXML
     private void prev(ActionEvent event) {
         store.previous();
     }
 
-    // metoda odpowiedzialna za przycisk play/pause
+    /**
+     * Play or pause song
+     *
+     * @param event
+     */
     @FXML
     private void play(ActionEvent event) {
         store.playPause();
         changePlayIcon(store.isPlayed());
     }
 
-    // metoda odpowiedzialna za przycisk next
+    /**
+     * Go to next song
+     *
+     * @param event
+     */
     @FXML
     private void next(ActionEvent event) {
         store.next();
     }
 
 
-    // metoda służąca ustawieniu tytułu piosenki
+    /**
+     * Set title of song
+     *
+     * @param title
+     */
     @FXML
     private void setSongTitle(String title) {
         songTitle.setText(title);

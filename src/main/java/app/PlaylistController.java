@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 public class PlaylistController implements Initializable {
 
-    // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
     ListManagerSong listManager;
 
     private final Store store = App.getStore();
@@ -37,22 +36,21 @@ public class PlaylistController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<String> list = store.getPlaylists()
-            .stream()
-            .map(Playlist::getName)
-            .collect(Collectors.toList());
+                .stream()
+                .map(Playlist::getName)
+                .collect(Collectors.toList());
 
         ObservableList<String> observableList = FXCollections.observableList(list);
         choosePlaylists.getItems().clear();
         choosePlaylists.setItems(observableList);
 
         listManager = new ListManagerSong(playlistView, playlistSearch);
-        // ustawienie początkowej statystyki
         if (choosePlaylists.getItems().size() > 0) {
             choosePlaylists.setValue(choosePlaylists.getItems().get(0));
         }
 
         choosePlaylists.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) ->
-            listManager.setPlaylist(store.getPlaylist(newValue))
+                listManager.setPlaylist(store.getPlaylist(newValue))
         );
     }
 

@@ -85,6 +85,11 @@ public class SettingsController implements Initializable {
         playlistLocationField.setText(locationPlaylists);
     }
 
+    /**
+     * Default initialize method
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

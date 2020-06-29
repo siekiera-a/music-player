@@ -15,9 +15,7 @@ import java.util.ResourceBundle;
 
 public class StatisticsController implements Initializable {
 
-    // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
     ListManager listManager;
-    // zmienna odpowiedzialna za index w ComboBox
     int index;
 
     @FXML
@@ -25,7 +23,12 @@ public class StatisticsController implements Initializable {
     public TextArea statisticsSearch;
     public ComboBox<String> chooseStatistics;
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<String> list = new ArrayList<>();
@@ -41,32 +44,24 @@ public class StatisticsController implements Initializable {
 
         listManager = new ListManager(statisticsView, statisticsSearch);
 
-        // ustawienie początkowej statystyki
         chooseStatistics.setValue(chooseStatistics.getItems().get(0));
 
-        // wyświetlenie konkretnej listy na ekranie dla początkowej statystyki
         listManager.mostPlayed();
 
         chooseStatistics.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             index = observableList.indexOf(newValue);
-            //System.out.println(index);
-            //System.out.println(newValue);
             if (index == -1) {
                 return;
             }
             if (index == 0) {
-                // wyświetlenie konkretnej listy na ekranie dla pierwszej statystyki
                 listManager.mostPlayed();
             } else if (index == 1) {
-                // wyświetlenie konkretnej listy na ekranie dla drugiej statystyki
                 listManager.leastPlayed();
             } else if (index == 2) {
-                // wyświetlenie konkretnej listy na ekranie dla trzeciej statystyki
                 listManager.currentDaySongs();
-            } else if (index == 3){
+            } else if (index == 3) {
                 listManager.lastWeekSongs();
             }
-
 
         });
     }

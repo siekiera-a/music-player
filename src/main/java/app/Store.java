@@ -53,15 +53,11 @@ public class Store {
         player.setOnAudioLoaded(this::audioLoaded);
 
         loadPlaylists();
-
-//        player.changePlaylist(new Playlist("xd", List.of(
-//            new Song("Bet My Heart.mp3"),
-//            new Song("Visions.mp3"),
-//            new Song("This Love.mp3")
-//        )));
-
     }
 
+    /**
+     * Load playlists
+     */
     private void loadPlaylists() {
         try (Stream<Path> files = Files.walk(settings.getPlaylistDirectory(), 1)) {
             files.filter(Files::isRegularFile)
@@ -108,22 +104,35 @@ public class Store {
         }
     }
 
+    /**
+     * Play
+     */
     public void play() {
         isPlayed = true;
         player.play();
         Platform.runLater(() -> sceneChange());
     }
 
+    /**
+     * Pause
+     */
     public void pause() {
         isPlayed = false;
         player.pause();
         Platform.runLater(() -> sceneChange());
     }
 
+    /**
+     * Seek
+     * @param progress
+     */
     public void seek(float progress) {
         player.seek(progress);
     }
 
+    /**
+     * Shuffle
+     */
     public void shuffle() {
         player.shuffle();
     }
@@ -160,6 +169,9 @@ public class Store {
         player.changeVolume(1.0f * volume / 100);
     }
 
+    /**
+     * Repeat song
+     */
     public void repeat() {
         player.toggleLoop();
     }
@@ -336,12 +348,18 @@ public class Store {
         return settings;
     }
 
+    /**
+     * Start stream
+     */
     public void startStream() {
         if (server == null) {
             server = new Server(port, player.getCurrentSong(), player::getProgress);
         }
     }
 
+    /**
+     * Stop stream
+     */
     public void stopStream() {
         server.stop();
         server = null;
