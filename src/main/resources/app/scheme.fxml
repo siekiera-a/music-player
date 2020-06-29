@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <VBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.SchemeController">
     <children>
         <GridPane id="frame" prefHeight="400.0" prefWidth="600.0" styleClass="frame" stylesheets="@style.css" VBox.vgrow="ALWAYS">
@@ -80,9 +79,14 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                     </rowConstraints>
                                     <children>
-                                        <Button fx:id="heartButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="32.0" prefWidth="43.0" styleClass="heart" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                        <Button fx:id="heartButton" alignment="CENTER" contentDisplay="CENTER"
+                                                maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                                mnemonicParsing="false" prefHeight="32.0" prefWidth="43.0"
+                                                styleClass="heart" GridPane.columnIndex="2" GridPane.halignment="RIGHT"
+                                                GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER"
+                                                GridPane.vgrow="ALWAYS" visible="false">
                                             <GridPane.margin>
-                                                <Insets />
+                                                <Insets/>
                                             </GridPane.margin>
                                         </Button>
                                         <Label fx:id="songTitle" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="507.0" text=" " GridPane.columnIndex="1">

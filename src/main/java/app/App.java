@@ -37,6 +37,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setMinWidth(640);
         stage.setMinHeight(480);
+        stage.setOnCloseRequest(w -> store.disconnect());
         //ustawienie overlaya po minimalizacji okna głownego
         st = new Stage();
         Scene scene2 = new Scene(loadFXML("overlay"), 200, 100);
@@ -82,15 +83,5 @@ public class App extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-//
-//        Playlist playlist = new Playlist("Playlista 1", List.of(
-//                new Song("C:\\Users\\Ania\\Music\\1.mp3"),
-//                new Song("C:\\Users\\Ania\\Music\\2.mp3"),
-//                new Song("C:\\Users\\Ania\\Music\\3.mp3"),
-//                new Song("C:\\Users\\Ania\\Music\\4.mp3")
-//        ));
-//
-//        playlist.save(Paths.get("C:\\Users\\Ania\\Music"));
-
     }
 }
