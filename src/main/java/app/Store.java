@@ -5,6 +5,7 @@ import app.playlist.Playlist;
 import app.playlist.Song;
 import app.server.Server;
 import app.settings.Settings;
+import javafx.application.Platform;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -92,6 +93,7 @@ public class Store {
      */
     public void playPause() {
         isPlayed = !isPlayed;
+        server.setIsPlayed(isPlayed);
         if (isPlayed) {
             player.play();
             if (isStreaming()) {
@@ -108,11 +110,13 @@ public class Store {
     public void play() {
         isPlayed = true;
         player.play();
+        Platform.runLater(() -> sceneChange());
     }
 
     public void pause() {
         isPlayed = false;
         player.pause();
+        Platform.runLater(() -> sceneChange());
     }
 
     public void seek(float progress) {
@@ -347,6 +351,13 @@ public class Store {
 
     public void playPlaylist(Playlist playlist) {
         player.changePlaylist(playlist);
+    }
+
+    public void release() {
+        player.stop();
+        if (server != null) {
+            server.stop();
+        }
     }
 
 }

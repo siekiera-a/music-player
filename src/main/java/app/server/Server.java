@@ -8,12 +8,14 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class Server implements Runnable {
 
     private boolean running;
     private int port;
     private final int maxConnectedDevices = 15;
+    private boolean isPlayed;
 
     private final Supplier<Float> getProgress;
 
@@ -36,12 +38,22 @@ public class Server implements Runnable {
         try (ServerSocket server = this.server = new ServerSocket(port)) {
             while (running) {
                 Socket socket = server.accept();
+
+                clients.removeAll(
+                    clients.stream()
+                        .filter(ServerClient::isDisconnected)
+                        .collect(Collectors.toList()));
+
                 if (clients.size() < maxConnectedDevices) {
                     try {
                         ServerClient client = new ServerClient(socket);
                         client.fileName(song.getTitle() + "." + song.getExtension());
                         client.send(song);
-                        client.play(getProgress.get());
+                        if (isPlayed) {
+                            client.play(getProgress.get());
+                        } else {
+                            client.pause(getProgress.get());
+                        }
                         clients.add(client);
                     } catch (IOException ignore) {
                         socket.close();
@@ -86,4 +98,9 @@ public class Server implements Runnable {
         }
         clients.forEach(ServerClient::disconnect);
     }
+
+    public void setIsPlayed(boolean value) {
+        isPlayed = value;
+    }
+
 }
