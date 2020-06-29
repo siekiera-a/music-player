@@ -32,7 +32,7 @@ public class ListManagerSong {
             } else {
                 ObservableList<String> items = FXCollections.observableArrayList();
                 for (String x : playlistData) {
-                    if (x.contains(newValue)) {
+                    if (x.toLowerCase().contains(newValue.toLowerCase())) {
                         items.add(x);
                     }
                 }
@@ -51,18 +51,6 @@ public class ListManagerSong {
                     .forEach(playlistData::add);
         }
 
-        playlistView.setItems(playlistData);
-    }
-
-    /**
-     * Create queue
-     */
-    public void setQueueList() {
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 5; i < 100; i++) {
-            playlistData.add(String.valueOf(i));
-        }
         playlistView.setItems(playlistData);
     }
 

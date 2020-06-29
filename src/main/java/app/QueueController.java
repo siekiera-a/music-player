@@ -29,6 +29,7 @@ public class QueueController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         listManager = new ListManagerSong(queueView, queueSearch);
         // wyświetlenie konkretnej listy na ekranie
+        store.subscribeQueueChange(listManager::setPlaylist);
         listManager.setPlaylist(new Playlist("Queue", store.getQueue()));
     }
 }

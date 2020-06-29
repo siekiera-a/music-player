@@ -19,9 +19,6 @@ public class RoomController implements Initializable {
     // zmienna odpowiedzialna za id komputera
     String id;
 
-    // zmienna odpowiedzialna za hasło komputera
-    String password;
-
     @FXML
     public Button joinButton;
     public Button streamButton;
@@ -34,6 +31,7 @@ public class RoomController implements Initializable {
 
     public TextField idTextField;
 
+    private final Store store = App.getStore();
 
     /**
      * Get id of computer to join

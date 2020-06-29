@@ -3,6 +3,7 @@ package app;
 import app.player.LocalPlayer;
 import app.playlist.Playlist;
 import app.playlist.Song;
+import app.server.Server;
 import app.settings.Settings;
 import javafx.util.Duration;
 
@@ -25,6 +26,7 @@ public class Store {
     private final Set<Consumer<Duration>> audioLoadedListeners;
     private final Set<Consumer<Boolean>> sceneChangeListeners;
     private final Set<Consumer<String>> titleChangeListeners;
+    private final Set<Consumer<Playlist>> queueChangeListeners;
     private final List<Playlist> playlists;
     private final Settings settings;
 
@@ -32,49 +34,57 @@ public class Store {
     private boolean isPlayed;
     private int currentTime;
 
+    private Server server;
+    private final int port = 21370;
+
     public Store() {
         volume = (int) (player.getVolume() * 100);
         timeChangeListeners = new HashSet<>();
         sceneChangeListeners = new HashSet<>();
         titleChangeListeners = new HashSet<>();
         audioLoadedListeners = new HashSet<>();
+        queueChangeListeners = new HashSet<>();
         settings = new Settings();
         playlists = new ArrayList<>();
 
         player.setOnPlaying(this::timeChange);
         player.setOnAudioLoaded(this::audioLoaded);
 
+        loadPlaylists();
+
+        player.changePlaylist(new Playlist("xd", List.of(
+            new Song("Bet My Heart.mp3"),
+            new Song("Visions.mp3"),
+            new Song("This Love.mp3")
+        )));
+
+    }
+
+    private void loadPlaylists() {
         try (Stream<Path> files = Files.walk(settings.getPlaylistDirectory(), 1)) {
             files.filter(Files::isRegularFile)
-                    .filter(path -> path.getFileName().toString().endsWith(".txt"))
-                    .forEach(path -> {
-                        String file = path.getFileName().toString();
-                        String playlistName = file.substring(0, file.lastIndexOf("."));
-                        try {
-                            List<String> lines = Files.readAllLines(path);
-                            List<Song> songs = new ArrayList<>();
-                            lines.forEach(line -> {
-                                try {
-                                    Song song = new Song(line);
-                                    songs.add(song);
-                                } catch (IllegalArgumentException ignored) {
-                                }
-                            });
-                            Playlist playlist = new Playlist(playlistName, songs);
-                            playlists.add(playlist);
-                        } catch (IOException e) {
-                        }
-                    });
+                .filter(path -> path.getFileName().toString().endsWith(".txt"))
+                .forEach(path -> {
+                    String file = path.getFileName().toString();
+                    String playlistName = file.substring(0, file.lastIndexOf("."));
+                    try {
+                        List<String> lines = Files.readAllLines(path);
+                        List<Song> songs = new ArrayList<>();
+                        lines.forEach(line -> {
+                            try {
+                                Song song = new Song(line);
+                                songs.add(song);
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        });
+                        Playlist playlist = new Playlist(playlistName, songs);
+                        playlists.add(playlist);
+                    } catch (IOException e) {
+                    }
+                });
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        player.changePlaylist(new Playlist("xd", List.of(
-                new Song("C:\\Users\\Ania\\Music\\1.mp3"),
-                new Song("C:\\Users\\Ania\\Music\\2.mp3"),
-                new Song("C:\\Users\\Ania\\Music\\3.mp3")
-        )));
-
     }
 
     /**
@@ -84,9 +94,29 @@ public class Store {
         isPlayed = !isPlayed;
         if (isPlayed) {
             player.play();
+            if (isStreaming()) {
+                server.play(player.getProgress());
+            }
         } else {
             player.pause();
+            if (isStreaming()) {
+                server.pause(player.getProgress());
+            }
         }
+    }
+
+    public void play() {
+        isPlayed = true;
+        player.play();
+    }
+
+    public void pause() {
+        isPlayed = false;
+        player.pause();
+    }
+
+    public void seek(float progress) {
+        player.seek(progress);
     }
 
     public void shuffle() {
@@ -126,7 +156,7 @@ public class Store {
     }
 
     public void repeat() {
-        // @TODO
+        player.toggleLoop();
     }
 
     /**
@@ -171,6 +201,14 @@ public class Store {
         currentTime = 0;
         audioLoadedListeners.forEach(c -> c.accept(duration));
         titleChange(player.getTitle());
+        queueChange(new Playlist("Queue", player.getQueue()));
+
+        if (isStreaming()) {
+            Song song = player.getCurrentSong();
+            server.changeSong(song);
+            server.fileName(song.getTitle() + "." + song.getExtension());
+            server.send();
+        }
     }
 
     /**
@@ -203,8 +241,21 @@ public class Store {
      *
      * @param newTitle new title
      */
-    public void titleChange(String newTitle) {
+    private void titleChange(String newTitle) {
         titleChangeListeners.forEach(c -> c.accept(newTitle));
+    }
+
+    /**
+     * subscribe to title change
+     *
+     * @param action method that will be performed after queue update
+     */
+    public void subscribeQueueChange(Consumer<Playlist> action) {
+        queueChangeListeners.add(action);
+    }
+
+    private void queueChange(Playlist playlist) {
+        queueChangeListeners.forEach(c -> c.accept(playlist));
     }
 
     /**
@@ -265,9 +316,9 @@ public class Store {
      */
     public Playlist getPlaylist(String name) {
         Optional<Playlist> playlist = playlists
-                .stream()
-                .filter(p -> p.getName().equals(name))
-                .findFirst();
+            .stream()
+            .filter(p -> p.getName().equals(name))
+            .findFirst();
 
         return playlist.orElse(null);
     }
@@ -278,4 +329,24 @@ public class Store {
     public Settings getSettings() {
         return settings;
     }
+
+    public void startStream() {
+        if (server == null) {
+            server = new Server(port, player.getCurrentSong(), player::getProgress);
+        }
+    }
+
+    public void stopStream() {
+        server.stop();
+        server = null;
+    }
+
+    private boolean isStreaming() {
+        return server != null;
+    }
+
+    public void playPlaylist(Playlist playlist) {
+        player.changePlaylist(playlist);
+    }
+
 }

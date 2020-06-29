@@ -8,6 +8,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -229,7 +230,23 @@ public class LocalPlayer {
     }
 
     public List<Song> getQueue() {
-        return queue.getSongs();
+        List<Song> songs = queue.getSongs();
+        if (songs.size() > 1) {
+            return songs.subList(1, songs.size());
+        } else {
+            return new LinkedList<>();
+        }
     }
 
+    public float getProgress() {
+        if (player == null) {
+            return 0.0f;
+        }
+
+        return (float) (player.getCurrentTime().toSeconds() / player.getCycleDuration().toSeconds());
+    }
+
+    public Song getCurrentSong() {
+        return currentSong;
+    }
 }
