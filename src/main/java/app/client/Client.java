@@ -102,4 +102,12 @@ public class Client implements Runnable {
         }
         store.seek(progress);
     }
+
+    public void disconnect() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

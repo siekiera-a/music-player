@@ -1,5 +1,6 @@
 package app;
 
+import app.client.Client;
 import app.player.LocalPlayer;
 import app.playlist.Playlist;
 import app.playlist.Song;
@@ -37,6 +38,7 @@ public class Store {
 
     private Server server;
     private final int port = 21370;
+    private Client client;
 
     public Store() {
         volume = (int) (player.getVolume() * 100);
@@ -53,11 +55,11 @@ public class Store {
 
         loadPlaylists();
 
-//        player.changePlaylist(new Playlist("xd", List.of(
-//            new Song("Bet My Heart.mp3"),
-//            new Song("Visions.mp3"),
-//            new Song("This Love.mp3")
-//        )));
+        player.changePlaylist(new Playlist("xd", List.of(
+            new Song("Bet My Heart.mp3"),
+            new Song("Visions.mp3"),
+            new Song("This Love.mp3")
+        )));
     }
 
     private void loadPlaylists() {
@@ -341,10 +343,14 @@ public class Store {
         }
     }
 
-    public void stopStream() {
+    public void disconnect() {
         if (server != null) {
             server.stop();
             server = null;
+        }
+        if (client != null) {
+            client.disconnect();
+            client = null;
         }
     }
 
@@ -358,9 +364,11 @@ public class Store {
 
     public void release() {
         player.stop();
-        if (server != null) {
-            server.stop();
-        }
+        disconnect();
+    }
+
+    public void connect(String address) {
+        client = new Client(address, port, player::stop);
     }
 
 }
