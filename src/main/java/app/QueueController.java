@@ -18,7 +18,13 @@ public class QueueController implements Initializable {
     public ListView<String> queueView;
     public TextArea queueSearch;
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     * Create a queue list
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listManager = new ListManagerSong(queueView, queueSearch);

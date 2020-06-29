@@ -89,6 +89,11 @@ public class CustomCellSongs extends ListCell<String> {
         }
     }
 
+    /**
+     * Set picked song to selected playlist
+     *
+     * @param actionEvent
+     */
     private void addToPlaylist(ActionEvent actionEvent) {
         addToPlaylist.setOnAction(event -> {
             Popup popup = new Popup();
@@ -118,6 +123,11 @@ public class CustomCellSongs extends ListCell<String> {
         });
     }
 
+    /**
+     * Set picked song to favourite playlist
+     *
+     * @param actionEvent
+     */
     private void addFavourite(ActionEvent actionEvent) {
         isFavourite = !isFavourite;
         if (isFavourite) {
@@ -129,6 +139,11 @@ public class CustomCellSongs extends ListCell<String> {
         }
     }
 
+    /**
+     * Set picked song to queue
+     *
+     * @param actionEvent
+     */
     private void addQueue(ActionEvent actionEvent) {
         inQueue = !inQueue;
         if (inQueue) {
@@ -140,6 +155,12 @@ public class CustomCellSongs extends ListCell<String> {
         }
     }
 
+    /**
+     * Update element
+     *
+     * @param item
+     * @param empty
+     */
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);

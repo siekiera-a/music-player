@@ -27,12 +27,10 @@ public class SettingsController implements Initializable {
     public CheckBox startAppCB;
 
     public Button playlistButton;
-    public Button passwordButton;
     public Button songButton;
 
     public TextField playlistLocationField;
     public TextField songLocationField;
-    public TextField passwordField;
 
 
     /**
@@ -107,10 +105,5 @@ public class SettingsController implements Initializable {
         showSettings();
         playlistButton.setOnAction(this::chooseLocationPlaylist);
         songButton.setOnAction(this::chooseLocationSongs);
-        passwordButton.setOnAction(this::setPasswordButton);
-    }
-
-    private void setPasswordButton(ActionEvent actionEvent) {
-        password = passwordField.getText();
     }
 }

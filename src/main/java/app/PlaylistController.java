@@ -29,7 +29,15 @@ public class PlaylistController implements Initializable {
     public TextArea playlistSearch;
     public ComboBox<String> choosePlaylists;
 
-    // metoda inicjalizacji
+
+    /**
+     * Default initialize method
+     * Create list of playlist with songs
+     *
+     * @param location
+     * @param resources
+     */
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<String> list = store.getPlaylists()

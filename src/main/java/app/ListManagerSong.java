@@ -22,11 +22,9 @@ public class ListManagerSong {
         setSearchListener();
     }
 
-    public void setList(ObservableList<String> newPlaylist) {
-        playlistData = newPlaylist;
-        playlistView.setItems(playlistData);
-    }
-
+    /**
+     * Search (filtered) elements in list
+     */
     protected void setSearchListener() {
         playlistSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals("")) {
@@ -44,6 +42,7 @@ public class ListManagerSong {
         });
     }
 
+
     public void setPlaylist(Playlist playlist) {
         playlistData.clear();
         if (playlist != null) {
@@ -55,6 +54,9 @@ public class ListManagerSong {
         playlistView.setItems(playlistData);
     }
 
+    /**
+     * Create queue
+     */
     public void setQueueList() {
         playlistData.clear();
         // tworzenie początkowej listy piosenek
@@ -63,6 +65,5 @@ public class ListManagerSong {
         }
         playlistView.setItems(playlistData);
     }
-
 
 }

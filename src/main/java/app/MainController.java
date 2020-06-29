@@ -11,17 +11,22 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
 
     // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
-    ListManager listManager;
+    ListManagerSong listManager;
 
     @FXML
     public ListView<String> mainView;
     public TextArea mainSearch;
 
-    // metoda inicjalizacji
+    /**
+     * Default initialize method
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        listManager = new ListManager(mainView, mainSearch);
+        listManager = new ListManagerSong(mainView, mainSearch);
         // wyświetlenie konkretnej listy na ekranie
-        listManager.lastWeekSongs();
+        listManager.setCollection();
     }
 }
