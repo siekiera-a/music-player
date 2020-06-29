@@ -37,9 +37,9 @@ public class PlaylistController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<String> list = store.getPlaylists()
-                .stream()
-                .map(Playlist::getName)
-                .collect(Collectors.toList());
+            .stream()
+            .map(Playlist::getName)
+            .collect(Collectors.toList());
 
         ObservableList<String> observableList = FXCollections.observableList(list);
         choosePlaylists.getItems().clear();
@@ -47,10 +47,12 @@ public class PlaylistController implements Initializable {
 
         listManager = new ListManagerSong(playlistView, playlistSearch);
         // ustawienie początkowej statystyki
-        choosePlaylists.setValue(choosePlaylists.getItems().get(0));
+        if (choosePlaylists.getItems().size() > 0) {
+            choosePlaylists.setValue(choosePlaylists.getItems().get(0));
+        }
 
         choosePlaylists.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) ->
-                listManager.setPlaylist(store.getPlaylist(newValue))
+            listManager.setPlaylist(store.getPlaylist(newValue))
         );
     }
 

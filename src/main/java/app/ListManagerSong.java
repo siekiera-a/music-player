@@ -32,7 +32,7 @@ public class ListManagerSong {
             } else {
                 ObservableList<String> items = FXCollections.observableArrayList();
                 for (String x : playlistData) {
-                    if (x.contains(newValue)) {
+                    if (x.toLowerCase().contains(newValue.toLowerCase())) {
                         items.add(x);
                     }
                 }

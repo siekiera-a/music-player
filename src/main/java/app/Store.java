@@ -25,6 +25,7 @@ public class Store {
     private final Set<Consumer<Duration>> audioLoadedListeners;
     private final Set<Consumer<Boolean>> sceneChangeListeners;
     private final Set<Consumer<String>> titleChangeListeners;
+    private final Set<Consumer<Playlist>> queueChangeListeners;
     private final List<Playlist> playlists;
     private final Settings settings;
 
@@ -38,43 +39,48 @@ public class Store {
         sceneChangeListeners = new HashSet<>();
         titleChangeListeners = new HashSet<>();
         audioLoadedListeners = new HashSet<>();
+        queueChangeListeners = new HashSet<>();
         settings = new Settings();
         playlists = new ArrayList<>();
 
         player.setOnPlaying(this::timeChange);
         player.setOnAudioLoaded(this::audioLoaded);
 
+        loadPlaylists();
+
+        player.changePlaylist(new Playlist("xd", List.of(
+            new Song("Bet My Heart.mp3"),
+            new Song("Visions.mp3"),
+            new Song("This Love.mp3")
+        )));
+
+    }
+
+    private void loadPlaylists() {
         try (Stream<Path> files = Files.walk(settings.getPlaylistDirectory(), 1)) {
             files.filter(Files::isRegularFile)
-                    .filter(path -> path.getFileName().toString().endsWith(".txt"))
-                    .forEach(path -> {
-                        String file = path.getFileName().toString();
-                        String playlistName = file.substring(0, file.lastIndexOf("."));
-                        try {
-                            List<String> lines = Files.readAllLines(path);
-                            List<Song> songs = new ArrayList<>();
-                            lines.forEach(line -> {
-                                try {
-                                    Song song = new Song(line);
-                                    songs.add(song);
-                                } catch (IllegalArgumentException ignored) {
-                                }
-                            });
-                            Playlist playlist = new Playlist(playlistName, songs);
-                            playlists.add(playlist);
-                        } catch (IOException e) {
-                        }
-                    });
+                .filter(path -> path.getFileName().toString().endsWith(".txt"))
+                .forEach(path -> {
+                    String file = path.getFileName().toString();
+                    String playlistName = file.substring(0, file.lastIndexOf("."));
+                    try {
+                        List<String> lines = Files.readAllLines(path);
+                        List<Song> songs = new ArrayList<>();
+                        lines.forEach(line -> {
+                            try {
+                                Song song = new Song(line);
+                                songs.add(song);
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        });
+                        Playlist playlist = new Playlist(playlistName, songs);
+                        playlists.add(playlist);
+                    } catch (IOException e) {
+                    }
+                });
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        player.changePlaylist(new Playlist("xd", List.of(
-                new Song("C:\\Users\\Ania\\Music\\1.mp3"),
-                new Song("C:\\Users\\Ania\\Music\\2.mp3"),
-                new Song("C:\\Users\\Ania\\Music\\3.mp3")
-        )));
-
     }
 
     /**
@@ -171,6 +177,7 @@ public class Store {
         currentTime = 0;
         audioLoadedListeners.forEach(c -> c.accept(duration));
         titleChange(player.getTitle());
+        queueChange(new Playlist("Queue", player.getQueue()));
     }
 
     /**
@@ -203,8 +210,21 @@ public class Store {
      *
      * @param newTitle new title
      */
-    public void titleChange(String newTitle) {
+    private void titleChange(String newTitle) {
         titleChangeListeners.forEach(c -> c.accept(newTitle));
+    }
+
+    /**
+     * subscribe to title change
+     *
+     * @param action method that will be performed after queue update
+     */
+    public void subscribeQueueChange(Consumer<Playlist> action) {
+        queueChangeListeners.add(action);
+    }
+
+    private void queueChange(Playlist playlist) {
+        queueChangeListeners.forEach(c -> c.accept(playlist));
     }
 
     /**
