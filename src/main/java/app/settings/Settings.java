@@ -21,7 +21,6 @@ public class Settings {
             try {
                 Files.createDirectory(settingsDirectory);
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
 
@@ -32,7 +31,6 @@ public class Settings {
                 playlistDirectory = Path.of(lines.get(0));
                 musicDirectory = Path.of(lines.get(1));
             } catch (IOException e) {
-                e.printStackTrace();
             }
         } else {
             playlistDirectory = path;
@@ -116,5 +114,9 @@ public class Settings {
      */
     public Path getStatisticsPath() {
         return Path.of(settingsDirectory.toAbsolutePath().toString(), "statistics.txt");
+    }
+
+    public Path getTempDirectory() {
+        return Path.of(System.getProperty("user.home"), "Music", "temp");
     }
 }

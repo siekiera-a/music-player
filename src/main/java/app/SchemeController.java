@@ -188,6 +188,7 @@ public class SchemeController implements Initializable {
     private void exit(ActionEvent event) {
         Stage stage = (Stage) mainContent.getScene().getWindow();
         stage.close();
+        App.getStore().release();
     }
 
     @FXML

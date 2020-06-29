@@ -23,8 +23,9 @@ public class Client implements Runnable {
     private final String host;
     private final int port;
     private Socket socket;
+    private Runnable release;
 
-    public Client(String host, int port) {
+    public Client(String host, int port, Runnable release) {
         this.host = host;
         this.port = port;
         new Thread(this).start();
@@ -45,13 +46,30 @@ public class Client implements Runnable {
                     takeAction(action);
                     action = (String) inputStream.readObject();
                 }
+                release.run();
             }
         } catch (Exception e) {
         }
     }
 
     private Song downloadFile(ObjectInputStream inputStream, String fileName) {
-        Path path = Path.of(settings.getSettingsPath().toAbsolutePath().toString(), "temp", fileName);
+        if (!Files.isDirectory(settings.getTempDirectory())) {
+            try {
+                Files.createDirectory(settings.getTempDirectory());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Path path = Path.of(settings.getTempDirectory().toAbsolutePath().toString(), fileName);
+
+        try {
+            Files.deleteIfExists(path);
+            Files.createFile(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try (OutputStream stream = Files.newOutputStream(path)) {
             boolean finished = false;
             while (!finished) {
