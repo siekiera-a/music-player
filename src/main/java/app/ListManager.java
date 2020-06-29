@@ -25,7 +25,9 @@ public class ListManager {
     public ListView<String> playlistView;
     public TextArea playlistSearch;
 
-    String filePah = Paths.get(System.getProperty("user.home") + "\\Music") + "\\statistics.txt";
+    private final Store store = App.getStore();
+
+    String filePah = Paths.get(System.getProperty("user.home") + "\\Music\\App") + "\\statistics.txt";
 
     ListManager(ListView<String> playlistView, TextArea playlistSearch) {
         this.playlistView = playlistView;

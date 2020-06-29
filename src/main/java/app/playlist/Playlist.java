@@ -147,10 +147,23 @@ public class Playlist {
         }
     }
 
+    /**
+     * Clear playlist
+     */
     public void clear() {
         playlist.clear();
     }
 
+    /**
+     * @return playlist's name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @return playlist's songs
+     */
     public List<Song> getSongs() {
         return List.copyOf(playlist);
     }

@@ -1,5 +1,6 @@
 package app;
 
+import app.playlist.Playlist;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -12,7 +13,7 @@ public class QueueController implements Initializable {
 
     // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
     ListManagerSong listManager;
-
+    private final Store store = App.getStore();
     @FXML
     public ListView<String> queueView;
     public TextArea queueSearch;
@@ -28,6 +29,6 @@ public class QueueController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         listManager = new ListManagerSong(queueView, queueSearch);
         // wyświetlenie konkretnej listy na ekranie
-        listManager.setQueueList();
+        listManager.setPlaylist(new Playlist("Queue", store.getQueue()));
     }
 }
