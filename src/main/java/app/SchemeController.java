@@ -136,7 +136,6 @@ public class SchemeController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource(fxml + ".fxml"));
             mainContent.setCenter(root);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

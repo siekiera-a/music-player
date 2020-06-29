@@ -80,11 +80,9 @@ public class Settings {
                             try {
                                 Files.move(path, Path.of(String.valueOf(filePath), path.getFileName().toString()), StandardCopyOption.REPLACE_EXISTING);
                             } catch (IOException e) {
-                                e.printStackTrace();
                             }
                         });
             } catch (IOException e) {
-                e.printStackTrace();
             }
             playlistDirectory = filePath;
             save();
@@ -98,7 +96,6 @@ public class Settings {
         try {
             Files.writeString(getSettingsPath(), String.format("%s\n%s\n", playlistDirectory, musicDirectory));
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

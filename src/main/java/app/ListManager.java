@@ -133,7 +133,6 @@ public class ListManager {
             try {
                 currentDay = parser.parse(format);
             } catch (ParseException e) {
-                e.printStackTrace();
             }
             Date finalCurrentDay = currentDay;
 
@@ -145,7 +144,6 @@ public class ListManager {
                 try {
                     date = parser.parse(data[2]);
                 } catch (ParseException e) {
-                    e.printStackTrace();
                 }
                 Song song = new Song(path);
 
@@ -164,7 +162,6 @@ public class ListManager {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
         return listenedSongs;
@@ -199,7 +196,6 @@ public class ListManager {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
         return mostListened;

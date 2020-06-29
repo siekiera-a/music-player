@@ -45,7 +45,6 @@ public class Statistics {
         try {
             Files.writeString(settings.getStatisticsPath(), str);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

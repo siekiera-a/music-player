@@ -55,12 +55,6 @@ public class Store {
         player.setOnAudioLoaded(this::audioLoaded);
 
         loadPlaylists();
-
-        player.changePlaylist(new Playlist("xd", List.of(
-            new Song("Bet My Heart.mp3"),
-            new Song("Visions.mp3"),
-            new Song("This Love.mp3")
-        )));
     }
 
     private void loadPlaylists() {
@@ -86,7 +80,6 @@ public class Store {
                     }
                 });
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

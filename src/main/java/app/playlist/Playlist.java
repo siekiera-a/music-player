@@ -143,7 +143,6 @@ public class Playlist {
                 outputFile.write(p.path() + "\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

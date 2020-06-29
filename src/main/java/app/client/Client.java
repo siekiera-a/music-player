@@ -58,7 +58,6 @@ public class Client implements Runnable {
             try {
                 Files.createDirectory(settings.getTempDirectory());
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
 
@@ -68,7 +67,6 @@ public class Client implements Runnable {
             Files.deleteIfExists(path);
             Files.createFile(path);
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
         try (OutputStream stream = Files.newOutputStream(path)) {
@@ -107,7 +105,6 @@ public class Client implements Runnable {
         try {
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
