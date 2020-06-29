@@ -47,7 +47,7 @@ public class ListManagerSong {
         playlistData.clear();
         if (playlist != null) {
             playlist.getSongs().stream()
-                    .map(Song::getTitle)
+                    .map(Song::path)
                     .forEach(playlistData::add);
         }
 
