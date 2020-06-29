@@ -1,5 +1,6 @@
 package app;
 
+import app.playlist.Song;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
@@ -18,13 +19,14 @@ public class CustomCellSongs extends ListCell<String> {
     //parametry, które będą ustawiały popup w dobrym miejscu
     double height = 200;
     double width = 800;
+    private int number = 0;
 
     HBox hbox = new HBox();
     Label label = new Label("empty");
     Pane pane = new Pane();
     Button button = new Button("...");
     String lastItem;
-    boolean isFavourite = false;
+    boolean createP = false;
     boolean inQueue = false;
     boolean isPlayNext = false;
     Button queue;
@@ -71,7 +73,7 @@ public class CustomCellSongs extends ListCell<String> {
             popup.show(App.getInstance());
 
             queue.setOnAction(this::addQueue);
-            createPlaylist.setOnAction(this::addFavourite);
+            createPlaylist.setOnAction(this::createPlaylist);
             addToPlaylist.setOnAction(this::addToPlaylist);
             playNext.setOnAction(this::playNext);
 
@@ -82,6 +84,9 @@ public class CustomCellSongs extends ListCell<String> {
         isPlayNext = !isPlayNext;
         if (isPlayNext) {
             System.out.println("play next");
+
+            store.playAsNext(new Song(lastItem));
+
             playNext.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
         } else {
             System.out.println("not play next");
@@ -124,17 +129,18 @@ public class CustomCellSongs extends ListCell<String> {
     }
 
     /**
-     * Set picked song to favourite playlist
+     * Create new playlist
      *
      * @param actionEvent
      */
-    private void addFavourite(ActionEvent actionEvent) {
-        isFavourite = !isFavourite;
-        if (isFavourite) {
-            System.out.println("favourite");
+    private void createPlaylist(ActionEvent actionEvent) {
+
+        createP = !createP;
+        if (createP) {
+            store.createPlaylist("nazwa " + number, lastItem);
+            number++;
             createPlaylist.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
         } else {
-            System.out.println("not favourite");
             createPlaylist.setStyle("-fx-opacity: 1; -fx-border-width: 0; -fx-background-color: white;");
         }
     }
@@ -147,7 +153,7 @@ public class CustomCellSongs extends ListCell<String> {
     private void addQueue(ActionEvent actionEvent) {
         inQueue = !inQueue;
         if (inQueue) {
-            System.out.println(" in queue");
+            store.queue(new Song(lastItem));
             queue.setStyle("-fx-opacity: 0.4; -fx-border-width: 0; -fx-background-color: white;");
         } else {
             System.out.println("not in queue");
