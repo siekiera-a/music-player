@@ -19,9 +19,6 @@ public class PlaylistController implements Initializable {
     // manager pomagający przy listach ( tworzenie list, szukanie w listach, itd )
     ListManagerSong listManager;
 
-    // zmienna odpowiedzialna za index w ComboBox
-    int index;
-
     private final Store store = App.getStore();
 
     @FXML
@@ -37,7 +34,6 @@ public class PlaylistController implements Initializable {
      * @param location
      * @param resources
      */
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<String> list = store.getPlaylists()
@@ -50,7 +46,6 @@ public class PlaylistController implements Initializable {
         choosePlaylists.setItems(observableList);
 
         listManager = new ListManagerSong(playlistView, playlistSearch);
-
         // ustawienie początkowej statystyki
         choosePlaylists.setValue(choosePlaylists.getItems().get(0));
 

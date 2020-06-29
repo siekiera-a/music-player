@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Settings {
     private Path playlistDirectory;
@@ -72,6 +74,20 @@ public class Settings {
      */
     public void setPlaylistDirectory(Path filePath) {
         if (Files.isDirectory(filePath)) {
+
+            try (Stream<Path> files = Files.walk(getPlaylistDirectory(), 1)) {
+                files.filter(Files::isRegularFile)
+                        .filter(path -> path.getFileName().toString().endsWith(".txt"))
+                        .forEach(path -> {
+                            try {
+                                Files.move(path, Path.of(String.valueOf(filePath), path.getFileName().toString()), StandardCopyOption.REPLACE_EXISTING);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             playlistDirectory = filePath;
             save();
         }

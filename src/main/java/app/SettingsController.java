@@ -2,10 +2,8 @@ package app;
 
 import app.settings.Settings;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -20,11 +18,7 @@ public class SettingsController implements Initializable {
 
     String locationPlaylists;
     String locationSongs;
-    String password = "";
     private final Settings settings = App.getStore().getSettings();
-
-    @FXML
-    public CheckBox startAppCB;
 
     public Button playlistButton;
     public Button songButton;
@@ -91,15 +85,9 @@ public class SettingsController implements Initializable {
         playlistLocationField.setText(locationPlaylists);
     }
 
-
-    //metoda ustawiająca, że aplikacja ma zostać uruchomiona przy starcie systemu
-    public void startApp() {
-        startAppCB.isSelected();
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        startApp();
+
         locationSongs = settings.getMusicDirectory().toAbsolutePath().toString();
         locationPlaylists = settings.getPlaylistDirectory().toAbsolutePath().toString();
         showSettings();
