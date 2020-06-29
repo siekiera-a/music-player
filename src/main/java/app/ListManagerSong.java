@@ -54,16 +54,4 @@ public class ListManagerSong {
         playlistView.setItems(playlistData);
     }
 
-    /**
-     * Create queue
-     */
-    public void setQueueList() {
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 5; i < 100; i++) {
-            playlistData.add(String.valueOf(i));
-        }
-        playlistView.setItems(playlistData);
-    }
-
 }

@@ -3,6 +3,7 @@ package app;
 import app.player.LocalPlayer;
 import app.playlist.Playlist;
 import app.playlist.Song;
+import app.server.Server;
 import app.settings.Settings;
 import javafx.util.Duration;
 
@@ -32,6 +33,9 @@ public class Store {
     private int volume;
     private boolean isPlayed;
     private int currentTime;
+
+    private Server server;
+    private final int port = 21370;
 
     public Store() {
         volume = (int) (player.getVolume() * 100);
@@ -90,8 +94,14 @@ public class Store {
         isPlayed = !isPlayed;
         if (isPlayed) {
             player.play();
+            if (isStreaming()) {
+                server.play(player.getProgress());
+            }
         } else {
             player.pause();
+            if (isStreaming()) {
+                server.pause(player.getProgress());
+            }
         }
     }
 
@@ -132,7 +142,7 @@ public class Store {
     }
 
     public void repeat() {
-        // @TODO
+        player.toggleLoop();
     }
 
     /**
@@ -178,6 +188,13 @@ public class Store {
         audioLoadedListeners.forEach(c -> c.accept(duration));
         titleChange(player.getTitle());
         queueChange(new Playlist("Queue", player.getQueue()));
+
+        if (isStreaming()) {
+            Song song = player.getCurrentSong();
+            server.changeSong(song);
+            server.fileName(song.getTitle() + "." + song.getExtension());
+            server.send();
+        }
     }
 
     /**
@@ -285,9 +302,9 @@ public class Store {
      */
     public Playlist getPlaylist(String name) {
         Optional<Playlist> playlist = playlists
-                .stream()
-                .filter(p -> p.getName().equals(name))
-                .findFirst();
+            .stream()
+            .filter(p -> p.getName().equals(name))
+            .findFirst();
 
         return playlist.orElse(null);
     }
@@ -297,5 +314,20 @@ public class Store {
      */
     public Settings getSettings() {
         return settings;
+    }
+
+    public void startStream() {
+        if (server == null) {
+            server = new Server(port, player.getCurrentSong(), player::getProgress);
+        }
+    }
+
+    public void stopStream() {
+        server.stop();
+        server = null;
+    }
+
+    private boolean isStreaming() {
+        return server != null;
     }
 }

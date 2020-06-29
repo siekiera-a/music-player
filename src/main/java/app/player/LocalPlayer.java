@@ -238,4 +238,15 @@ public class LocalPlayer {
         }
     }
 
+    public float getProgress() {
+        if (player == null) {
+            return 0.0f;
+        }
+
+        return (float) (player.getCurrentTime().toSeconds() / player.getCycleDuration().toSeconds());
+    }
+
+    public Song getCurrentSong() {
+        return currentSong;
+    }
 }
