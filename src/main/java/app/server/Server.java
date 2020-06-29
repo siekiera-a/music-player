@@ -94,7 +94,6 @@ public class Server implements Runnable {
         try {
             server.close();
         } catch (IOException e) {
-            e.printStackTrace();
         }
         clients.forEach(ServerClient::disconnect);
     }

@@ -28,6 +28,7 @@ public class Client implements Runnable {
     public Client(String host, int port, Runnable release) {
         this.host = host;
         this.port = port;
+        this.release = release;
         new Thread(this).start();
     }
 

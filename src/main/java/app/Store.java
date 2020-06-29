@@ -53,12 +53,11 @@ public class Store {
 
         loadPlaylists();
 
-        player.changePlaylist(new Playlist("xd", List.of(
-            new Song("Bet My Heart.mp3"),
-            new Song("Visions.mp3"),
-            new Song("This Love.mp3")
-        )));
-
+//        player.changePlaylist(new Playlist("xd", List.of(
+//            new Song("Bet My Heart.mp3"),
+//            new Song("Visions.mp3"),
+//            new Song("This Love.mp3")
+//        )));
     }
 
     private void loadPlaylists() {
@@ -93,7 +92,9 @@ public class Store {
      */
     public void playPause() {
         isPlayed = !isPlayed;
-        server.setIsPlayed(isPlayed);
+        if (server != null) {
+            server.setIsPlayed(isPlayed);
+        }
         if (isPlayed) {
             player.play();
             if (isStreaming()) {
@@ -341,8 +342,10 @@ public class Store {
     }
 
     public void stopStream() {
-        server.stop();
-        server = null;
+        if (server != null) {
+            server.stop();
+            server = null;
+        }
     }
 
     private boolean isStreaming() {

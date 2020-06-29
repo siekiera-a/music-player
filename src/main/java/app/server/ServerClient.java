@@ -47,21 +47,14 @@ class ServerClient {
                 while (input.available() > 0) {
                     byte[] buffor = new byte[bufforSize];
                     boolean finished = false;
-                    int bytesReaded;
-                    if ((bytesReaded = input.read(buffor)) < buffor.length) {
+                    if (input.read(buffor) < buffor.length) {
                         finished = true;
-                        if (bytesReaded > 0) {
-                            byte[] temp = new byte[bytesReaded];
-                            System.arraycopy(buffor, 0, temp, 0, bytesReaded);
-                            buffor = temp;
-                        }
                     }
                     FilePayload payload = new FilePayload(buffor, finished);
                     outputStream.writeObject(payload);
                 }
                 return true;
             } catch (Exception e) {
-                disconnect();
                 return false;
             }
         } else {
@@ -80,7 +73,6 @@ class ServerClient {
         try {
             outputStream.writeObject(str);
         } catch (IOException e) {
-            disconnect();
         }
     }
 
@@ -101,7 +93,6 @@ class ServerClient {
             try {
                 outputStream.writeObject("TITLE:" + fileName);
             } catch (Exception e) {
-                disconnect();
             }
         });
     }
@@ -126,7 +117,6 @@ class ServerClient {
             socket.close();
             pool.shutdown();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

@@ -180,7 +180,6 @@ public class LocalPlayer {
      */
     public void stop() {
         if (player != null) {
-            player.stop();
             player.dispose();
         }
     }
@@ -203,7 +202,7 @@ public class LocalPlayer {
     }
 
     public void playAsNext(Song song) {
-
+        queue.addFirst(song);
     }
 
     public void setOnPlaying(Consumer<Duration> onPlaying) {
