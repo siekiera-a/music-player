@@ -178,7 +178,7 @@ public class LocalPlayer {
     /**
      * stop current song and release associeted resources
      */
-    private void stop() {
+    public void stop() {
         if (player != null) {
             player.stop();
             player.dispose();

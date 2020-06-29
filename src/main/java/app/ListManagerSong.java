@@ -17,7 +17,6 @@ public class ListManagerSong {
     ListManagerSong(ListView<String> playlistView, TextArea playlistSearch) {
         this.playlistView = playlistView;
         this.playlistSearch = playlistSearch;
-
         playlistView.setCellFactory(x -> new CustomCellSongs(this));
         setSearchListener();
     }

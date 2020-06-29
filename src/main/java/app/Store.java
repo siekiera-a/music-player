@@ -354,7 +354,10 @@ public class Store {
     }
 
     public void release() {
-
+        player.stop();
+        if (server != null) {
+            server.stop();
+        }
     }
 
 }
