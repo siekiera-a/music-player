@@ -44,8 +44,8 @@ class ServerClient {
         File file = new File(path);
         if (file.exists() && file.isFile()) {
             try (FileInputStream input = new FileInputStream(file)) {
-                byte[] buffor = new byte[bufforSize];
                 while (input.available() > 0) {
+                    byte[] buffor = new byte[bufforSize];
                     boolean finished = false;
                     int bytesReaded;
                     if ((bytesReaded = input.read(buffor)) < buffor.length) {
@@ -61,6 +61,7 @@ class ServerClient {
                 }
                 return true;
             } catch (Exception e) {
+                disconnect();
                 return false;
             }
         } else {
@@ -79,6 +80,7 @@ class ServerClient {
         try {
             outputStream.writeObject(str);
         } catch (IOException e) {
+            disconnect();
         }
     }
 
@@ -99,6 +101,7 @@ class ServerClient {
             try {
                 outputStream.writeObject("TITLE:" + fileName);
             } catch (Exception e) {
+                disconnect();
             }
         });
     }
@@ -125,5 +128,9 @@ class ServerClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isDisconnected() {
+        return pool.isShutdown();
     }
 }
