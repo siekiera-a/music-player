@@ -1,20 +1,20 @@
 package app.statistics;
 
+import app.App;
 import app.playlist.Song;
+import app.settings.Settings;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class Statistics {
 
     private final LinkedList<Info> listenedSongs;
-    private final Path path = Paths.get(System.getProperty("user.home") + "\\Music");
+    private final Settings settings = App.getStore().getSettings();
 
     public Statistics() {
         listenedSongs = new LinkedList<>();
@@ -30,24 +30,20 @@ public class Statistics {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         Info info = new Info(song, time, formatter.format(date));
-
         listenedSongs.add(info);
-
-        save(path);
+        save();
     }
 
     /**
      * Saving statistics to file
-     *
-     * @param directory for saving statistics
      */
-    public void save(Path directory) {
-        File file = new File(String.valueOf(directory), "statistics.txt");
+    public void save() {
+        String str = listenedSongs.stream()
+                .map(i -> String.format("%s\t%d\t%s", i.song().path(), i.time(), i.date()))
+                .collect(Collectors.joining("\n"));
 
-        try (FileWriter outputFile = new FileWriter(file.getAbsoluteFile())) {
-            for (Info i : listenedSongs) {
-                outputFile.write(i.song().path() + "\t" + i.time() + "\t" + i.date() + "\n");
-            }
+        try {
+            Files.writeString(settings.getStatisticsPath(), str);
         } catch (IOException e) {
             e.printStackTrace();
         }

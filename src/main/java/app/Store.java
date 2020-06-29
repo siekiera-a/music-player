@@ -44,7 +44,7 @@ public class Store {
         player.setOnPlaying(this::timeChange);
         player.setOnAudioLoaded(this::audioLoaded);
 
-        try (Stream<Path> files = Files.walk(settings.getSaveDirectory(), 1)) {
+        try (Stream<Path> files = Files.walk(settings.getPlaylistDirectory(), 1)) {
             files.filter(Files::isRegularFile)
                     .filter(path -> path.getFileName().toString().endsWith(".txt"))
                     .forEach(path -> {
@@ -243,14 +243,26 @@ public class Store {
         return player.getQueue();
     }
 
+    /**
+     * Create playlist
+     *
+     * @param name of playlist
+     */
     public void createPlaylist(String name) {
         playlists.add(new Playlist(name));
     }
 
+    /**
+     * @return list of playlists
+     */
     public List<Playlist> getPlaylists() {
         return playlists;
     }
 
+    /**
+     * @param name playlist's name
+     * @return playlist or null if playlist do not exist
+     */
     public Playlist getPlaylist(String name) {
         Optional<Playlist> playlist = playlists
                 .stream()
@@ -258,5 +270,12 @@ public class Store {
                 .findFirst();
 
         return playlist.orElse(null);
+    }
+
+    /**
+     * @return settings
+     */
+    public Settings getSettings() {
+        return settings;
     }
 }

@@ -11,21 +11,17 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
-    private final Path filePath = Paths.get(System.getProperty("user.home") + "\\Music\\settings.txt");
+
     String locationPlaylists;
     String locationSongs;
     String password = "";
-    private final Settings settings = new Settings();
+    private final Settings settings = App.getStore().getSettings();
 
     @FXML
     public CheckBox startAppCB;
@@ -48,7 +44,9 @@ public class SettingsController implements Initializable {
         Stage stage = (Stage) playlistButton.getScene().getWindow();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(stage);
-        setPlaylistLocation(file.toString());
+        if (file != null) {
+            setPlaylistLocation(file.toString());
+        }
     }
 
     /**
@@ -60,7 +58,9 @@ public class SettingsController implements Initializable {
         Stage stage = (Stage) songButton.getScene().getWindow();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(stage);
-        setSongsLocation(file.toString());
+        if (file != null) {
+            setSongsLocation(file.toString());
+        }
     }
 
     /**
@@ -70,7 +70,7 @@ public class SettingsController implements Initializable {
      */
     public void setPlaylistLocation(String directory) {
         this.locationPlaylists = directory;
-        settings.setSaveDirectory(Path.of(directory));
+        settings.setPlaylistDirectory(Path.of(directory));
         playlistLocationField.setText(locationPlaylists);
     }
 
@@ -93,21 +93,6 @@ public class SettingsController implements Initializable {
         playlistLocationField.setText(locationPlaylists);
     }
 
-    /**
-     * Read user's settings from file and write them to local variables
-     *
-     * @param filePah where are saved user's settings
-     */
-    public void readSettings(Path filePah) {
-        List<String> settings = new ArrayList<>();
-        try {
-            settings = Files.readAllLines(filePah);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        locationPlaylists = settings.get(0);
-        locationSongs = settings.get(1);
-    }
 
     //metoda ustawiająca, że aplikacja ma zostać uruchomiona przy starcie systemu
     public void startApp() {
@@ -117,7 +102,8 @@ public class SettingsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startApp();
-        readSettings(filePath);
+        locationSongs = settings.getMusicDirectory().toAbsolutePath().toString();
+        locationPlaylists = settings.getPlaylistDirectory().toAbsolutePath().toString();
         showSettings();
         playlistButton.setOnAction(this::chooseLocationPlaylist);
         songButton.setOnAction(this::chooseLocationSongs);
