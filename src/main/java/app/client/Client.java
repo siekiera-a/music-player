@@ -28,6 +28,7 @@ public class Client implements Runnable {
     public Client(String host, int port, Runnable release) {
         this.host = host;
         this.port = port;
+        this.release = release;
         new Thread(this).start();
     }
 
@@ -100,5 +101,13 @@ public class Client implements Runnable {
             case "PAUSE" -> store.pause();
         }
         store.seek(progress);
+    }
+
+    public void disconnect() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

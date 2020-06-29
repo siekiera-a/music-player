@@ -84,6 +84,7 @@ public class RoomController implements Initializable {
      */
     @FXML
     private void stream(ActionEvent actionEvent) {
+        store.startStream();
         streamButton.setDisable(true);
         joinHBox.setDisable(true);
         peopleHBox.setDisable(false);
@@ -98,7 +99,7 @@ public class RoomController implements Initializable {
     @FXML
     private void joinToStream(ActionEvent actionEvent) {
         getId();
-        //System.out.println(id);
+        store.connect(idTextField.getText());
         streamButton.setDisable(true);
         joinHBox.setDisable(true);
         peopleHBox.setDisable(true);
@@ -116,6 +117,7 @@ public class RoomController implements Initializable {
         joinHBox.setDisable(false);
         peopleHBox.setDisable(true);
         disconnectButton.setDisable(true);
+        store.disconnect();
     }
 
 }
