@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -53,11 +54,11 @@ public class Store {
 
         loadPlaylists();
 
-        player.changePlaylist(new Playlist("xd", List.of(
-            new Song("Bet My Heart.mp3"),
-            new Song("Visions.mp3"),
-            new Song("This Love.mp3")
-        )));
+//        player.changePlaylist(new Playlist("xd", List.of(
+//            new Song("Bet My Heart.mp3"),
+//            new Song("Visions.mp3"),
+//            new Song("This Love.mp3")
+//        )));
 
     }
 
@@ -303,8 +304,9 @@ public class Store {
      *
      * @param name of playlist
      */
-    public void createPlaylist(String name) {
-        playlists.add(new Playlist(name));
+    public void createPlaylist(String name, String path) {
+        playlists.add(new Playlist(name, Collections.singleton(new Song(path))));
+        playlists.forEach(p -> p.save(settings.getPlaylistDirectory()));
     }
 
     /**
