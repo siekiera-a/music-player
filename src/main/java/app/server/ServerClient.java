@@ -77,7 +77,7 @@ class ServerClient {
         }
 
         try {
-            outputStream.writeChars(str);
+            outputStream.writeObject(str);
         } catch (IOException e) {
         }
     }
@@ -97,7 +97,7 @@ class ServerClient {
     public void fileName(String fileName) {
         pool.submit(() -> {
             try {
-                outputStream.writeChars("TITLE:" + fileName);
+                outputStream.writeObject("TITLE:" + fileName);
             } catch (Exception e) {
             }
         });

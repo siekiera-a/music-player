@@ -105,6 +105,20 @@ public class Store {
         }
     }
 
+    public void play() {
+        isPlayed = true;
+        player.play();
+    }
+
+    public void pause() {
+        isPlayed = false;
+        player.pause();
+    }
+
+    public void seek(float progress) {
+        player.seek(progress);
+    }
+
     public void shuffle() {
         player.shuffle();
     }
@@ -330,4 +344,9 @@ public class Store {
     private boolean isStreaming() {
         return server != null;
     }
+
+    public void playPlaylist(Playlist playlist) {
+        player.changePlaylist(playlist);
+    }
+
 }
