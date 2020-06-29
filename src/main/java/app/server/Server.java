@@ -58,7 +58,20 @@ public class Server implements Runnable {
         clients.forEach(client -> client.send(song));
     }
 
+    public void play(float progress) {
+        clients.forEach(client -> client.play(progress));
+    }
+
+    public void pause(float progress) {
+        clients.forEach(client -> client.play(progress));
+    }
+
+    public void changeSong() {
+        clients.forEach(ServerClient::changeSong);
+    }
+
     public void stop() {
         thread.interrupt();
+        clients.forEach(ServerClient::disconnect);
     }
 }

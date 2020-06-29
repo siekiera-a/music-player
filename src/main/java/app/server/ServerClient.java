@@ -8,16 +8,21 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 class ServerClient {
 
     private final Socket socket;
     private final ObjectOutputStream outputStream;
-    private final int bufforSize = 32768;
+    private final int bufforSize = 32768; // 2^15
+    private final ExecutorService pool;
 
     public ServerClient(Socket socket) throws IOException {
         this.socket = socket;
         outputStream = new ObjectOutputStream(socket.getOutputStream());
+        pool = Executors.newFixedThreadPool(1);
     }
 
     /**
@@ -26,13 +31,7 @@ class ServerClient {
      * @param song song to send
      */
     public void send(Song song) {
-        new Thread(() -> {
-            if (sendFile(song.path())) {
-                System.out.println("successfull!");
-            } else {
-                System.out.println("failed!");
-            }
-        }).start();
+        pool.submit(() -> sendFile(song.path()));
     }
 
     /**
@@ -69,6 +68,41 @@ class ServerClient {
         }
     }
 
+    private void task(String action, Optional<Float> progress) {
+        String str;
+        if (progress.isPresent()) {
+            str = String.format("%s:%f", action.toUpperCase(), progress.get());
+        } else {
+            str = action.toUpperCase();
+        }
+
+        try {
+            outputStream.writeChars(str);
+        } catch (IOException e) {
+        }
+    }
+
+    public void play(float progress) {
+        pool.submit(() -> task("PLAY", Optional.of(progress)));
+    }
+
+    public void pause(float progress) {
+        pool.submit(() -> task("PAUSE", Optional.of(progress)));
+    }
+
+    public void changeSong() {
+        pool.submit(() -> task("CHANGE", Optional.empty()));
+    }
+
+    public void fileName(String fileName) {
+        pool.submit(() -> {
+            try {
+                outputStream.writeChars("TITLE:" + fileName);
+            } catch (Exception e) {
+            }
+        });
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,9 +121,9 @@ class ServerClient {
         try {
             outputStream.close();
             socket.close();
+            pool.shutdown();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
