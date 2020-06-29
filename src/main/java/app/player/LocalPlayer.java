@@ -3,6 +3,7 @@ package app.player;
 import app.playlist.Playlist;
 import app.playlist.Queue;
 import app.playlist.Song;
+import app.statistics.Statistics;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -26,9 +27,19 @@ public class LocalPlayer {
     private Consumer<Duration> onPlaying;
     private Consumer<Duration> onLoaded;
 
+    private Stopwatch stopwatch = new Stopwatch();
+    private Statistics statistics;
+
     public LocalPlayer() {
         this.queue = new Queue();
         volume = 1.0f;
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+            }
+            statistics = new Statistics();
+        }).start();
     }
 
     /**
@@ -39,7 +50,13 @@ public class LocalPlayer {
     private void changeSong(Song song) {
         stop();
         try {
+            java.time.Duration duration = stopwatch.stop();
+            long seconds = duration.toSeconds();
+            if (seconds > 0) {
+                statistics.addTime(currentSong, (int) seconds);
+            }
             currentSong = song;
+            stopwatch.start();
             File file = new File(song.path());
             Media media = new Media(file.toURI().toString());
             player = new MediaPlayer(media);
@@ -73,6 +90,7 @@ public class LocalPlayer {
         if (player != null) {
             isPlayed = true;
             player.play();
+            stopwatch.start();
         }
     }
 
@@ -172,6 +190,7 @@ public class LocalPlayer {
         if (player != null) {
             isPlayed = false;
             player.pause();
+            stopwatch.pause();
         }
     }
 

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Store {
@@ -55,6 +56,19 @@ public class Store {
         player.setOnAudioLoaded(this::audioLoaded);
 
         loadPlaylists();
+
+        try (var files = Files.walk(settings.getMusicDirectory(), 1)) {
+            ArrayList<Song> songs = new ArrayList<>();
+            for (Path p : files.filter(Files::isRegularFile).collect(Collectors.toList())) {
+                try {
+                    Song song = new Song(p.toString());
+                    songs.add(song);
+                } catch (IllegalArgumentException e) {
+                }
+            }
+            player.changePlaylist(new Playlist("collection", songs));
+        } catch (Exception e) {
+        }
     }
 
     private void loadPlaylists() {
