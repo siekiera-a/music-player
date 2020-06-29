@@ -1,5 +1,7 @@
 package app;
 
+import app.playlist.Playlist;
+import app.playlist.Song;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -30,7 +32,7 @@ public class ListManagerSong {
             } else {
                 ObservableList<String> items = FXCollections.observableArrayList();
                 for (String x : playlistData) {
-                    if (x.contains(newValue)) {
+                    if (x.toLowerCase().contains(newValue.toLowerCase())) {
                         items.add(x);
                     }
                 }
@@ -40,96 +42,16 @@ public class ListManagerSong {
         });
     }
 
-    /**
-     * Create first playlist
-     */
-    public void setPlaylist1List() {
+
+    public void setPlaylist(Playlist playlist) {
         playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 0; i < 100; i++) {
-            playlistData.add(String.valueOf(i));
+        if (playlist != null) {
+            playlist.getSongs().stream()
+                    .map(Song::getTitle)
+                    .forEach(playlistData::add);
         }
+
         playlistView.setItems(playlistData);
     }
-
-    /**
-     * Create second playlist
-     */
-    public void setPlaylist2List() {
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 0; i < 80; i++) {
-            playlistData.add(String.valueOf(i));
-        }
-        playlistView.setItems(playlistData);
-    }
-
-    /**
-     * Create third playlist
-     */
-    public void setPlaylist3List() {
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 0; i < 60; i++) {
-            playlistData.add(String.valueOf(i));
-        }
-        playlistView.setItems(playlistData);
-    }
-
-    /**
-     * Create forth playlist
-     */
-    public void setPlaylist4List() {
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 0; i < 30; i++) {
-            playlistData.add(String.valueOf(i));
-        }
-        playlistView.setItems(playlistData);
-    }
-
-    /**
-     * Create favourite playlist
-     */
-    public void setFavouriteList() {
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 0; i < 14; i++) {
-            playlistData.add(String.valueOf(i));
-        }
-        playlistView.setItems(playlistData);
-    }
-
-    /**
-     * Create queue
-     */
-    public void setQueueList() {
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 5; i < 100; i++) {
-            playlistData.add(String.valueOf(i));
-        }
-        playlistView.setItems(playlistData);
-    }
-
-    /**
-     * Create collection of songs
-     */
-    public void setCollection(){
-        playlistData.clear();
-        // tworzenie początkowej listy piosenek
-        for (int i = 0; i < 1000; i++) {
-            playlistData.add(String.valueOf(i));
-        }
-        playlistView.setItems(playlistData);
-    }
-
-    /*public void upWithIndex(int index) {
-
-    }*/
-
-    /*public void downWithIndex(int index) {
-
-    }*/
 
 }

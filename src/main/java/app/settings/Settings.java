@@ -1,22 +1,42 @@
 package app.settings;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class Settings {
-    private Path saveDirectory;
+    private Path playlistDirectory;
     private Path musicDirectory;
-    private final Path path = Paths.get(System.getProperty("user.home") + "\\Music");
+    private Path settingsDirectory;
 
     public Settings() {
-        this.saveDirectory = path;
-        this.musicDirectory = path;
-        if (!Files.exists(Paths.get(path + "\\settings.txt"))) {
+        Path path = Paths.get(System.getProperty("user.home"), "Music");
+        settingsDirectory = Path.of(path.toString(), "App");
+
+        if (!Files.isDirectory(settingsDirectory)) {
+            try {
+                Files.createDirectory(settingsDirectory);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Path settingsFile = getSettingsPath();
+        if (Files.exists(settingsFile)) {
+            try {
+                List<String> lines = Files.readAllLines(settingsFile);
+                playlistDirectory = Path.of(lines.get(0));
+                musicDirectory = Path.of(lines.get(1));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            playlistDirectory = path;
+            musicDirectory = path;
             save();
         }
     }
@@ -24,82 +44,77 @@ public class Settings {
     /**
      * Changing path for searching music
      *
-     * @param path for searching music
+     * @param filePath for searching music
      */
-    public void setMusicLocation(Path path) {
-        if (isDirectory(path)) {
-            musicDirectory = path;
+    public void setMusicLocation(Path filePath) {
+        if (Files.isDirectory(filePath)) {
+            musicDirectory = filePath;
             save();
         }
+    }
+
+    /**
+     * @return musicDirectory
+     */
+    public Path getMusicDirectory() {
+        return musicDirectory;
+    }
+
+    /**
+     * @return playlistDirectory
+     */
+    public Path getPlaylistDirectory() {
+        return playlistDirectory;
     }
 
     /**
      * Changing path for saving playloist
      *
-     * @param path for saving playlist
+     * @param filePath for saving playlist
      */
-    public void setSaveDirectory(Path path) {
-        if (isDirectory(path)) {
-            saveDirectory = path;
+    public void setPlaylistDirectory(Path filePath) {
+        if (Files.isDirectory(filePath)) {
+
+            try (Stream<Path> files = Files.walk(getPlaylistDirectory(), 1)) {
+                files.filter(Files::isRegularFile)
+                        .filter(path -> path.getFileName().toString().endsWith(".txt"))
+                        .forEach(path -> {
+                            try {
+                                Files.move(path, Path.of(String.valueOf(filePath), path.getFileName().toString()), StandardCopyOption.REPLACE_EXISTING);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            playlistDirectory = filePath;
             save();
         }
-    }
-
-    /**
-     * @param path for save
-     * @return true if path is a directory otherwise return false
-     */
-    public static boolean isDirectory(Path path) {
-        if (path == null || !Files.exists(path)) {
-            return false;
-        } else return Files.isDirectory(path);
     }
 
     /**
      * Saving settings to file
      */
     public void save() {
-        File file = new File(String.valueOf(path), "settings.txt");
-
-        try (FileWriter outputFile = new FileWriter(file.getAbsoluteFile())) {
-            outputFile.write((saveDirectory) + "\n");
-            outputFile.write((musicDirectory) + "\n");
+        try {
+            Files.writeString(getSettingsPath(), String.format("%s\n%s\n", playlistDirectory, musicDirectory));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * @return path for autostart in Windows
+     * @return path of settings file
      */
-    public static String getAutoStart() {
-        return System.getProperty("java.io.tmpdir").replace("Local\\Temp\\", "Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
+    public Path getSettingsPath() {
+        return Path.of(settingsDirectory.toAbsolutePath().toString(), "settings.txt");
     }
 
-    public static String getRunningDir() {
-        String runningdir = Paths.get(".").toAbsolutePath().normalize().toString();
-        runningdir += "\\target";       //dopisac cala lokalizacje artefaktow
-        System.out.println(runningdir);
-
-        return runningdir;
+    /**
+     * @return path of statistics file
+     */
+    public Path getStatisticsPath() {
+        return Path.of(settingsDirectory.toAbsolutePath().toString(), "statistics.txt");
     }
-
-    public void autostart() {
-        Path autostartPath = Paths.get(getAutoStart());
-        Path currentPath = Paths.get(getRunningDir());
-        try {
-            Path path = Path.of(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-            System.out.println(path.toAbsolutePath().toString());
-//            Files.createSymbolicLink(path, )
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-//        try {
-//            Files.move(currentPath.resolve("ania.txt"), autostartPath.resolve("ania.txt"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
-
-
 }
